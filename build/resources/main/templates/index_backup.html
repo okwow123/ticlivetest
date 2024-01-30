@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src='/js/gpt.js'></script>
+</head>
+<body>
+<div class="chatGPT">
+    <div class="header">
+        <h3>
+            <img src="/images/logo-chat.png" alt="IT">
+            <span>GPT</span>
+        </h3>
+        <button type="button" class="btn btn-close"></button>
+    </div>
+    <div class="body">
+        <div class="form-row">
+            <div class="col">
+                <select id="selectId" hidden>
+                    <option selected value="4" >Chat</option>
+                </select>
+            </div>
+        </div>
+        <div class="chat-scroll scroll" id="chatDiv">
+        </div>
+    </div>
+    <div class="footer">
+        <textarea class="form-control-sm-gpt" rows="2" id="textContent"></textarea>
+        <button type="button" class="btn btn-primary-gpt" id="chatSend">Send</button>
+    </div>
+    <p class="copyright">© ALL RIGHTS RESERVED.</p>
+</div>
+<button type="button" class="btn btn-primary-gpt btn-GPT"><b>IT</b><br>GPT</button>
+
+</body>
+</html>

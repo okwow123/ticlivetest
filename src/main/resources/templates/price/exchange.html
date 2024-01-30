@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="ko" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+<link href="/css/style.css" rel="stylesheet">
+<script type="text/javascript" src="/js/lib/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="/js/lib/jquery-ui-1.11.4.min.js"></script>
+
+<div class="content-wrap">
+    <section class="section full">
+        <h2 class="title">
+            <span>환율 정보</span>
+            <span class="noti">최종 수집 시간 : <em id="last_date_result"></em> </span>
+        </h2>
+        <div class="cont-group">
+            <div class="col-100">
+                <table class="table table-data-list-view" id="siteList">
+                </table>
+            </div>
+        </div>
+    </section>
+</div>
+
+
+<script defer type="text/javascript" src="/js/lib/jquery.dataTables.js"></script>
+<script defer type="text/javascript" src="/js/lib/dataTables.bootstrap.js"></script>
+<script defer type="text/javascript" src="/js/lib/full_numbers_no_ellipses.js"></script>
+<script defer type="text/javascript" src="/js/lib/datepicker.js"></script>
+<script defer type="text/javascript" src="/js/lib/timepicker.js"></script>
+<script defer type="text/javascript" src="/js/lib/fileinput.js"></script>
+<script defer type="text/javascript" src="/js/lib/select2/js/select2.min.js"></script>
+<script defer type="text/javascript" src="/js/price/exchange.js"></script>
+</html>
