@@ -1,4 +1,4 @@
-package com.itac.login.entity.member;
+package com.itac.login.entity.user;
 
 import com.itac.login.entity.BaseTimeEntity;
 import lombok.*;
@@ -9,7 +9,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -17,34 +16,56 @@ import java.util.Collection;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
-public class Member extends BaseTimeEntity implements UserDetails {
+public class Users extends BaseTimeEntity implements UserDetails {
 
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String email;
-    private String pwd;
-    private LocalDateTime lastLoginTime;
+    private Long userNum;
+    private String userEmail;
+    private String userPassword;
+    private String auth;
 
     @Builder
-    public Member(Long id, String email, String pwd, LocalDateTime lastLoginTime) {
+    public Users(Long userNum, String userEmail, String userPassword, String auth) {
         super();
-        this.id = id;
-        this.email = email;
-        this.pwd = pwd;
-        this.lastLoginTime = lastLoginTime;
+        this.userNum = userNum;
+        this.userEmail = userEmail;
+        this.userPassword = userPassword;
+        this.auth = auth;
     }
 
-    @Override
-    public String getPassword() {
-        return this.getPwd();
+    public Long getUserNum() {
+        return userNum;
     }
 
-    @Override
-    public String getUsername() {
-        return this.getEmail();
+    public void setUserNum(Long userNum) {
+        this.userNum = userNum;
+    }
+
+    public String getUserEmail() {
+        return userEmail;
+    }
+
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
+    }
+
+    public String getUserPassword() {
+        return userPassword;
+    }
+
+    public void setUserPassword(String userPassword) {
+        this.userPassword = userPassword;
+    }
+
+    public String isAuth() {
+        return auth;
+    }
+
+    public void setAuth(String auth) {
+        this.auth = auth;
     }
 
     //계정이 갖고있는 권한 목록은 리턴
@@ -59,6 +80,16 @@ public class Member extends BaseTimeEntity implements UserDetails {
         //collectors.add(new SimpleGrantedAuthority("Role"));
 
         return collectors;
+    }
+
+    @Override
+    public String getPassword() {
+        return this.getUserPassword();
+    }
+
+    @Override
+    public String getUsername() {
+        return this.getUserEmail();
     }
 
     //계정이 만료되지 않았는지 리턴 (true: 만료 안됨)

@@ -1,6 +1,5 @@
 package com.itac.login.common.handler;
 
-import com.itac.login.entity.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
@@ -16,12 +15,12 @@ import java.time.LocalDateTime;
 @Component
 public class AuthSucessHandler extends SimpleUrlAuthenticationSuccessHandler {
 	
-	private final MemberRepository memberRepository;
+	//private final MemberRepository memberRepository;
 	
 	@Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         
-        memberRepository.updateMemberLastLogin(authentication.getName(), LocalDateTime.now());
+        //userRepository.updateMemberLastLogin(authentication.getName(), LocalDateTime.now());
 
         super.onAuthenticationSuccess(request, response, authentication);
     }

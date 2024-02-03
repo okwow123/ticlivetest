@@ -1,7 +1,7 @@
 package com.itac.login.service;
 
 
-import com.itac.login.entity.member.MemberRepository;
+import com.itac.login.entity.user.UserRepository;
 import org.springframework.stereotype.Service;
 import lombok.RequiredArgsConstructor;
 
@@ -10,11 +10,11 @@ import lombok.RequiredArgsConstructor;
 @Service
 public class MemberRegisterService {
 
-    private final MemberRepository memberRepository;
+    private final UserRepository userRepository;
 
 
-    public int registerMember(String username,String password)  {
-        return memberRepository.registerMember(username,password);
+    public int registerMember(String username,String password,String auth)  {
+        return userRepository.registerUser(username,password,auth);
 
     }
 

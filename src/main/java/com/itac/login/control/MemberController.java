@@ -33,10 +33,11 @@ public class MemberController {
     public String getLoginPage(HttpServletRequest request, Model model) {
         String username = request.getParameter("username");
         String password = new BCryptPasswordEncoder().encode(request.getParameter("password"));
+        String auth = request.getParameter("auth");
         int ret_value = 0;
 
         try{
-            ret_value= memberRegisterService.registerMember(username,password);
+            ret_value= memberRegisterService.registerMember(username,password,auth);
         }catch(Exception e){
             model.addAttribute("msg",e.getMessage());
         }
