@@ -78,3 +78,82 @@ CREATE TABLE public."blog_block" (
 
 
 --update member set pwd='$2a$10$wnxgUHTCVY2VTw22q5IC/uFLKG7FK28rpPBXp0RDOiseESFES.l.G'
+
+-- 2024. 02. 03 
+create sequence user_userNum_seq
+	increment 1
+	start 1
+	minvalue 1
+	maxvalue 9223372036854775807
+	cache 1;
+
+create sequence store_storeNum_seq
+	increment 1
+	start 1
+	minvalue 1
+	maxvalue 9223372036854775807
+	cache 1;
+
+create sequence review_reviewNum_seq
+	increment 1
+	start 1
+	minvalue 1
+	maxvalue 9223372036854775807
+	cache 1;
+
+create sequence reservation_reservationNum_seq
+	increment 1
+	start 1
+	minvalue 1
+	maxvalue 9223372036854775807
+	cache 1;
+
+-- 회원테이블
+create table public."user"(
+	userNum int4 not null default nextval('user_usernum_seq'::regclass),
+	userId varchar(20) not null,
+	userPassword varchar(20) not null,
+	userEmail varchar(20) not null,
+	-- 권한 여부(사용자 0, 가맹점 1)
+	authorzation boolean not null default 0,
+	constraint user_pk primary key (userNum)
+);
+
+create table public."store"(
+	storeNum int4 not null default nextval('store_storeNum_seq'::regclass),
+	storeName varchar(20) not null,
+	storeLocation varchar(20) not null,
+	storePhoneNum varchar(20) not null,
+	-- 평점 저장여부
+	grade varchar(5) not null default 0,
+	storeInfo varchar(200),
+	menuImage,
+	-- images json, > 텍스트 json 데이터
+	-- images jsonb, > 바이너리 json 데이터
+	createDate date not null,
+	modificationDate date,
+	usreNum int4 not null,
+	constraint sotre_pk primary key (storeNum)
+);
+
+create table public."review"(
+	reviewNum int4 not null default nextval('review_reviewNum_seq'::regclass),
+	writer varchar(20) not null,
+	reviewContent varchar(1000),
+	-- reviewContent text, > 가변 길이 문자열
+	grade varchar(5) not null,
+	image,
+	-- images json, > 텍스트 json 데이터
+	-- images jsonb, > 바이너리 json 데이터
+	createDate date not null,
+	constraint review_pk primary key (reviewNum)
+);
+
+create table public."reservation"(
+	reservationNum int4 not null default nextval('reservation_reservationNum_seq'::regclass),
+	numberOfPerson int4 not null,
+	reservationDate date not null,
+	reservationTime time not null,
+	reservationUserNum int4 not null,
+	constraint reservation_pk primary key (reservationNum)
+);
