@@ -111,11 +111,10 @@ create sequence reservation_reservationNum_seq
 -- 회원테이블
 create table public."user"(
 	userNum int4 not null default nextval('user_usernum_seq'::regclass),
-	userId varchar(20) not null,
+	userEmail varchar(20) not null unique,
 	userPassword varchar(20) not null,
-	userEmail varchar(20) not null,
 	-- 권한 여부(사용자 0, 가맹점 1)
-	authorzation boolean not null default 0,
+	auth boolean not null default false,
 	constraint user_pk primary key (userNum)
 );
 
@@ -127,8 +126,8 @@ create table public."store"(
 	-- 평점 저장여부
 	grade varchar(5) not null default 0,
 	storeInfo varchar(200),
-	menuImage,
-	-- images json, > 텍스트 json 데이터
+	-- 텍스트 json 데이터
+	images json,
 	-- images jsonb, > 바이너리 json 데이터
 	createDate date not null,
 	modificationDate date,
@@ -142,8 +141,8 @@ create table public."review"(
 	reviewContent varchar(1000),
 	-- reviewContent text, > 가변 길이 문자열
 	grade varchar(5) not null,
-	image,
-	-- images json, > 텍스트 json 데이터
+	-- 텍스트 json 데이터
+	images json,
 	-- images jsonb, > 바이너리 json 데이터
 	createDate date not null,
 	constraint review_pk primary key (reviewNum)
