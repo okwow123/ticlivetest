@@ -11,6 +11,11 @@ public class MainController {
     public String test(){
         return "index";
     }
+    @GetMapping("/index2")
+    public String index2(){
+        return "index2";
+    }
+
     @GetMapping("/home")
     public String home(){
         return "/home/home";
