@@ -11,6 +11,20 @@ public class MainController {
     public String test(){
         return "index";
     }
-
-
+    @GetMapping("/home")
+    public String home(){
+        return "/home/home";
+    }
+    @GetMapping("/search")
+    public String search(){
+        return "/search/search";
+    }
+    @GetMapping("/reservation")
+    public String reservation(){
+        return "/reservation/reservation";
+    }
+    @GetMapping("/mypage")
+    public String mypage(){
+        return "/mypage/mypage";
+    }
 }
