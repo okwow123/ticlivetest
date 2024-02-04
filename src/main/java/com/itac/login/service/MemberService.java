@@ -29,4 +29,8 @@ public class MemberService implements UserDetailsService {
 		return userRepository.registerUser(username,password,auth);
 	}
 
+	public String getAuth(String username){
+		return userRepository.getAuth(username);
+	}
+
 }
