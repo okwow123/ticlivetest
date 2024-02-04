@@ -66,6 +66,8 @@ dependencies {
 
     implementation group: 'org.apache.poi', name: 'poi', version: '3.17'
     implementation group: 'org.apache.poi', name: 'poi-ooxml', version: '3.17'
+
+    implementation 'com.vladmihalcea:hibernate-types-52:2.19.2'
 }
 
 // QueryDSL
