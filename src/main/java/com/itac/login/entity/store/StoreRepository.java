@@ -10,7 +10,8 @@ public interface StoreRepository extends JpaRepository<Store,Long> {
 
     List<Store> findByStoreNameContaining(String searchWord);
 
-    List<Store> findByStoreCategoryContaining(String categoryWord);
+    //카테고리가 없어서 비활성화
+//    List<Store> findByStoreCategoryContaining(String categoryWord);
 
     List<Store> findByStoreLocationContaining(String locationWord);
 
