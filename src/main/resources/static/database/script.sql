@@ -71,8 +71,6 @@ CREATE TABLE public."blog_block" (
 );
 
 
-
-
 --register /login
 --forum
 
@@ -131,8 +129,8 @@ create table public."store"(
 	-- images jsonb, > 바이너리 json 데이터
 	createDate date not null,
 	modificationDate date,
-	usreNum int4 not null,
-	constraint sotre_pk primary key (storeNum)
+	userNum int4 not null,
+	constraint store_pk primary key (storeNum)
 );
 
 create table public."review"(
