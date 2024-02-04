@@ -31,7 +31,6 @@ CREATE TABLE public."wallet" (
 	last_view_time timestamptz NULL DEFAULT now(),
 	CONSTRAINT wallet_primary PRIMARY KEY (id),
 	CONSTRAINT wallet_un UNIQUE (email)
-
 );
 
 
@@ -40,7 +39,7 @@ CREATE TABLE public."wallet" (
 --모든 데이터 히스토리 관리
 CREATE TABLE public."history" (
 	id int4 NOT NULL GENERATED ALWAYS AS IDENTITY,
-	history varchar(max) NULL,
+	history varchar(255) NULL,
 	create_time timestamptz NULL DEFAULT now(),
 	CONSTRAINT history_primary PRIMARY KEY (id)
 );
@@ -52,7 +51,7 @@ CREATE TABLE public."price_information" (
 	cName varchar(200) NOT NULL,--coin name
     cPrice float NOT NULL,
 	create_time timestamptz NULL DEFAULT now(),
-	CONSTRAINT  price_information_primary PRIMARY KEY (id),
+	CONSTRAINT  price_information_primary PRIMARY KEY (id)
 );
 
 
@@ -67,7 +66,7 @@ CREATE TABLE public."blog_block" (
 	mintName varchar(200) NOT NULL,
 	mintTotalCount int NOT NULL,
     create_time timestamptz NULL DEFAULT now(),
-	CONSTRAINT  price_information_primary PRIMARY KEY (id),
+	CONSTRAINT  blog_block_primary PRIMARY KEY (id)
 );
 
 
@@ -119,10 +118,10 @@ create table public."user"(
 create table public."store"(
 	storeNum int4 not null default nextval('store_storeNum_seq'::regclass),
 	storeName varchar(20) not null,
-	storeLocation varchar(20) not null,
+	storeLocation varchar(80) not null,
 	storePhoneNum varchar(20) not null,
 	-- 평점 저장여부
-	grade varchar(5) not null default 0,
+	grade DECIMAL(2,1) not null default 0,
 	storeInfo varchar(200),
 	-- 텍스트 json 데이터
 	images json,
