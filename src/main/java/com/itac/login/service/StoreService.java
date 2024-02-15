@@ -14,16 +14,18 @@ import java.util.List;
 public class StoreService {
     private final StoreRepository storeRepository;
 
-    private Sort gradeDesc = Sort.by(Sort.Direction.DESC,"grade");
-    public List<Store> allStores(){
+    private Sort gradeDesc = Sort.by(Sort.Direction.DESC, "grade");
+
+    public List<Store> allStores() {
         return storeRepository.findAll(gradeDesc);
     }
-    public List<Store> searchWithWord(String searchWord){
+
+    public List<Store> searchWithWord(String searchWord) {
         return storeRepository.findByStoreNameContaining(searchWord);
     }
 
     @GetMapping("/location/{locationWord}")
-    public List<Store> searchWithLocation(String locationWord){
+    public List<Store> searchWithLocation(String locationWord) {
         return storeRepository.findByStoreLocationContaining(locationWord);
     }
 }
