@@ -47,11 +47,8 @@ public class UserLoginSecurityConfiguration extends WebSecurityConfigurerAdapter
 
         http.csrf().disable()	// csrf 토큰을 비활성화
                 .authorizeRequests() // 요청 URL에 따라 접근 권한을 설정
-<<<<<<< HEAD
-                .antMatchers("/api/**","/","/login/**","/js/**","/css/**","/robots.txt","/image/**","/img/**","/scss/**").permitAll() // 해당 경로들은 접근을 허용
-=======
-                .antMatchers("/","/login/**","/js/**","/css/**","/robots.txt","/image/**","/img/**","/scss/**", "/api/v1/store/**").permitAll() // 해당 경로들은 접근을 허용
->>>>>>> b86ea9d3bbfb6dc77756d3cdb546e6f63d0c2c7e
+
+                .antMatchers("/","/login/**","/js/**","/css/**","/robots.txt","/image/**","/img/**","/scss/**", "/api/**").permitAll() // 해당 경로들은 접근을 허용
                 .anyRequest() // 다른 모든 요청은
                 .authenticated() // 인증된 유저만 접근을 허용
                 .and()
