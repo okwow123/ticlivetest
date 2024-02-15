@@ -12,6 +12,7 @@ import org.json.JSONString;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 
@@ -31,6 +32,8 @@ public class Store{
     private String storeLocation;
     private String storePhoneNum;
     private String grade;
+    private LocalDate createDate;
+    private LocalDate modificationDate;
     private String storeInfo;
 
     @Type(type="json")
@@ -40,12 +43,6 @@ public class Store{
     @ManyToOne
     @JoinColumn(name="userNum")
     private Users users;
-
-    /*****************
-    //Date 계열 일단 누락된상태
-     private LocalDateTime createDate
-     private LocalDateTime modificationDate
-    *************************/
 
     @Builder
     public Store(Long storeNum, String storeName, String storeLocation, String storePhoneNum,String grade,String storeInfo, List<MultipartFile> images) {
