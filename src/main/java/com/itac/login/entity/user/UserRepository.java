@@ -31,4 +31,6 @@ public interface UserRepository extends JpaRepository<Users, Long> {
     public int registerUser(@Param(value = "useremail") String username,@Param(value = "userpassword") String password,@Param(value = "auth") String auth);
 
 
+    @Query(value="select auth from public.users where useremail=(:useremail)", nativeQuery = true)
+    public String getAuth(@Param(value = "useremail") String useremail);
 }

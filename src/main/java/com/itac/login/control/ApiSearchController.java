@@ -20,7 +20,7 @@ public class ApiSearchController {
 
     private final StoreService storeService;
 
-    @GetMapping(value={"/search/","/location/","/category/"})
+    @GetMapping(value={"/search","/location","/category"})
     public ResponseEntity<Object> allStores(){
         return ResponseEntity.ok().body(storeService.allStores());
     }
