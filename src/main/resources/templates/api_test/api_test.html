@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>api_text.html</title>
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.js"
+      integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <div id="map" style="width: 500px; height: 400px"></div>
+  </body>
+
+  <script
+    type="text/javascript"
+    src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9a8b1b354a8a82d51c1fe31ce27de7e7&libraries=services,clusterer,drawing"
+  ></script>
+  <script>
+    var container = document.getElementById('map');
+    var options = {
+      center: new kakao.maps.LatLng(33.450701, 126.570667),
+      level: 3,
+    };
+    var map = new kakao.maps.Map(container, options);
+
+    // 마커 클러스터러를 생성합니다
+    var clusterer = new kakao.maps.MarkerClusterer({
+      map: map,
+      gridSize: 35,
+      averageCenter: true,
+      minLevel: 6,
+      disableClickZoom: true,
+      averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정
+    });
+
+    console.log(clusterer);
+    clusterer.addMarkers([
+      new kakao.maps.Marker({
+        position: new kakao.maps.LatLng(33.450701, 126.570667),
+      }),
+      new kakao.maps.Marker({
+        position: new kakao.maps.LatLng(33.450711, 126.570687),
+      }),
+      new kakao.maps.Marker({
+        position: new kakao.maps.LatLng(33.450701, 126.570687),
+      }),
+    ]);
+  </script>
+</html>
