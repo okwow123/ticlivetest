@@ -1,12 +1,15 @@
 package com.itac.login.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.itac.login.entity.store.Store;
 import com.itac.login.entity.user.Users;
 import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.persistence.Column;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 @Getter
 @Setter
@@ -23,7 +26,7 @@ public class StoreDto {
     private String storeInfo;
     private LocalDate createDate;
     private LocalDate modificationDate;
-    private List<MultipartFile> images;
+    private List<String> images;
     private Users users;
 
 
