@@ -18,19 +18,19 @@ public class ReviewService {
     private final StoreRepository storeRepository;
 
     public void revalidateGrade(Long storeNum){
-//        List<Review> reviewList = reviewRepository.findAllByStoreNum(storeNum);
-//        double sum = 0;
-//        for(Review review : reviewList){
-//            sum += Float.parseFloat(review.getGrade());
-//        }
-//        float avg = (float) sum/reviewList.size();
-//
-//        Store store = storeRepository.findById(storeNum).orElse(null);
-//        if(store==null) {
-//
-//            return;
-//        }
-//        store.setGrade(avg+"");
-//        Store returnedStore =  storeRepository.save(store);
+        List<Review> reviewList = reviewRepository.findAllByStore_StoreNum(storeNum);
+        double sum = 0;
+        for(Review review : reviewList){
+            sum += Float.parseFloat(review.getGrade());
+        }
+        float avg = (float) sum/reviewList.size();
+
+        Store store = storeRepository.findById(storeNum).orElse(null);
+        if(store==null) {
+            log.info("조회된 store없음");
+            return;
+        }
+        store.setGrade(avg+"");
+        Store returnedStore =  storeRepository.save(store);
     }
 }

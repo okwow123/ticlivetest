@@ -3,6 +3,7 @@ package com.itac.login.entity.store;
 import com.itac.login.entity.user.Users;
 
 import lombok.*;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.annotations.Type;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -17,6 +18,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
+@Slf4j
 @EqualsAndHashCode(of= {"storeNum"}) // equals, hashCode 자동 생성
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -58,6 +60,13 @@ public class Store implements Serializable {
         this.grade = grade;
         this.storeInfo = storeInfo;
         this.images = images;
+    }
+
+    @PostLoad
+    private void postLoad() {
+        // 엔티티가 로드될 때 실행할 코드 작성
+        log.info("Entity loaded: " + this.storeNum);
+
     }
 
 }
