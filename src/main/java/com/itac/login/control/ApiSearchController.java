@@ -79,4 +79,18 @@ public class ApiSearchController {
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("조회된 데이터 없음");
     }
+
+    @GetMapping("/jenkinstest")
+    public ResponseEntity<Object> jenkinstest(){
+        List<Store> storeList = storeService.allStores();
+        log.info("before recommendfy storeList.toString() : "+storeList.toString());
+
+        storeList = recommendfy(storeList);
+        log.info("after recommendfy storeList.toString() : "+storeList.toString());
+
+        if(!storeList.isEmpty()){
+            return ResponseEntity.ok().body(storeList);
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("조회된 데이터 없음");
+    }
 }
