@@ -69,10 +69,8 @@ public class ApiSearchController {
     @GetMapping("/searchrecommend")
     public ResponseEntity<Object> searchrecommend(){
         List<Store> storeList = storeService.allStores();
-        log.info("before recommendfy storeList.toString() : "+storeList.toString());
 
         storeList = recommendfy(storeList);
-        log.info("after recommendfy storeList.toString() : "+storeList.toString());
 
         if(!storeList.isEmpty()){
             return ResponseEntity.ok().body(storeList);
@@ -83,10 +81,8 @@ public class ApiSearchController {
     @GetMapping("/jenkinstest")
     public ResponseEntity<Object> jenkinstest(){
         List<Store> storeList = storeService.allStores();
-        log.info("before recommendfy storeList.toString() : "+storeList.toString());
 
         storeList = recommendfy(storeList);
-        log.info("after recommendfy storeList.toString() : "+storeList.toString());
 
         if(!storeList.isEmpty()){
             return ResponseEntity.ok().body(storeList);
