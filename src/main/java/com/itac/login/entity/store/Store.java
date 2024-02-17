@@ -1,6 +1,7 @@
 package com.itac.login.entity.store;
 
 import com.itac.login.entity.StringListConverter;
+import com.itac.login.entity.user.Users;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import javax.persistence.*;
@@ -44,15 +45,17 @@ public class Store implements Serializable {
     private LocalDate createDate;
     @Column(name="modificationdate")
     private LocalDate modificationDate;
-
+/*
     @Column(name="images")
     @Convert(converter = StringListConverter.class)
     private List<String> images = new ArrayList<>();
 
-    /*@ManyToOne
+ */
+
+    @ManyToOne
     @JoinColumn(name="usernum")
     private Users users;
-*/
+
 
     @Builder
     public Store(Long storeNum, String storeName, String storeLocation, String storePhoneNum,String grade,String storeInfo, List<String> images) {
@@ -63,15 +66,13 @@ public class Store implements Serializable {
         this.storePhoneNum = storePhoneNum;
         this.grade = grade;
         this.storeInfo = storeInfo;
-        this.images = images;
+//        this.images = images;
         this.createDate = LocalDate.now();
     }
 
-    /*
     @PostLoad
     private void postLoad() {
         // 엔티티가 로드될 때 실행할 코드 작성
         log.info("Entity loaded: " + this.storeNum);
     }
-    */
 }
