@@ -78,8 +78,8 @@ public class ApiSearchController {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("조회된 데이터 없음");
     }
 
-    @GetMapping("/jenkinstest")
-    public ResponseEntity<Object> jenkinstest(){
+    @GetMapping("/searchrecommend2")
+    public ResponseEntity<Object> searchrecommend2(){
         List<Store> storeList = storeService.allStores();
 
         storeList = recommendfy(storeList);
