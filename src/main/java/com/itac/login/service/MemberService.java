@@ -2,6 +2,7 @@ package com.itac.login.service;
 
 import com.itac.login.entity.member.Member;
 import com.itac.login.entity.member.MemberRepository;
+import com.itac.login.entity.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 public class MemberService implements UserDetailsService {
 
 	private final MemberRepository memberRepository;
+	private final UserRepository userRepository;
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 

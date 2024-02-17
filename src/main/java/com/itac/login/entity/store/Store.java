@@ -2,34 +2,43 @@ package com.itac.login.entity.store;
 
 import com.itac.login.entity.BaseTimeEntity;
 import com.itac.login.entity.user.Users;
-import io.swagger.v3.core.util.Json;
+import com.vladmihalcea.hibernate.type.json.JsonType;
 import lombok.*;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Collection;
+import java.io.Serializable;
+import java.time.LocalDate;
+import java.util.List;
 
-@EqualsAndHashCode(of= {"id"}) // equals, hashCode 자동 생성
+@EqualsAndHashCode(of= {"storeNum"}) // equals, hashCode 자동 생성
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
-public class Store extends BaseTimeEntity {
+@TypeDef(name="json", typeClass= JsonType.class)
+public class Store implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long storenum;
-    private String storename;
-    private String storelocation;
-    private String storephonenum;
+    private Long storeNum;
+    private String storeName;
+    private String storeLocation;
+    private String storePhoneNum;
     private String grade;
-    private String storeinfo;
-    private String images;
+    private String storeInfo;
+    private LocalDate createDate;
+    private LocalDate modificationDate;
+    @Type(type="json")
+    @Column(name="images",columnDefinition = "json")
+    private List<MultipartFile> images;
 
-    private Long usernum;
+    @ManyToOne
+    @JoinColumn(name="userNum")
+    private Users users;
 
     /*****************
      //Date 계열 일단 누락된상태
@@ -38,13 +47,15 @@ public class Store extends BaseTimeEntity {
      *************************/
 
     @Builder
-    public Store(String storename, String storelocation, String storephonenum, String grade, String storeinfo, String images, Long usernum) {
-        this.storename = storename;
-        this.storelocation = storelocation;
-        this.storephonenum = storephonenum;
+    public Store(Long storeNum, String storeName, String storeLocation, String storePhoneNum,String grade,String storeInfo, List<MultipartFile> images) {
+        super();
+        this.storeNum = storeNum;
+        this.storeName = storeName;
+        this.storeLocation = storeLocation;
+        this.storePhoneNum = storePhoneNum;
         this.grade = grade;
-        this.storeinfo = storeinfo;
+        this.storeInfo = storeInfo;
         this.images = images;
-        this.usernum = usernum;
     }
+
 }
