@@ -123,8 +123,8 @@ create table public."store"(
 	-- 평점 저장여부
 	grade DECIMAL(2,1) not null default 0,
 	storeInfo varchar(200),
-	-- 텍스트 json 데이터
-	images json,
+	-- 텍스트 배열 데이터
+	images varchar(255),
 	-- images jsonb, > 바이너리 json 데이터
 	createDate date not null,
 	modificationDate date,

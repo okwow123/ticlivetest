@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -67,19 +68,7 @@ public class StoreController {
 
     @PostMapping(value="/create", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<Store> Create(@RequestPart("store") StoreDto storeDto, @RequestPart("file")List<MultipartFile> multipartFile) throws IOException{
-        log.info("file : " + multipartFile.get(0).getOriginalFilename());
-        List<MultipartFile> file = new ArrayList<>(multipartFile);
-        for(int i=0; i<file.size(); i++){
-            log.info(String.valueOf(file.get(i)));
-        }
-        storeDto.setImages(multipartFile);
-        log.info("storeName : " + storeDto.getStoreName()
-        + ", storeLocation : " + storeDto.getStoreLocation()
-        + ", storePhoneNum : " + storeDto.getStorePhoneNum()
-        + ", grade : " + storeDto.getGrade()
-        + ", storeInfo : " + storeDto.getStoreInfo()
-        + ", images : " + storeDto.getImages());
-        Store store = storeService.create(storeDto);
+        Store store = storeService.create(storeDto, multipartFile);
         //return "redirect:/api/v1/store/list";
         return ResponseEntity.status(HttpStatus.OK).body(store);
 
