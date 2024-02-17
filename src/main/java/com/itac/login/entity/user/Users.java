@@ -12,7 +12,7 @@ import javax.persistence.Id;
 import java.util.ArrayList;
 import java.util.Collection;
 
-@EqualsAndHashCode(of= {"id"}) // equals, hashCode 자동 생성
+@EqualsAndHashCode(of= {"userNum"}) // equals, hashCode 자동 생성
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
