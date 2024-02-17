@@ -31,14 +31,6 @@ spring:
 cors:
   origins:
     http://localhost:8080,
-    http://20.214.108.168:8080,
-    https://20.214.108.168:8080,
-    http://www.dalgom.app,
-    https://www.dalgom.app,
-    http://dalgom.app,
-    https://dalgom.app,
-
-
 # Log
 logging:
   level:
