@@ -3,18 +3,29 @@ package com.itac.login.control;
 import com.itac.login.entity.store.Store;
 import com.itac.login.service.MemberService;
 import com.itac.login.service.StoreService;
+import com.itac.login.dto.StoreDto;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/api/v1/store")
+@Slf4j
 public class StoreController {
+
+    String url ="http://localhost:8080";
 
     @Autowired
     private StoreService storeService;
@@ -23,37 +34,76 @@ public class StoreController {
     private MemberService memberService;
 
     @GetMapping("/info")
-    public String store(HttpServletRequest req, Authentication auth){
+    public void store(HttpServletRequest req, Authentication auth, HttpServletResponse resp) throws IOException {
         // 추후 AuthSuccessHandler을 통해 제한
         try{
-            auth.getAuthorities();
+            if(auth.getAuthorities() != null){
+                String email = req.getUserPrincipal().getName();
+                if(!memberService.getAuth(email).equals("store")){
+                    resp.sendRedirect(url+"/mypage");
+
+                }else{
+                    resp.sendRedirect(url+"/storePage");
+                }
+            }
         }catch(Exception e){
-            return "redirect:/login";
+            resp.sendRedirect(url+"/login");
         }
-
-        String email = req.getUserPrincipal().getName();
-        if(!memberService.getAuth(email).equals("store")){
-            return "redirect:/mypage";
-        }else{
-            return "redirect:/storePage";
-        }
-
     }
+
+
 
     @GetMapping("/list")
-    public List<Store> list(Model model){
+    public List<Store> list(){
 
-        return null;
+        return storeService.allStores();
     }
 
-    @GetMapping("/store")
-    public String store(Model model){
-        return null;
+    @GetMapping("/store/{id}")
+    public ResponseEntity<Store> store(@PathVariable Long id){
+        Store store = storeService.show(id);
+        return ResponseEntity.status(HttpStatus.OK).body(store);
     }
 
-    @PostMapping("/create")
-    public String Create(@RequestBody Store store){
-        return null;
+    @PostMapping(value="/create", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResponseEntity<Store> Create(@RequestPart("store") StoreDto storeDto, @RequestPart("file")List<MultipartFile> multipartFile) throws IOException{
+        log.info("file : " + multipartFile.get(0).getOriginalFilename());
+        List<MultipartFile> file = new ArrayList<>(multipartFile);
+        for(int i=0; i<file.size(); i++){
+            log.info(String.valueOf(file.get(i)));
+        }
+        storeDto.setImages(multipartFile);
+        log.info("storeName : " + storeDto.getStoreName()
+        + ", storeLocation : " + storeDto.getStoreLocation()
+        + ", storePhoneNum : " + storeDto.getStorePhoneNum()
+        + ", grade : " + storeDto.getGrade()
+        + ", storeInfo : " + storeDto.getStoreInfo()
+        + ", images : " + storeDto.getImages());
+        Store store = storeService.create(storeDto);
+        //return "redirect:/api/v1/store/list";
+        return ResponseEntity.status(HttpStatus.OK).body(store);
+
+    }
+
+    @PatchMapping("/store/{id}")
+    public ResponseEntity<StoreDto> update(@PathVariable Long id, @RequestBody StoreDto storeDto){
+
+        boolean result = storeService.update(id, storeDto);
+        if(result){
+            return ResponseEntity.status(HttpStatus.OK).body(storeDto);
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+    }
+
+    @DeleteMapping("/store/{id}")
+    public ResponseEntity<Store> delete(@PathVariable Long id){
+
+        boolean result = storeService.delete(id);
+        if(result){
+            return ResponseEntity.status(HttpStatus.OK).build();
+        }
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
 
