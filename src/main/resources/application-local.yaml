@@ -7,9 +7,9 @@ spring:
     ansi:
       enabled: detect
   datasource:
-    url: jdbc:postgresql://localhost:5432/postgres
-    username: postgres
-    password: 1q2w3e!Q@W#E
+    url: jdbc:postgresql://20.214.108.168:15432/testdb
+    username: testuser
+    password: testuser
   jpa:
     properties:
       hibernate:
@@ -19,13 +19,6 @@ spring:
         ddl-auto: none
     generate-ddl: false
     show-sql: true
-  # 이미지 업로드를 위한 설정
-  servlet:
-    multipart:
-      file-size-threshold: 1MB
-      location: c:/temp
-      max-file-size: 200MB
-      max-request-size: 200MB
 
 #cors setting
 cors:
@@ -48,10 +41,8 @@ logging:
         type:
           descriptor:
             sql: trace
-            BasicBinder: trace
-      apache:
-        commons:
-          beanutils: error
+
+  level.org.hibernate.type.descriptor.sql.BasicBinder: trace
+  level.org.apache.commons.beanutils: error
   file:
     name: ./logs/login-local.log
-
