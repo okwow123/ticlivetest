@@ -6,8 +6,10 @@ import com.itac.login.entity.store.StoreRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -15,17 +17,16 @@ import java.util.List;
 public class StoreService {
     private final StoreRepository storeRepository;
     private Sort gradeDesc = Sort.by(Sort.Direction.DESC, "grade");
+    private Sort gradeAsc = Sort.by(Sort.Direction.ASC, "grade");
 
     public List<Store> allStores() {
-        return storeRepository.findAll(gradeDesc);
+        return storeRepository.findAll(gradeAsc);
     }
 
     public List<Store> searchWithWord(String searchWord) {
-
         return storeRepository.findByStoreNameContaining(searchWord);
     }
 
-    @GetMapping("/location/{locationWord}")
     public List<Store> searchWithLocation(String locationWord){
         return storeRepository.findByStoreLocationContaining(locationWord);
     }
@@ -62,6 +63,7 @@ public class StoreService {
             return true;
         }
         return false;
-
     }
+
+
 }
