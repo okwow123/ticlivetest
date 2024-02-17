@@ -13,7 +13,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.util.*;
-
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -29,17 +28,16 @@ public class StoreService {
 
     private final StoreRepository storeRepository;
     private Sort gradeDesc = Sort.by(Sort.Direction.DESC, "grade");
+    private Sort gradeAsc = Sort.by(Sort.Direction.ASC, "grade");
 
     public List<Store> allStores() {
-        return storeRepository.findAll(gradeDesc);
+        return storeRepository.findAll(gradeAsc);
     }
 
     public List<Store> searchWithWord(String searchWord) {
-
         return storeRepository.findByStoreNameContaining(searchWord);
     }
 
-    @GetMapping("/location/{locationWord}")
     public List<Store> searchWithLocation(String locationWord){
         return storeRepository.findByStoreLocationContaining(locationWord);
     }
@@ -101,6 +99,7 @@ public class StoreService {
             return true;
         }
         return false;
-
     }
+
+
 }
