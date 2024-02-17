@@ -10,5 +10,5 @@ import java.util.List;
 @EnableJpaRepositories
 public interface ReviewRepository extends JpaRepository<Review,Long> {
 
-    List<Review> findAllByStoreNum(Long storeNum);
+//    List<Review> findAllByStoreNum(Long storeNum);
 }
