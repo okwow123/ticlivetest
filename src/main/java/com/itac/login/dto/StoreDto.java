@@ -18,7 +18,7 @@ public class StoreDto {
     private String storeName;
     private String storeLocation;
     private String storePhoneNum;
-    private String grade;
+    private Float grade;
     private String storeInfo;
     private LocalDate createDate;
     private LocalDate modificationDate;
@@ -38,5 +38,4 @@ public class StoreDto {
                 .users(users)
                 .build();
     }
-
 }

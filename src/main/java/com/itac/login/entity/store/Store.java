@@ -1,9 +1,9 @@
 package com.itac.login.entity.store;
 
 import com.itac.login.entity.StringListConverter;
-
 import com.itac.login.entity.user.Users;
 import lombok.*;
+import lombok.extern.slf4j.Slf4j;
 import javax.persistence.*;
 
 import com.vladmihalcea.hibernate.type.json.JsonType;
@@ -16,6 +16,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @EqualsAndHashCode(of= {"storeNum"}) // equals, hashCode 자동 생성
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -37,14 +38,13 @@ public class Store implements Serializable {
     @Column(name="storephonenum")
     private String storePhoneNum;
     @Column(name="grade")
-    private String grade;
+    private Float grade;
     @Column(name="storeinfo")
     private String storeInfo;
     @Column(name="createdate")
     private LocalDate createDate;
     @Column(name="modificationdate")
     private LocalDate modificationDate;
-
     @Column(name="images")
     @Convert(converter = StringListConverter.class)
     private List<String> images = new ArrayList<>();
@@ -54,7 +54,8 @@ public class Store implements Serializable {
     private Users users;
 
     @Builder
-    public Store(Long storeNum, String storeName, String storeLocation, String storePhoneNum,String grade,String storeInfo, List<String> images, Users users) {
+    public Store(Long storeNum, String storeName, String storeLocation, String storePhoneNum,Float grade,String storeInfo, List<String> images, Users users) {
+
         super();
         this.storeNum = storeNum;
         this.storeName = storeName;
@@ -65,10 +66,11 @@ public class Store implements Serializable {
         this.images = images;
         this.users = users;
         this.createDate = LocalDate.now();
-
-
     }
 
-
-
+    @PostLoad
+    private void postLoad() {
+        // 엔티티가 로드될 때 실행할 코드 작성
+        log.info("Entity loaded(storeNum): " + this.storeNum);
+    }
 }
