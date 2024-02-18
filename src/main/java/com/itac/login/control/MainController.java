@@ -33,4 +33,8 @@ public class MainController {
         return "mypage/mypage";
     }
 
+    @GetMapping("/robots.txt")
+    public String robots(){
+        return "robots.txt";
+    }
 }
