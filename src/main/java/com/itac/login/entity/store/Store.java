@@ -2,6 +2,7 @@ package com.itac.login.entity.store;
 
 import com.itac.login.entity.StringListConverter;
 
+import com.itac.login.entity.user.Users;
 import lombok.*;
 import javax.persistence.*;
 
@@ -48,13 +49,12 @@ public class Store implements Serializable {
     @Convert(converter = StringListConverter.class)
     private List<String> images = new ArrayList<>();
 
-    /*@ManyToOne
+    @ManyToOne
     @JoinColumn(name="usernum")
     private Users users;
-*/
 
     @Builder
-    public Store(Long storeNum, String storeName, String storeLocation, String storePhoneNum,String grade,String storeInfo, List<String> images) {
+    public Store(Long storeNum, String storeName, String storeLocation, String storePhoneNum,String grade,String storeInfo, List<String> images, Users users) {
         super();
         this.storeNum = storeNum;
         this.storeName = storeName;
@@ -63,6 +63,7 @@ public class Store implements Serializable {
         this.grade = grade;
         this.storeInfo = storeInfo;
         this.images = images;
+        this.users = users;
         this.createDate = LocalDate.now();
 
 

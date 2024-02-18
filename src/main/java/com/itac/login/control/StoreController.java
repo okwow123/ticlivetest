@@ -12,11 +12,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -60,21 +62,22 @@ public class StoreController {
         return storeService.allStores();
     }
 
-    @GetMapping("/store/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Store> store(@PathVariable Long id){
         Store store = storeService.show(id);
         return ResponseEntity.status(HttpStatus.OK).body(store);
     }
 
-    @PostMapping(value="/create", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseEntity<Store> Create(@RequestPart("store") StoreDto storeDto, @RequestPart("file")List<MultipartFile> multipartFile) throws IOException{
-        Store store = storeService.create(storeDto, multipartFile);
+    @PostMapping(value="/create")
+    public ResponseEntity<Store> Create(HttpServletRequest req, @RequestPart("store") StoreDto storeDto, @RequestPart("file")List<MultipartFile> multipartFile) throws IOException{
+        String user = req.getUserPrincipal().getName();
+        Store store = storeService.create(storeDto, user, multipartFile);
         //return "redirect:/api/v1/store/list";
         return ResponseEntity.status(HttpStatus.OK).body(store);
 
     }
 
-    @PatchMapping("/store/{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity<StoreDto> update(@PathVariable Long id, @RequestBody StoreDto storeDto){
 
         boolean result = storeService.update(id, storeDto);
@@ -84,7 +87,7 @@ public class StoreController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
-    @DeleteMapping("/store/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Store> delete(@PathVariable Long id){
 
         boolean result = storeService.delete(id);

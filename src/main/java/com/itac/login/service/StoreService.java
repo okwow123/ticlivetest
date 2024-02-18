@@ -44,9 +44,9 @@ public class StoreService {
         return storeRepository.findByStoreLocationContaining(locationWord);
     }
 
-    public Store create(StoreDto storeDto, List<MultipartFile> files){
+    public Store create(StoreDto storeDto, String user,List<MultipartFile> files){
         storeDto.setStoreNum(null);
-        storeDto.setUsers(userRepo.findByUserEmail("test@test.org"));
+        storeDto.setUsers(userRepo.findByUserEmail(user));
         try{
             List<String> images = new ArrayList<String>();
             for(MultipartFile file : files){
