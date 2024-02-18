@@ -45,6 +45,17 @@ public class Store implements Serializable {
     private LocalDate createDate;
     @Column(name="modificationdate")
     private LocalDate modificationDate;
+
+//    @Column(name="lowprice")
+//    private int lowprice;
+//    @Column(name="highprice")
+//    private int highprice;
+
+//    @Column(name="lat")
+//    private float lat;
+//    @Column(name="lng")
+//    private float lng;
+
     @Column(name="images")
     @Convert(converter = StringListConverter.class)
     private List<String> images = new ArrayList<>();
