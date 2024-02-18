@@ -46,11 +46,9 @@ public class SortMethodClass {
         final int orderDirection = (flag.length==0?-1:1); //내림차순일 때 -1, 오름차순일때 1
 
         list.sort((o1, o2) ->{
-            //이 부분이 정상작동 되지 않아서 아래 처럼 코드 수정
-            //return orderDirection*(int)(Float.parseFloat(o1.getGrade())-Float.parseFloat(o2.getGrade()));
-            if(orderDirection*(Float.parseFloat(o1.getGrade())-Float.parseFloat(o2.getGrade()))<0)
+            if(orderDirection*(o1.getGrade()-o2.getGrade())<0)
                 return -1;
-            else if(orderDirection*(Float.parseFloat(o1.getGrade())-Float.parseFloat(o2.getGrade()))>0)
+            else if(orderDirection*(o1.getGrade()-o2.getGrade())>0)
                 return 1;
             else return 0;
         } );

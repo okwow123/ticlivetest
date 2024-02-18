@@ -38,7 +38,7 @@ public class Store implements Serializable {
     @Column(name="storephonenum")
     private String storePhoneNum;
     @Column(name="grade")
-    private String grade;
+    private Float grade;
     @Column(name="storeinfo")
     private String storeInfo;
     @Column(name="createdate")
@@ -53,9 +53,8 @@ public class Store implements Serializable {
     @JoinColumn(name="usernum")
     private Users users;
 
-
     @Builder
-    public Store(Long storeNum, String storeName, String storeLocation, String storePhoneNum,String grade,String storeInfo, List<String> images) {
+    public Store(Long storeNum, String storeName, String storeLocation, String storePhoneNum,Float grade,String storeInfo, List<String> images) {
         super();
         this.storeNum = storeNum;
         this.storeName = storeName;
@@ -70,6 +69,6 @@ public class Store implements Serializable {
     @PostLoad
     private void postLoad() {
         // 엔티티가 로드될 때 실행할 코드 작성
-        log.info("Entity loaded: " + this.storeNum);
+        log.info("Entity loaded(storeNum): " + this.storeNum);
     }
 }

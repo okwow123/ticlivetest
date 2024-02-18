@@ -21,7 +21,7 @@ public class ReviewService {
         List<Review> reviewList = reviewRepository.findAllByStore_StoreNum(storeNum);
         double sum = 0;
         for(Review review : reviewList){
-            sum += Float.parseFloat(review.getGrade());
+            sum += review.getGrade();
         }
         float avg = (float) sum/reviewList.size();
 
@@ -30,7 +30,7 @@ public class ReviewService {
             log.info("조회된 store없음");
             return;
         }
-        store.setGrade(avg+"");
+        store.setGrade(avg);
         Store returnedStore =  storeRepository.save(store);
     }
 }

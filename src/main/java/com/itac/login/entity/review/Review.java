@@ -1,15 +1,13 @@
 package com.itac.login.entity.review;
 
+import com.itac.login.entity.StringListConverter;
 import com.itac.login.entity.store.Store;
 import com.itac.login.entity.user.Users;
-import com.vladmihalcea.hibernate.type.json.JsonType;
 import lombok.*;
-import org.hibernate.annotations.Type;
-import org.hibernate.annotations.TypeDef;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @EqualsAndHashCode(of={"reviewNum"})// equals, hashCode 자동 생성
@@ -28,7 +26,7 @@ public class Review implements Serializable {
     private String reviewContent;
 
     @Column
-    private String grade;
+    private Float grade;
 
     @Column
     private String createdDate;
@@ -41,14 +39,15 @@ public class Review implements Serializable {
     @JoinColumn(name="storeNum")
     private Store store;
 
-    @Type(type="json")
-    @Column(name="images",columnDefinition = "json")
-    private List<MultipartFile> images;
+    @Column(name="images")
+    @Convert(converter = StringListConverter.class)
+    private List<String> images = new ArrayList<>();
 
     @Builder
-    public Review(Long reviewNum,String grade) {
+    public Review(Long reviewNum,Float grade) {
         super();
         this.reviewNum = reviewNum;
         this.grade = grade;
     }
+
 }
