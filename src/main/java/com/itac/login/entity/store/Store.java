@@ -1,14 +1,8 @@
 package com.itac.login.entity.store;
 
-import com.itac.login.dto.ImageVo;
 import com.itac.login.entity.StringListConverter;
-import com.itac.login.entity.user.Users;
 
 import lombok.*;
-import org.hibernate.annotations.Type;
-import org.springframework.web.multipart.MultipartFile;
-
-import javax.imageio.stream.FileImageInputStream;
 import javax.persistence.*;
 
 import com.vladmihalcea.hibernate.type.json.JsonType;
@@ -20,7 +14,6 @@ import java.io.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @EqualsAndHashCode(of= {"storeNum"}) // equals, hashCode 자동 생성
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
