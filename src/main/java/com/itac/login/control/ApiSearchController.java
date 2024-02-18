@@ -1,5 +1,6 @@
 package com.itac.login.control;
 
+import com.itac.login.common.util.SortMethodClass;
 import com.itac.login.entity.store.Store;
 import com.itac.login.service.StoreService;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-import static com.itac.login.common.util.SortMethodClass.recommendfy;
 
 
 @RequestMapping("/api")
@@ -70,7 +70,7 @@ public class ApiSearchController {
     public ResponseEntity<Object> searchrecommend(){
         List<Store> storeList = storeService.allStores();
 
-        storeList = recommendfy(storeList);
+        storeList = new SortMethodClass().recommendfy(storeList);
 
         if(!storeList.isEmpty()){
             return ResponseEntity.ok().body(storeList);
@@ -82,7 +82,7 @@ public class ApiSearchController {
     public ResponseEntity<Object> searchrecommend2(){
         List<Store> storeList = storeService.allStores();
 
-        storeList = recommendfy(storeList);
+        storeList = new SortMethodClass().recommendfy(storeList);
 
         if(!storeList.isEmpty()){
             return ResponseEntity.ok().body(storeList);

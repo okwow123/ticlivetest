@@ -1,14 +1,27 @@
 package com.itac.login.common.util;
 
+import com.itac.login.entity.review.ReviewRepository;
 import com.itac.login.entity.store.Store;
+import com.itac.login.entity.store.StoreRepository;
+import lombok.RequiredArgsConstructor;
+import org.apache.xmlbeans.impl.xb.xmlconfig.Extensionconfig;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
+@RequiredArgsConstructor
 public class SortMethodClass {
-    public static List<Store> recommendfy(List<Store> list){
+
+    @Autowired
+    StoreRepository storeRepository;
+    @Autowired
+    ReviewRepository reviewRepository;
+
+
+    public List<Store> recommendfy(List<Store> list){
         final int gradeWeight = 1;
         HashMap<Store,Integer> map = new HashMap<Store,Integer>();
 
@@ -22,7 +35,7 @@ public class SortMethodClass {
         }
 
         //리뷰 많은순 처리 필요
-        //list =
+        list = sortByReviews(list);
 
         //가격 낮은순으로 처리 필요
 
@@ -41,7 +54,7 @@ public class SortMethodClass {
     }
 
     //점수 높은 순(내림차순)으로 정렬, 2번째 매개변수가 있을경우에는 (오름차순)으로 정렬
-    public static List<Store> sortByGrade(List<Store> list,Object ...flag){
+    public List<Store> sortByGrade(List<Store> list,Object ...flag){
 
         final int orderDirection = (flag.length==0?-1:1); //내림차순일 때 -1, 오름차순일때 1
 
@@ -52,6 +65,23 @@ public class SortMethodClass {
                 return 1;
             else return 0;
         } );
+        return list;
+    }
+
+    public List<Store> sortByReviews(List<Store> list,Object...flag){
+        final int orderDirection = (flag.length==0?-1:1); //내림차순일 때 -1, 오름차순일때 1
+
+        list.sort((o1,o2)->{
+            Long sn1= o1.getStoreNum();
+            int src1 = reviewRepository.findAllByStore_StoreNum(o1.getStoreNum()).size();
+            int src2 = reviewRepository.findAllByStore_StoreNum(o2.getStoreNum()).size();
+            if(src1-src2<0){
+                return -1;
+            }else if(src1-src2>0){
+                return 1;
+            }return 0;
+        });
+
 
         return list;
     }
