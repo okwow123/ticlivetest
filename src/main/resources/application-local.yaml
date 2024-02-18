@@ -41,8 +41,9 @@ logging:
         type:
           descriptor:
             sql: trace
-
-  level.org.hibernate.type.descriptor.sql.BasicBinder: trace
-  level.org.apache.commons.beanutils: error
+            BasicBinder: trace
+      apache:
+        commons:
+          beanutils: error
   file:
     name: ./logs/login-local.log

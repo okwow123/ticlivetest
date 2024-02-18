@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
-@EqualsAndHashCode(of= {"storeNum"}) // equals, hashCode 자동 생성
+@EqualsAndHashCode(of= {"storenum"}) // equals, hashCode 자동 생성
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Setter

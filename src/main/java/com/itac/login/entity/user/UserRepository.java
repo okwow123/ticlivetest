@@ -25,6 +25,7 @@ public interface UserRepository extends JpaRepository<Users, Long> {
     public int loginCheck(@Param("useremail") String email, @Param("userpassword") String password);
 
     public Users findByUserEmail(String userEmail);
+
     @Transactional
     @Modifying
     @Query(value="insert into public.users(useremail,userpassword,auth) values(:useremail,:userpassword,:auth)",nativeQuery = true)

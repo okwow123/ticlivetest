@@ -53,13 +53,11 @@ public class StoreController {
             resp.sendRedirect(url+"/login");
         }
     }
-
-
-
+    
     @GetMapping("/list")
-    public List<Store> list(){
-
-        return storeService.allStores();
+    public ResponseEntity<Object> list(){
+        
+        return ResponseEntity.status(HttpStatus.OK).body(storeService.allStores());
     }
 
     @GetMapping("/{id}")
@@ -69,18 +67,21 @@ public class StoreController {
     }
 
     @PostMapping(value="/create")
-    public ResponseEntity<Store> Create(HttpServletRequest req, @RequestPart("store") StoreDto storeDto, @RequestPart("file")List<MultipartFile> multipartFile) throws IOException{
-        String user = req.getUserPrincipal().getName();
+    public ResponseEntity<Store> Create(@RequestPart("store") StoreDto storeDto, @RequestPart("file")List<MultipartFile> multipartFile) throws IOException{
+    //public ResponseEntity<Store> Create(HttpServletRequest req, @RequestPart("store") StoreDto storeDto, @RequestPart("file")List<MultipartFile> multipartFile) throws IOException{
+        //String user = req.getUserPrincipal().getName();
+        String user = "test@test.org";
         Store store = storeService.create(storeDto, user, multipartFile);
-        //return "redirect:/api/v1/store/list";
         return ResponseEntity.status(HttpStatus.OK).body(store);
 
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<StoreDto> update(@PathVariable Long id, @RequestBody StoreDto storeDto){
-
-        boolean result = storeService.update(id, storeDto);
+    public ResponseEntity<StoreDto> update(@PathVariable Long id, @RequestPart("store") StoreDto storeDto, @RequestPart("file")List<MultipartFile> multipartFile){
+    //public ResponseEntity<StoreDto> update(HttpServletRequest req, @PathVariable Long id, @RequestPart("store") StoreDto storeDto, @RequestPart("file")List<MultipartFile> multipartFile){
+        //String user = req.getUserPrincipal().getName();
+        String user = "test@test.org";
+        boolean result = storeService.update(user, id, storeDto, multipartFile);
         if(result){
             return ResponseEntity.status(HttpStatus.OK).body(storeDto);
         }
@@ -88,9 +89,11 @@ public class StoreController {
     }
 
     @DeleteMapping("/{id}")
+    //public ResponseEntity<Store> delete(@PathVariable Long id, HttpServletRequest req){
     public ResponseEntity<Store> delete(@PathVariable Long id){
-
-        boolean result = storeService.delete(id);
+        //String user = req.getUserPrincipal().getName();
+        String user = "test@test.org";
+        boolean result = storeService.delete(id, user);
         if(result){
             return ResponseEntity.status(HttpStatus.OK).build();
         }
