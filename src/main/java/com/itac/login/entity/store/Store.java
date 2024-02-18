@@ -45,12 +45,9 @@ public class Store implements Serializable {
     private LocalDate createDate;
     @Column(name="modificationdate")
     private LocalDate modificationDate;
-/*
     @Column(name="images")
     @Convert(converter = StringListConverter.class)
     private List<String> images = new ArrayList<>();
-
- */
 
     @ManyToOne
     @JoinColumn(name="usernum")
@@ -66,7 +63,7 @@ public class Store implements Serializable {
         this.storePhoneNum = storePhoneNum;
         this.grade = grade;
         this.storeInfo = storeInfo;
-//        this.images = images;
+        this.images = images;
         this.createDate = LocalDate.now();
     }
 
