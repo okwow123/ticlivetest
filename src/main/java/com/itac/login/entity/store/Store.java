@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
-@EqualsAndHashCode(of= {"storeNum"}) // equals, hashCode 자동 생성
+@EqualsAndHashCode(of= {"storenum"}) // equals, hashCode 자동 생성
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Setter
@@ -45,6 +45,17 @@ public class Store implements Serializable {
     private LocalDate createDate;
     @Column(name="modificationdate")
     private LocalDate modificationDate;
+
+//    @Column(name="lowprice")
+//    private int lowprice;
+//    @Column(name="highprice")
+//    private int highprice;
+
+//    @Column(name="lat")
+//    private float lat;
+//    @Column(name="lng")
+//    private float lng;
+
     @Column(name="images")
     @Convert(converter = StringListConverter.class)
     private List<String> images = new ArrayList<>();
@@ -54,7 +65,8 @@ public class Store implements Serializable {
     private Users users;
 
     @Builder
-    public Store(Long storeNum, String storeName, String storeLocation, String storePhoneNum,Float grade,String storeInfo, List<String> images) {
+    public Store(Long storeNum, String storeName, String storeLocation, String storePhoneNum,Float grade,String storeInfo, List<String> images, Users users) {
+
         super();
         this.storeNum = storeNum;
         this.storeName = storeName;
@@ -63,6 +75,7 @@ public class Store implements Serializable {
         this.grade = grade;
         this.storeInfo = storeInfo;
         this.images = images;
+        this.users = users;
         this.createDate = LocalDate.now();
     }
 

@@ -49,5 +49,4 @@ public class Review implements Serializable {
         this.reviewNum = reviewNum;
         this.grade = grade;
     }
-
 }

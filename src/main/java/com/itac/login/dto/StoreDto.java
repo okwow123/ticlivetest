@@ -1,15 +1,11 @@
 package com.itac.login.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.itac.login.entity.store.Store;
 import com.itac.login.entity.user.Users;
 import lombok.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import javax.persistence.Column;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Map;
 
 @Getter
 @Setter
@@ -39,7 +35,7 @@ public class StoreDto {
                 //.createDate(createDate)
                 //.modificationDate(modificationDate)
                 .images(images)
-                //.users(users)
+                .users(users)
                 .build();
     }
 }

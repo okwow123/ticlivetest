@@ -12,11 +12,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -51,43 +53,47 @@ public class StoreController {
             resp.sendRedirect(url+"/login");
         }
     }
-
-
-
+    
     @GetMapping("/list")
-    public List<Store> list(){
-
-        return storeService.allStores();
+    public ResponseEntity<Object> list(){
+        
+        return ResponseEntity.status(HttpStatus.OK).body(storeService.allStores());
     }
 
-    @GetMapping("/store/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Store> store(@PathVariable Long id){
         Store store = storeService.show(id);
         return ResponseEntity.status(HttpStatus.OK).body(store);
     }
 
-    @PostMapping(value="/create", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
+    @PostMapping(value="/create")
     public ResponseEntity<Store> Create(@RequestPart("store") StoreDto storeDto, @RequestPart("file")List<MultipartFile> multipartFile) throws IOException{
-        Store store = storeService.create(storeDto, multipartFile);
-        //return "redirect:/api/v1/store/list";
+    //public ResponseEntity<Store> Create(HttpServletRequest req, @RequestPart("store") StoreDto storeDto, @RequestPart("file")List<MultipartFile> multipartFile) throws IOException{
+        //String user = req.getUserPrincipal().getName();
+        String user = "test@test.org";
+        Store store = storeService.create(storeDto, user, multipartFile);
         return ResponseEntity.status(HttpStatus.OK).body(store);
 
     }
 
-    @PatchMapping("/store/{id}")
-    public ResponseEntity<StoreDto> update(@PathVariable Long id, @RequestBody StoreDto storeDto){
-
-        boolean result = storeService.update(id, storeDto);
+    @PatchMapping("/{id}")
+    public ResponseEntity<StoreDto> update(@PathVariable Long id, @RequestPart("store") StoreDto storeDto, @RequestPart("file")List<MultipartFile> multipartFile){
+    //public ResponseEntity<StoreDto> update(HttpServletRequest req, @PathVariable Long id, @RequestPart("store") StoreDto storeDto, @RequestPart("file")List<MultipartFile> multipartFile){
+        //String user = req.getUserPrincipal().getName();
+        String user = "test@test.org";
+        boolean result = storeService.update(user, id, storeDto, multipartFile);
         if(result){
             return ResponseEntity.status(HttpStatus.OK).body(storeDto);
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
-    @DeleteMapping("/store/{id}")
+    @DeleteMapping("/{id}")
+    //public ResponseEntity<Store> delete(@PathVariable Long id, HttpServletRequest req){
     public ResponseEntity<Store> delete(@PathVariable Long id){
-
-        boolean result = storeService.delete(id);
+        //String user = req.getUserPrincipal().getName();
+        String user = "test@test.org";
+        boolean result = storeService.delete(id, user);
         if(result){
             return ResponseEntity.status(HttpStatus.OK).build();
         }
