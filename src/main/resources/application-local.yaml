@@ -10,6 +10,8 @@ spring:
     url: jdbc:postgresql://20.214.108.168:15432/testdb
     username: testuser
     password: testuser
+    #hikari:
+     # maximum-pool: 20
   jpa:
     properties:
       hibernate:

@@ -3,15 +3,18 @@ package com.itac.login.common.util;
 import com.itac.login.entity.review.ReviewRepository;
 import com.itac.login.entity.store.Store;
 import com.itac.login.entity.store.StoreRepository;
-import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
-@RequiredArgsConstructor
+@Component
+@Slf4j
 public class SortMethod {
 
     @Autowired
@@ -34,9 +37,9 @@ public class SortMethod {
         // -> 순회할리스트, 점수를 기록할 map, 가중치  순으로 매개변수입력 (반환형 map)
         map = calculateMap(list,map,gradeWeight);
 
-//        // 리뷰 많은순 처리 필요
-//        list = sortByReviews(list);
-//        map = calculateMap(list,map,reviewWeight);
+        // 리뷰 많은순 처리 필요
+        list = sortByReviews(list);
+        map = calculateMap(list,map,reviewWeight);
 //
 //        // 가격 낮은순으로 처리 필요
 //        list = sortByPrice(list);
@@ -71,6 +74,8 @@ public class SortMethod {
         final int orderDirection = (flag.length==0?-1:1); //내림차순일 때 -1, 오름차순일때 1
 
         list.sort((o1, o2) ->{
+//            log.info("o1.toString(): "+ o1.toString());
+//            log.info("o2.toString(): "+ o2.toString());
             if(orderDirection*(o1.getGrade()-o2.getGrade())<0)
                 return -1;
             else if(orderDirection*(o1.getGrade()-o2.getGrade())>0)
@@ -82,12 +87,26 @@ public class SortMethod {
 
     public List<Store> sortByReviews(List<Store> list,Object...flag){
         final int orderDirection = (flag.length==0?-1:1); //내림차순일 때 -1, 오름차순일때 1
+        log.info("sortByReviews메서드 시작");
+        list.sort((Store o1,Store o2)->{
+//            log.info("o1.toString(): "+ o1.toString());
+//            log.info("Store o1의 리뷰들 :"+ reviewRepository.findAllByStore(o1).toString());
+//            log.info("Store o1의 리뷰들 :"+ reviewRepository.findAllByStoreStoreNum(o1.getStoreNum()).toString());
+//            log.info("Store o1의 리뷰들의 크기 :"+ reviewRepository.findAllByStoreStoreNum(o1.getStoreNum()).size());
 
-        list.sort((o1,o2)->{
-            int src1 = reviewRepository.findAllByStore_StoreNum(o1.getStoreNum()).size();
-            int src2 = reviewRepository.findAllByStore_StoreNum(o2.getStoreNum()).size();
+//            log.info("o2.toString(): "+ o2.toString());
+//            log.info("Store o2의 리뷰들 :"+ reviewRepository.findAllByStore(o2).toString());
+//            log.info("Store o2의 리뷰들 :"+ reviewRepository.findAllByStoreStoreNum(o2.getStoreNum()).toString());
+//            log.info("Store o2의 리뷰들의 크기 :"+ reviewRepository.findAllByStoreStoreNum(o2.getStoreNum()).size());
+            int src1 = reviewRepository.findAllByStoreStoreNum(o1.getStoreNum()).size();
+            int src2 = reviewRepository.findAllByStoreStoreNum(o2.getStoreNum()).size();
             if(src1-src2!=0){
-                return (src1>src2?-1:1)*orderDirection;
+                //return (src1>src2?-1:1)*orderDirection;
+                if(orderDirection*(src1-src2)>0){
+                    return -1;
+                }else{
+                    return 1;
+                }
             }else
                 return 0;
         });

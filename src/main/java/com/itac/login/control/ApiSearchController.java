@@ -23,6 +23,7 @@ import java.util.List;
 public class ApiSearchController {
 
     private final StoreService storeService;
+    private final SortMethod sortMethod;
 
     @GetMapping(value={"/search","/location","/category"})
     public ResponseEntity<Object> allStores(){
@@ -70,7 +71,8 @@ public class ApiSearchController {
     public ResponseEntity<Object> searchrecommend(){
         List<Store> storeList = storeService.allStores();
 
-        storeList = new SortMethod().recommendfy(storeList);
+        log.info("searchrecommend Mapping에서 조회된 List<Store> value:"+ storeList.toString());
+        storeList = sortMethod.recommendfy(storeList);
 
         if(!storeList.isEmpty()){
             return ResponseEntity.ok().body(storeList);

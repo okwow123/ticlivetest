@@ -1,6 +1,9 @@
 package com.itac.login.entity.store;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.itac.login.entity.StringListConverter;
+import com.itac.login.entity.review.Review;
 import com.itac.login.entity.user.Users;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
@@ -8,6 +11,7 @@ import javax.persistence.*;
 
 import com.vladmihalcea.hibernate.type.json.JsonType;
 
+import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.TypeDef;
 
 import java.io.*;
@@ -17,10 +21,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
-@EqualsAndHashCode(of= {"storenum"}) // equals, hashCode 자동 생성
+@EqualsAndHashCode(of= {"storeNum"}) // equals, hashCode 자동 생성
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Setter
+@ToString(exclude = "reviews")
 @Entity
 @TypeDef(name="json", typeClass= JsonType.class)
 public class Store implements Serializable {
@@ -60,9 +65,15 @@ public class Store implements Serializable {
     @Convert(converter = StringListConverter.class)
     private List<String> images = new ArrayList<>();
 
-    @ManyToOne
-    @JoinColumn(name="usernum")
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JsonManagedReference // 순환참조 방지
+    @JoinColumn(name="userNum")
     private Users users;
+
+
+    @OneToMany(mappedBy = "store",fetch=FetchType.LAZY)
+    @JsonBackReference //순환참조 방지
+    private List<Review> reviews = new ArrayList<>();
 
     @Builder
     public Store(Long storeNum, String storeName, String storeLocation, String storePhoneNum,Float grade,String storeInfo, List<String> images, Users users) {
@@ -82,6 +93,6 @@ public class Store implements Serializable {
     @PostLoad
     private void postLoad() {
         // 엔티티가 로드될 때 실행할 코드 작성
-        log.info("Entity loaded(storeNum): " + this.storeNum);
+        log.info("Store Entity loaded(storeNum): " + this.toString());
     }
 }
