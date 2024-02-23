@@ -16,7 +16,7 @@ public class StringListConverter implements AttributeConverter<List<String>, Str
 
     @Override
     public String convertToDatabaseColumn(List<String> attribute) {
-        log.info("컨버터 내부에서 db데이터 형식으로 변환 시도, 입력된 List<String> attribute : .."+attribute+"..END");
+//        log.info("컨버터 내부에서 db데이터 형식으로 변환 시도, 입력된 List<String> attribute : .."+attribute+"..END");
         try {
             if(attribute.isEmpty()){
                 return null;
@@ -30,7 +30,7 @@ public class StringListConverter implements AttributeConverter<List<String>, Str
 
     @Override
     public List<String> convertToEntityAttribute(String dbData) {
-        log.info("컨버터 내부에서 java 데이터 형식으로 변환 시도, 입력된 String dbData : .."+dbData+"..END");
+//        log.info("컨버터 내부에서 java 데이터 형식으로 변환 시도, 입력된 String dbData : .."+dbData+"..END");
         try {
             if(dbData == null || dbData.equals("")){
                 return new ArrayList<>();

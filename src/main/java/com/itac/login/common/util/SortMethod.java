@@ -102,11 +102,7 @@ public class SortMethod {
             int src2 = reviewRepository.findAllByStoreStoreNum(o2.getStoreNum()).size();
             if(src1-src2!=0){
                 //return (src1>src2?-1:1)*orderDirection;
-                if(orderDirection*(src1-src2)>0){
-                    return -1;
-                }else{
-                    return 1;
-                }
+                return (src1>src2?-1:1)*orderDirection;
             }else
                 return 0;
         });

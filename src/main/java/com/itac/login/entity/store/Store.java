@@ -1,6 +1,7 @@
 package com.itac.login.entity.store;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.itac.login.entity.StringListConverter;
 import com.itac.login.entity.review.Review;
@@ -67,12 +68,14 @@ public class Store implements Serializable {
 
     @ManyToOne(fetch=FetchType.LAZY)
     @JsonManagedReference // 순환참조 방지
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @JoinColumn(name="userNum")
     private Users users;
 
 
     @OneToMany(mappedBy = "store",fetch=FetchType.LAZY)
     @JsonBackReference //순환참조 방지
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private List<Review> reviews = new ArrayList<>();
 
     @Builder
