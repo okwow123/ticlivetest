@@ -40,14 +40,14 @@ public class SortMethod {
         // 리뷰 많은순 처리 필요
         list = sortByReviews(list);
         map = calculateMap(list,map,reviewWeight);
-//
-//        // 가격 낮은순으로 처리 필요
-//        list = sortByPrice(list);
-//        map = calculateMap(list,map,priceWeight);
 
-//        // 거리 순으로 처리 필요
-//        list = sortByDistance(list,new xyPoint(37.489552f,126.724072f));
-//        map = calculateMap(list,map,distanceWeight);
+        // 가격 낮은순으로 처리 필요
+        list = sortByPrice(list);
+        map = calculateMap(list,map,priceWeight);
+
+        // 거리 순으로 처리 필요
+        list = sortByDistance(list,new xyPoint(37.489552f,126.724072f));
+        map = calculateMap(list,map,distanceWeight);
 
 
         // 처리된 결과에 따라 list 재정렬
@@ -58,13 +58,14 @@ public class SortMethod {
                 return finalMap.get(o2)- finalMap.get(o1);
             }
         });
+
         return list;
     }
 
     private HashMap<Store, Integer> calculateMap(List<Store> list, HashMap<Store, Integer> map, int Weight) {
         for(Store store:list){
             map.put(store,map.getOrDefault(store,0)+
-                    ((list.size())-(list.indexOf(store)+1) /(list.size())*Weight));
+                    Weight*(list.size()-(list.indexOf(store))) /list.size());
         }
         return map;
     }
@@ -82,6 +83,7 @@ public class SortMethod {
                 return 1;
             else return 0;
         } );
+
         return list;
     }
 
@@ -102,7 +104,7 @@ public class SortMethod {
             int src2 = reviewRepository.findAllByStoreStoreNum(o2.getStoreNum()).size();
             if(src1-src2!=0){
                 //return (src1>src2?-1:1)*orderDirection;
-                return (src1>src2?-1:1)*orderDirection;
+                return (src1<src2?-1:1)*orderDirection;
             }else
                 return 0;
         });
@@ -110,50 +112,50 @@ public class SortMethod {
         return list;
     }
 
-//    public List<Store> sortByPrice(List<Store> list,Object...flag){
-//        final int orderDirection = (flag.length==0?-1:1); //내림차순일 때 -1, 오름차순일때 1
-//
-//        if(orderDirection==-1) //내림차순으로 정렬할때는 (각 매장당) 비싼가격이 높은것이 먼저 보이게 정렬
-//            list.sort((o1,o2)->{
-//                int src1 = o1.getHighprice();
-//                int src2 = o2.getHighprice();
-//                if(src1-src2!=0){
-//                    return (src1>src2?-1:1)*orderDirection;
-//                }else
-//                    return 0;
-//            });
-//        else // 오름차순으로 정렬할때는 (각 매장당) 싼 가격이 낮은것이 먼저 보이게 정렬
-//            list.sort((o1,o2)->{
-//                int src1 = o1.getLowprice();
-//                int src2 = o2.getLowprice();
-//                if(src1-src2!=0){
-//                    return (src1<src2?1:-1)*orderDirection;
-//                }else
-//                    return 0;
-//            });
-//
-//        return list;
-//    }
+    public List<Store> sortByPrice(List<Store> list,Object...flag){
+        final int orderDirection = (flag.length==0?-1:1); //내림차순일 때 -1, 오름차순일때 1
 
-//    public List<Store> sortByDistance(List<Store> list,xyPoint point,Object...flag){ //
-//        final int orderDirection = (flag.length==0?1:-1); //오름차순일 때 -1, 내림차순일때 1
-//        float lat = point.getLat();
-//        float lng = point.getLng();
-//
-//        list.sort((o1,o2)->{
-//            double distance1 = getDistanceBetween2Points(o1.getLng(),o1.getLat(),lat,lng),
-//                    distance2 = getDistanceBetween2Points(o2.getLng(),o2.getLat(),lat,lng);
-//            if(distance1<distance2)
-//                return -1;
-//            else if(distance1>distance2)
-//                return 1;
-//            else
-//                return 0;
-//        });
-//        return list;
-//    }
+        if(orderDirection==-1) //내림차순으로 정렬할때는 (각 매장당) 비싼가격이 높은것이 먼저 보이게 정렬
+            list.sort((o1,o2)->{
+                int src1 = o1.getHighprice();
+                int src2 = o2.getHighprice();
+                if(src1-src2!=0){
+                    return (src1>src2?-1:1)*orderDirection;
+                }else
+                    return 0;
+            });
+        else // 오름차순으로 정렬할때는 (각 매장당) 싼 가격이 낮은것이 먼저 보이게 정렬
+            list.sort((o1,o2)->{
+                int src1 = o1.getLowprice();
+                int src2 = o2.getLowprice();
+                if(src1-src2!=0){
+                    return (src1<src2?1:-1)*orderDirection;
+                }else
+                    return 0;
+            });
 
-//    public double getDistanceBetween2Points(float x1, float y1,float x2, float y2){
-//        return Math.sqrt(Math.pow((x1-x2),2)+Math.pow((y1-y2),2));
-//    }
+        return list;
+    }
+
+    public List<Store> sortByDistance(List<Store> list,xyPoint point,Object...flag){ //
+        final int orderDirection = (flag.length==0?1:-1); //오름차순일 때 -1, 내림차순일때 1
+        float lat = point.getLat();
+        float lng = point.getLng();
+
+        list.sort((o1,o2)->{
+            double distance1 = getDistanceBetween2Points(o1.getLng(),o1.getLat(),lat,lng),
+                    distance2 = getDistanceBetween2Points(o2.getLng(),o2.getLat(),lat,lng);
+            if(distance1<distance2)
+                return -1;
+            else if(distance1>distance2)
+                return 1;
+            else
+                return 0;
+        });
+        return list;
+    }
+
+    public double getDistanceBetween2Points(float x1, float y1,float x2, float y2){
+        return Math.sqrt(Math.pow((x1-x2),2)+Math.pow((y1-y2),2));
+    }
 }

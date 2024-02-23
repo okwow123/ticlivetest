@@ -52,15 +52,15 @@ public class Store implements Serializable {
     @Column(name="modificationdate")
     private LocalDate modificationDate;
 
-//    @Column(name="lowprice")
-//    private int lowprice;
-//    @Column(name="highprice")
-//    private int highprice;
+    @Column(name="lowprice")
+    private int lowprice;
+    @Column(name="highprice")
+    private int highprice;
 
-//    @Column(name="lat")
-//    private float lat;
-//    @Column(name="lng")
-//    private float lng;
+    @Column(name="lat")
+    private float lat;
+    @Column(name="lng")
+    private float lng;
 
     @Column(name="images")
     @Convert(converter = StringListConverter.class)
@@ -96,6 +96,10 @@ public class Store implements Serializable {
     @PostLoad
     private void postLoad() {
         // 엔티티가 로드될 때 실행할 코드 작성
-        log.info("Store Entity loaded(storeNum): " + this.toString());
+        log.info("Store Entity loaded: " + this.toString());
     }
+
+    @Transient
+    private StringBuffer reason;
+
 }
