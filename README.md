@@ -35,7 +35,10 @@ https 인증서 추가 설치 요청중...
 ![image](https://github.com/okwow123/itca/assets/11327395/e94714b6-1290-46da-892a-aac991425b93)
 
 최태형님 SQL 수정 
+
 --회원테이블
+
+```
 CREATE TABLE public."member" (
 	id int4 NOT NULL GENERATED ALWAYS AS IDENTITY,
 	email varchar(200) NOT NULL,
@@ -142,6 +145,7 @@ create table public."reservation"(
 	constraint reservation_pk primary key (reservationNum)
 );
 
+```
 
 
 
@@ -200,3 +204,95 @@ create table public."reservation"(
 - nginx 셋팅
 
   ![image](https://github.com/okwow123/itca/assets/11327395/bd058996-b66b-4fe4-bebe-e77fb2532dd5)
+
+
+
+
+- build.gradle 셋팅 +JPA +QUERY DSL
+
+```
+buildscript {
+    ext {
+        queryDslVersion = "5.0.0"
+    }
+}
+
+plugins {
+    id 'org.springframework.boot' version '2.6.4'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'java'
+}
+
+group = 'com.itac.login'
+version = '0.3.0'
+sourceCompatibility = '11'
+archivesBaseName = 'login'
+
+ext['log4j2.version'] = '2.17.1'
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation fileTree(dir: './src/main/libs', include: '**/*.jar')
+
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-elasticsearch'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
+    implementation 'org.springdoc:springdoc-openapi-ui:1.6.6'
+
+
+    implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
+    implementation 'org.springframework.boot:spring-boot-starter-batch'
+    runtimeOnly 'org.postgresql:postgresql'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
+    implementation 'com.opencsv:opencsv:5.3'
+
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+    implementation 'com.google.code.gson:gson:2.9.0'
+
+    // QueryDSL
+    implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
+    annotationProcessor(
+            "javax.persistence:javax.persistence-api",
+            "javax.annotation:javax.annotation-api",
+            "com.querydsl:querydsl-apt:${queryDslVersion}:jpa")
+
+    implementation group: 'org.hibernate', name: 'hibernate-spatial', version: '5.5.0.Final'
+    implementation 'org.springframework.boot:spring-boot-starter-test'
+
+    implementation group: 'org.apache.poi', name: 'poi', version: '3.17'
+    implementation group: 'org.apache.poi', name: 'poi-ooxml', version: '3.17'
+
+    implementation 'com.vladmihalcea:hibernate-types-52:2.19.2'
+}
+
+// QueryDSL
+sourceSets {
+    main {
+        java {
+            srcDirs = ["$projectDir/src/main/java", "$buildDir/generated"]
+        }
+    }
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+```
