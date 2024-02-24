@@ -18,7 +18,7 @@ public class ReviewService {
     private final StoreRepository storeRepository;
 
     public void revalidateGrade(Long storeNum){
-        List<Review> reviewList = reviewRepository.findAllByStore_StoreNum(storeNum);
+        List<Review> reviewList = reviewRepository.findAllByStoreStoreNum(storeNum);
         double sum = 0;
         for(Review review : reviewList){
             sum += review.getGrade();

@@ -1,9 +1,12 @@
 package com.itac.login.entity.review;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.itac.login.entity.StringListConverter;
 import com.itac.login.entity.store.Store;
 import com.itac.login.entity.user.Users;
 import lombok.*;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -14,6 +17,8 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Setter
+@Slf4j
+@ToString
 @Entity
 public class Review implements Serializable {
     private static final long serialVersionUID=1L;
@@ -29,13 +34,17 @@ public class Review implements Serializable {
     private Float grade;
 
     @Column
-    private String createdDate;
+    private String createDate;
 
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JsonManagedReference // 순환참조 방지
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @JoinColumn(name="userNum")
     private Users users;
 
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JsonManagedReference // 순환참조 방지
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @JoinColumn(name="storeNum")
     private Store store;
 

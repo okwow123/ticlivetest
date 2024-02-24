@@ -2,6 +2,7 @@ package com.itac.login.entity.user;
 
 import com.itac.login.entity.BaseTimeEntity;
 import lombok.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -16,6 +17,8 @@ import java.util.Collection;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
+@ToString
+@Slf4j
 public class Users extends BaseTimeEntity implements UserDetails {
 
     private static final long serialVersionUID = 1L;
