@@ -4,6 +4,8 @@
 
 ![image](https://github.com/okwow123/itca/assets/11327395/9e951cab-ab76-496f-a7c0-e6f260500cf5)
 
+![image](https://github.com/okwow123/itca/assets/11327395/4a9cc5d2-a155-418b-b85a-e18d2917a72e)
+
 
 컨셉 : 디저트,커피 위주의 캐치테이블 버전
 
