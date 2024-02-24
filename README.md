@@ -2,7 +2,7 @@
 
 링크 : https://dalgom.app
 
-![image](https://github.com/okwow123/itca/assets/11327395/9e951cab-ab76-496f-a7c0-e6f260500cf5)
+![image](https://github.com/okwow123/itca/assets/11327395/9e951cab-ab76-496f-a7c0-e6f260500cf5) ![image](https://github.com/okwow123/itca/assets/11327395/4a9cc5d2-a155-418b-b85a-e18d2917a72e)
 
 
 컨셉 : 디저트,커피 위주의 캐치테이블 버전
@@ -35,7 +35,10 @@ https 인증서 추가 설치 요청중...
 ![image](https://github.com/okwow123/itca/assets/11327395/e94714b6-1290-46da-892a-aac991425b93)
 
 최태형님 SQL 수정 
+
 --회원테이블
+
+```
 CREATE TABLE public."member" (
 	id int4 NOT NULL GENERATED ALWAYS AS IDENTITY,
 	email varchar(200) NOT NULL,
@@ -142,6 +145,7 @@ create table public."reservation"(
 	constraint reservation_pk primary key (reservationNum)
 );
 
+```
 
 
 
@@ -200,3 +204,124 @@ create table public."reservation"(
 - nginx 셋팅
 
   ![image](https://github.com/okwow123/itca/assets/11327395/bd058996-b66b-4fe4-bebe-e77fb2532dd5)
+
+
+
+
+- build.gradle 셋팅 +JPA +QUERY DSL
+
+```
+buildscript {
+    ext {
+        queryDslVersion = "5.0.0"
+    }
+}
+
+plugins {
+    id 'org.springframework.boot' version '2.6.4'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'java'
+}
+
+group = 'com.itac.login'
+version = '0.3.0'
+sourceCompatibility = '11'
+archivesBaseName = 'login'
+
+ext['log4j2.version'] = '2.17.1'
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation fileTree(dir: './src/main/libs', include: '**/*.jar')
+
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-elasticsearch'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
+    implementation 'org.springdoc:springdoc-openapi-ui:1.6.6'
+
+
+    implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
+    implementation 'org.springframework.boot:spring-boot-starter-batch'
+    runtimeOnly 'org.postgresql:postgresql'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
+    implementation 'com.opencsv:opencsv:5.3'
+
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+    implementation 'com.google.code.gson:gson:2.9.0'
+
+    // QueryDSL
+    implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
+    annotationProcessor(
+            "javax.persistence:javax.persistence-api",
+            "javax.annotation:javax.annotation-api",
+            "com.querydsl:querydsl-apt:${queryDslVersion}:jpa")
+
+    implementation group: 'org.hibernate', name: 'hibernate-spatial', version: '5.5.0.Final'
+    implementation 'org.springframework.boot:spring-boot-starter-test'
+
+    implementation group: 'org.apache.poi', name: 'poi', version: '3.17'
+    implementation group: 'org.apache.poi', name: 'poi-ooxml', version: '3.17'
+
+    implementation 'com.vladmihalcea:hibernate-types-52:2.19.2'
+}
+
+// QueryDSL
+sourceSets {
+    main {
+        java {
+            srcDirs = ["$projectDir/src/main/java", "$buildDir/generated"]
+        }
+    }
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+```
+
+
+
+--프로젝트 관리 방법론
+
+![image](https://github.com/okwow123/itca/assets/11327395/d70dfa33-7ae7-4982-a4fd-a2193b4b571c)
+
+
+프로젝트 관리의 접근 방식은 소프트웨어 개발의 Agile 방식을 기반으로 하며, 
+
+이러한 방식으로 교차 기능 팀은 지속적인 공동 작업, 계획 수립, 학습, 개선을 통해 소프트웨어를 신속하게 제공하고 변화에 더욱 유연하게 대응.
+
+Agile 방식의 목적은 프로젝트 완료 단계에서만 모든 이점을 제공할 뿐만 아니라 소프트웨어 개발 프로세스 전체에 걸쳐 이점을 제공. 
+
+Agile 관리는 여러 팀을 조율하고, 효과적인 프로세스를 수립하며, 데드라인을 설정하고, Agile 소프트웨어 프로젝트를 성공으로 이끌기 위한 방식
+
+[장점]
+
+여러 프로세스와 도구보다 개인과 상호작용을 중시.
+
+포괄적인 문서화보다 작동하는 소프트웨어를 중시.
+
+계약 협상보다 고객 공동 작업을 중시.
+
+계획을 따르는 것보다 변화에 대한 대응을 중시.
+
+
+스프린트 단위 : 1주일
+![image](https://github.com/okwow123/itca/assets/11327395/adea5834-f3ce-4396-9ae0-7408c0d055bd)
