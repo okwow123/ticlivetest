@@ -9,8 +9,9 @@
 
         <!--=============== CSS ===============-->
         <link rel="stylesheet" href="/css/styles.css">
+        <link rel="stylesheet" href="/css/styles2.css">
 
-        <title>Responsive bottom navigation</title>
+        <title>마이페이지</title>
     </head>
     <body>
         <!--=============== HEADER ===============-->
@@ -53,15 +54,88 @@
             </nav>
         </header>
 
-        <main>
 
-            <!--=============== ABOUT ===============-->
-            <section class="container section section__height" id="about">
-                <h2 class="section__title">마이페이지</h2>
-            </section>
+        <div class="wrap">
+            <div class="greenContainer">
+                <div class="profileBox">
+                    <div class="box" style="background: #BDBDBD;">
+                        <img class="profile" src="/img/cake-1.jpg">
+                    </div>
+                    <div class="userInfo">
+                        <div class="grade">일반회원</div>
+                        <div class="name">***님</div>
+                        <a href="#" class="change">프로필 변경</a>
+                    </div>
+                </div>
+            </div>
 
-        </main>
-        
+            <div class="summaryContainer">
+                    <a href="/mypage/storePage" class="store"> >가맹점 페이지 바로가기< </a>
+            </div>
+
+            <div class="shippingStatusContainer">
+                <div class="title">
+                    예약/리뷰
+                </div>
+                <div class="status">
+
+                    <div class="item">
+                        <div>
+                            <div class="green number">12</div>
+                            <div class="text">예약내역</div>
+                        </div>
+                    </div>
+
+                    <div class="item">
+                        <div>
+                            <div class="green number">5</div>
+                            <div class="text">내 리뷰</div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="listContainer">
+                <a href="#" class="item">
+                    <div class="icon">ii</div>
+                    <div class="text">회원정보수정<span class="circle"></span></div>
+                    <div class="right"> > </div>
+                </a>
+                <a href="#" class="item">
+                    <div class="icon">ii</div>
+                    <div class="text">찜한매장</div>
+                    <div class="right"> > </div>
+                </a>
+
+
+            </div>
+            <div class="listContainer">
+
+                <a href="#" class="item">
+                    <div class="icon">ii</div>
+                    <div class="text">알림</div>
+                    <div class="right"> > </div>
+                </a>
+                <a href="#" class="item">
+                    <div class="icon">ii</div>
+                    <div class="text">설정</div>
+                    <div class="right"> > </div>
+                </a>
+            </div>
+            <div class="infoContainer">
+                <a href="#" class="item">
+                    <div>공지사항</div>
+                </a>
+                <a href="#" class="item">
+                    <div>이용안내</div>
+                </a>
+                <a href="#" class="item">
+                    <div>고객센터</div>
+                </a>
+            </div>
+        </div>
+
 
         <!--=============== MAIN JS ===============-->
         <script src="/js/main.js"></script>
