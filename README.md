@@ -29,6 +29,23 @@ https 인증서 추가 설치 요청중...
 이진원님 -> 백엔드 개발 및 다이어그램 설계
 
 
+- 기술스택
+- JAVA JDK 11
+- 스프링부트 2.6.4
+- query DSL 5.0.0 + JPA
+- thymeleaf
+- postgresql Database + docker 
+- postman
+- github / sourcetree / github desktop
+- intellij
+- jenkins + docker
+- azure cloud service
+- 가비아 도메인 + https 인증서
+- 톰캣(로컬) + nginx 웹서버(운영)
+- ubuntu 20.04
+- 
+
+
 ![image](https://github.com/okwow123/itca/assets/11327395/9d4f5286-c5df-4340-9203-7dfb4fa5929a)
 
 안효진님 DB설계
