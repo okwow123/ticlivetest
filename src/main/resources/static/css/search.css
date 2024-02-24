@@ -22,3 +22,19 @@ tempborderlines,.search_module,.store_div,.images_div,.store_name_div,.store_pat
 .store_path_div{
 
 }
+
+.item_img{    
+    background-size: cover;
+    background-position: center;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.module{
+    margin: 2vh 0 2vh 0;
+}
+
+#hashtag_list>*{
+    margin: 0 1vw 0 1vw;
+}
