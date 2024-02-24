@@ -188,3 +188,15 @@ create table public."reservation"(
 
 
 - https 인증서 추가
+- 
+![image](https://github.com/okwow123/itca/assets/11327395/d09f976b-9cc7-41f9-90e8-ab7c936eb0e1)
+
+
+- 웹 도커 셋팅
+
+![image](https://github.com/okwow123/itca/assets/11327395/6f81edc8-ed55-4c26-bcfd-76222a0750a5)
+
+
+- nginx 셋팅
+
+  ![image](https://github.com/okwow123/itca/assets/11327395/bd058996-b66b-4fe4-bebe-e77fb2532dd5)
