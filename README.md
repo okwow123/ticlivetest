@@ -2,6 +2,8 @@
 
 링크 : https://dalgom.app
 
+![image](https://github.com/okwow123/itca/assets/11327395/9e951cab-ab76-496f-a7c0-e6f260500cf5)
+
 
 컨셉 : 디저트,커피 위주의 캐치테이블 버전
 
@@ -45,6 +47,7 @@ CREATE TABLE public."member" (
 	CONSTRAINT member_un UNIQUE (email)
 );
 
+
 --게시판 테이블
 CREATE TABLE public."forum" (
 	id int4 NOT NULL GENERATED ALWAYS AS IDENTITY,
@@ -57,60 +60,9 @@ CREATE TABLE public."forum" (
 );
 
 
---blockchain wallet
-CREATE TABLE public."wallet" (
-	id int4 NOT NULL GENERATED ALWAYS AS IDENTITY,
-	email varchar(200) NOT NULL,
-    wallet_address varchar(200) NOT NULL,
-    wallet_password varchar(200) NOT NULL,
-	last_view_time timestamptz NULL DEFAULT now(),
-	CONSTRAINT wallet_primary PRIMARY KEY (id),
-	CONSTRAINT wallet_un UNIQUE (email)
-
-);
 
 
 
---blockchain history
---모든 데이터 히스토리 관리
-CREATE TABLE public."history" (
-	id int4 NOT NULL GENERATED ALWAYS AS IDENTITY,
-	history varchar(max) NULL,
-	create_time timestamptz NULL DEFAULT now(),
-	CONSTRAINT history_primary PRIMARY KEY (id)
-);
-
-
---coin_price
-CREATE TABLE public."price_information" (
-	id int4 NOT NULL GENERATED ALWAYS AS IDENTITY,
-	cName varchar(200) NOT NULL,--coin name
-    cPrice float NOT NULL,
-	create_time timestamptz NULL DEFAULT now(),
-	CONSTRAINT  price_information_primary PRIMARY KEY (id),
-);
-
-
-
---blockchain blog information
--- 1 person <-> 1 blog owner <-> 1 minting
---
-
-CREATE TABLE public."blog_block" (
-	id int4 NOT NULL GENERATED ALWAYS AS IDENTITY,
-	wallet_address varchar(200) NOT NULL,
-	mintName varchar(200) NOT NULL,
-	mintTotalCount int NOT NULL,
-    create_time timestamptz NULL DEFAULT now(),
-	CONSTRAINT  price_information_primary PRIMARY KEY (id),
-);
-
-
---register /login
---forum
-
-
---update member set pwd='$2a$10$wnxgUHTCVY2VTw22q5IC/uFLKG7FK28rpPBXp0RDOiseESFES.l.G'
 
 -- 2024. 02. 03 
 create sequence user_userNum_seq
@@ -226,3 +178,25 @@ create table public."reservation"(
 ![image](https://github.com/okwow123/itca/assets/11327395/a87b38c7-85ab-4861-952f-7335a5a771a5)
 [화면설계서_캐치테이블 (3).pptx](https://github.com/okwow123/itca/files/14155466/_.3.pptx)
 
+
+
+- 젠킨스 셋팅
+![image](https://github.com/okwow123/itca/assets/11327395/a039f30b-b25b-4500-a9a0-449f7ba209e3)
+
+![image](https://github.com/okwow123/itca/assets/11327395/c0e69976-add5-48ff-9c61-2d8e70d5da98)
+
+
+
+- https 인증서 추가
+- 
+![image](https://github.com/okwow123/itca/assets/11327395/d09f976b-9cc7-41f9-90e8-ab7c936eb0e1)
+
+
+- 웹 도커 셋팅
+
+![image](https://github.com/okwow123/itca/assets/11327395/6f81edc8-ed55-4c26-bcfd-76222a0750a5)
+
+
+- nginx 셋팅
+
+  ![image](https://github.com/okwow123/itca/assets/11327395/bd058996-b66b-4fe4-bebe-e77fb2532dd5)
