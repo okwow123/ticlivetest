@@ -18,6 +18,7 @@ import org.hibernate.annotations.TypeDef;
 import java.io.*;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,6 +62,12 @@ public class Store implements Serializable {
     private float lat;
     @Column(name="lng")
     private float lng;
+
+    private LocalTime openingtime;
+    private LocalTime closingtime;
+
+    private int reservable;
+
 
     @Column(name="images")
     @Convert(converter = StringListConverter.class)

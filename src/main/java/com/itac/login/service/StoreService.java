@@ -1,17 +1,22 @@
 package com.itac.login.service;
 
 import com.itac.login.dto.StoreDto;
+import com.itac.login.entity.reservation.Reservation;
+import com.itac.login.entity.reservation.ReservationRepository;
 import com.itac.login.entity.store.Store;
 import com.itac.login.entity.store.StoreRepository;
 import com.itac.login.entity.user.UserRepository;
 import com.itac.login.entity.user.Users;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.elasticsearch.search.DocValueFormat;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.*;
 @Service
 @RequiredArgsConstructor
@@ -25,6 +30,8 @@ public class StoreService {
     private final UserRepository userRepo;
 
     private final StoreRepository storeRepository;
+
+    private final ReservationRepository reservationRepository;
 
     private Sort gradeDesc = Sort.by(Sort.Direction.DESC, "grade");
     private Sort gradeAsc = Sort.by(Sort.Direction.ASC, "grade");
@@ -165,5 +172,31 @@ public class StoreService {
 
         return true;
     }
+
+    private List<LocalTime> getReservableTimes(Long storeNum, LocalDate anticipatedDate){
+        List<LocalTime> reservableTimes = new ArrayList<>();
+        Store store = storeRepository.findById(storeNum).orElse(null);
+        //store가 null일때 또는 reservable이 0일때 예외처리가 필요
+        LocalTime openingtime = store.getOpeningtime().plusHours(1);
+        openingtime = openingtime.plusHours(1);
+        LocalTime closingtime = store.getClosingtime();
+        for (LocalTime time = openingtime; time.isBefore(closingtime); time = time.plusHours(1)) {
+            reservableTimes.add(time);
+        }
+        //기본 예약가능한 시간들에서 예약된 시간들을 빼야함
+
+        HashSet<LocalTime> reservedTimes = new HashSet<>(reservationRepository.findAllReservedTimesByStoreNumberAndDateTime(storeNum,anticipatedDate));
+        reservableTimes.removeIf(reservable-> reservedTimes.contains(reservable));
+
+        return reservableTimes;
+    }
+
+    private List<LocalTime> getReservableTimes(Store store,LocalDate anticipatedDate) {
+        return getReservableTimes(store.getStoreNum(),anticipatedDate);
+    }
+
+
+
+
 
 }

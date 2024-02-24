@@ -4,6 +4,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.stereotype.Repository;
+
+import java.time.LocalTime;
 import java.util.List;
 import com.itac.login.entity.store.Store;
 
@@ -21,5 +23,4 @@ public interface StoreRepository extends JpaRepository<Store,Long> {
 
     @Query(value="select * from public.store where storenum=(:storenum)", nativeQuery = true)
     Store createUser(Long storenum);
-
 }
