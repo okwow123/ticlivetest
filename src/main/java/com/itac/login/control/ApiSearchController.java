@@ -79,16 +79,4 @@ public class ApiSearchController {
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("조회된 데이터 없음");
     }
-
-    @GetMapping("/searchrecommend2")
-    public ResponseEntity<Object> searchrecommend2(){
-        List<Store> storeList = storeService.allStores();
-
-        storeList = new SortMethod().recommendfy(storeList);
-
-        if(!storeList.isEmpty()){
-            return ResponseEntity.ok().body(storeList);
-        }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("조회된 데이터 없음");
-    }
 }
