@@ -18,23 +18,23 @@ public class MainController {
 
     @GetMapping("/home")
     public String home(){
-        return "/home/home";
+        return "home/home";
     }
     @GetMapping("/search")
     public String search(){
-        return "/search/search";
+        return "search/search";
     }
     @GetMapping("/reservation")
     public String reservation(){
-        return "/reservation/reservation";
+        return "reservation/reservation";
     }
     @GetMapping("/mypage")
     public String mypage(){
-        return "/mypage/mypage";
+        return "mypage/mypage";
     }
 
     @GetMapping("/mypage/storePage")
     public String mypage2(){
-        return "/mypage/storePage";
+        return "mypage/storePage";
     }
 }
