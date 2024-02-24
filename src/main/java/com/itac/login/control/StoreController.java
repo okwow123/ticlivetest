@@ -68,20 +68,16 @@ public class StoreController {
     }
 
     @PostMapping(value="/create")
-    public ResponseEntity<Store> Create(@RequestPart("store") StoreDto storeDto, @RequestPart("file")List<MultipartFile> multipartFile){
-    //public ResponseEntity<Store> Create(HttpServletRequest req, @RequestPart("store") StoreDto storeDto, @RequestPart("file")List<MultipartFile> multipartFile) throws IOException{
-        //String user = req.getUserPrincipal().getName();
-        String user = "test@test.org";
+    public ResponseEntity<Store> Create(HttpServletRequest req, @RequestPart("store") StoreDto storeDto, @RequestPart("file")List<MultipartFile> multipartFile) throws IOException{
+        String user = req.getUserPrincipal().getName();
         Store store = storeService.create(storeDto, user, multipartFile);
         return ResponseEntity.status(HttpStatus.OK).body(store);
 
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<StoreDto> update(@PathVariable Long id, @RequestPart("store") StoreDto storeDto, @RequestPart("file")List<MultipartFile> multipartFile){
-    //public ResponseEntity<StoreDto> update(HttpServletRequest req, @PathVariable Long id, @RequestPart("store") StoreDto storeDto, @RequestPart("file")List<MultipartFile> multipartFile){
-        //String user = req.getUserPrincipal().getName();
-        String user = "test@test.org";
+    public ResponseEntity<StoreDto> update(HttpServletRequest req, @PathVariable Long id, @RequestPart("store") StoreDto storeDto, @RequestPart("file")List<MultipartFile> multipartFile){
+        String user = req.getUserPrincipal().getName();
         boolean result = storeService.update(user, id, storeDto, multipartFile);
         if(result){
             return ResponseEntity.status(HttpStatus.OK).body(storeDto);
@@ -90,10 +86,8 @@ public class StoreController {
     }
 
     @DeleteMapping("/{id}")
-    //public ResponseEntity<Store> delete(@PathVariable Long id, HttpServletRequest req){
-    public ResponseEntity<Store> delete(@PathVariable Long id){
-        //String user = req.getUserPrincipal().getName();
-        String user = "test@test.org";
+    public ResponseEntity<Store> delete(@PathVariable Long id, HttpServletRequest req){
+        String user = req.getUserPrincipal().getName();
         boolean result = storeService.delete(id, user);
         if(result){
             return ResponseEntity.status(HttpStatus.OK).build();
