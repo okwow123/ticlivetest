@@ -45,6 +45,7 @@ https 인증서 추가 설치 요청중...
 - ubuntu 20.04
 - 
 
+-- 간트차트 
 
 ![image](https://github.com/okwow123/itca/assets/11327395/9d4f5286-c5df-4340-9203-7dfb4fa5929a)
 
