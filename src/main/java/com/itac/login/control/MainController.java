@@ -33,8 +33,8 @@ public class MainController {
         return "mypage/mypage";
     }
 
-    @GetMapping("/robots.txt")
-    public String robots(){
-        return "robots.txt";
+    @GetMapping("/mypage/storePage")
+    public String mypage2(){
+        return "mypage/storePage";
     }
 }
