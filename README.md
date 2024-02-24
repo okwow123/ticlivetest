@@ -2,6 +2,8 @@
 
 링크 : https://dalgom.app
 
+![image](https://github.com/okwow123/itca/assets/11327395/9e951cab-ab76-496f-a7c0-e6f260500cf5)
+
 
 컨셉 : 디저트,커피 위주의 캐치테이블 버전
 
