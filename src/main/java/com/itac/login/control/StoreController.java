@@ -63,11 +63,12 @@ public class StoreController {
     @GetMapping("/{id}")
     public ResponseEntity<Store> store(@PathVariable Long id){
         Store store = storeService.show(id);
+
         return ResponseEntity.status(HttpStatus.OK).body(store);
     }
 
     @PostMapping(value="/create")
-    public ResponseEntity<Store> Create(@RequestPart("store") StoreDto storeDto, @RequestPart("file")List<MultipartFile> multipartFile) throws IOException{
+    public ResponseEntity<Store> Create(@RequestPart("store") StoreDto storeDto, @RequestPart("file")List<MultipartFile> multipartFile){
     //public ResponseEntity<Store> Create(HttpServletRequest req, @RequestPart("store") StoreDto storeDto, @RequestPart("file")List<MultipartFile> multipartFile) throws IOException{
         //String user = req.getUserPrincipal().getName();
         String user = "test@test.org";
@@ -76,7 +77,7 @@ public class StoreController {
 
     }
 
-    @PatchMapping("/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<StoreDto> update(@PathVariable Long id, @RequestPart("store") StoreDto storeDto, @RequestPart("file")List<MultipartFile> multipartFile){
     //public ResponseEntity<StoreDto> update(HttpServletRequest req, @PathVariable Long id, @RequestPart("store") StoreDto storeDto, @RequestPart("file")List<MultipartFile> multipartFile){
         //String user = req.getUserPrincipal().getName();
