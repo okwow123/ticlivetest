@@ -43,7 +43,7 @@ https 인증서 추가 설치 요청중...
 - 가비아 도메인 + https 인증서
 - 톰캣(로컬) + nginx 웹서버(운영)
 - ubuntu 20.04
-- 
+- flutter / android app
 
 -- 간트차트 
 
