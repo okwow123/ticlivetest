@@ -5,6 +5,7 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 logs/
+*.tmp
 
 ### STS ###
 .apt_generated
