@@ -47,8 +47,15 @@ public class StoreService {
 
     public Store create(StoreDto storeDto, String user, List<MultipartFile> files) {
         storeDto.setStoreNum(null);
+        storeDto.setGrade(0f);
         storeDto.setUsers(userRepo.findByUserEmail(user));
-        storeDto.setImages(uuidImage(files));
+        if(files != null){
+            storeDto.setImages(uuidImage(files));
+        }else{
+            List<String> empty = new ArrayList<>();
+            storeDto.setImages(empty);
+        }
+
         Store store = storeDto.toEntity();
         return storeRepository.save(store);
     }
