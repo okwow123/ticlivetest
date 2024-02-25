@@ -13,7 +13,7 @@ spring:
     hikari:
       connectionTimeout: 30000
       maximumPoolSize: 30
-      maxLifetime: 1800000
+      maxLifetime: 180000
       poolName: HikariCP
       minimum-idle: 3
       auto-commit: false
