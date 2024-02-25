@@ -31,6 +31,7 @@ public class StoreDto {
                 .storeName(storeName)
                 .storeLocation(storeLocation)
                 .storePhoneNum(storePhoneNum)
+                .storeInfo(storeInfo)
                 .grade(grade)
                 //.createDate(createDate)
                 //.modificationDate(modificationDate)

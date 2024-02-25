@@ -85,15 +85,14 @@ public class StoreController {
     }
 
     @PostMapping(value="/create")
-    public ResponseEntity<Store> Create(HttpServletRequest req, @RequestPart("store") StoreDto storeDto, @RequestPart("file")List<MultipartFile> multipartFile) throws IOException{
+    public ResponseEntity<Store> Create(HttpServletRequest req, @RequestPart("store") StoreDto storeDto, @RequestPart(value = "file", required = false)List<MultipartFile> multipartFile) throws IOException{
         String user = req.getUserPrincipal().getName();
         Store store = storeService.create(storeDto, user, multipartFile);
         return ResponseEntity.status(HttpStatus.OK).body(store);
-
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<StoreDto> update(HttpServletRequest req, @PathVariable Long id, @RequestPart("store") StoreDto storeDto, @RequestPart("file")List<MultipartFile> multipartFile){
+    public ResponseEntity<StoreDto> update(HttpServletRequest req, @PathVariable Long id, @RequestPart("store") StoreDto storeDto, @RequestPart(value="file", required=false)List<MultipartFile> multipartFile){
         String user = req.getUserPrincipal().getName();
         boolean result = storeService.update(user, id, storeDto, multipartFile);
         if(result){
