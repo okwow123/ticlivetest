@@ -38,3 +38,24 @@ tempborderlines,.search_module,.store_div,.images_div,.store_name_div,.store_pat
 #hashtag_list>*{
     margin: 0 1vw 0 1vw;
 }
+
+#reservationDateTable {
+  display: none;
+  position: fixed;
+  bottom:0px;
+  height: 70vh;
+  /* max-width: 100%; */
+  background-color: #f1f1f1;
+  padding: 20px;
+  animation: slideUp 0.5s ease;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+

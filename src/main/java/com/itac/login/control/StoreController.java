@@ -20,6 +20,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -59,11 +61,21 @@ public class StoreController {
         return ResponseEntity.status(HttpStatus.OK).body(storeService.manageStoreInfo(userId));
     }
 
+
+
     @GetMapping("/{id}")
     public ResponseEntity<Store> store(@PathVariable Long id){
         Store store = storeService.show(id);
 
         return ResponseEntity.status(HttpStatus.OK).body(store);
+    }
+
+    @GetMapping("/{id}/{localdate}")
+    public ResponseEntity<List<LocalTime>> getReservableTimes(@PathVariable Long id,@PathVariable LocalDate localdate){
+       List<LocalTime> reservableTimes = storeService.getReservableTimes(id,localdate);
+       return reservableTimes != null && !reservableTimes.isEmpty()?
+               ResponseEntity.status(HttpStatus.OK).body(reservableTimes):
+               ResponseEntity.status(HttpStatus.NO_CONTENT).body(reservableTimes);
     }
 
     @PostMapping(value="/create")
@@ -91,7 +103,6 @@ public class StoreController {
         if(result){
             return ResponseEntity.status(HttpStatus.OK).build();
         }
-
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 

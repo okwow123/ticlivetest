@@ -177,7 +177,7 @@ public class StoreService {
         return true;
     }
 
-    private List<LocalTime> getReservableTimes(Long storeNum, LocalDate anticipatedDate){
+    public List<LocalTime> getReservableTimes(Long storeNum, LocalDate anticipatedDate){
         List<LocalTime> reservableTimes = new ArrayList<>();
         Store store = storeRepository.findById(storeNum).orElse(null);
         //store가 null일때 또는 reservable이 0일때 예외처리가 필요
@@ -191,11 +191,12 @@ public class StoreService {
 
         HashSet<LocalTime> reservedTimes = new HashSet<>(reservationRepository.findAllReservedTimesByStoreNumberAndDateTime(storeNum,anticipatedDate));
         reservableTimes.removeIf(reservable-> reservedTimes.contains(reservable));
+        log.info(reservedTimes.toString());
 
         return reservableTimes;
     }
 
-    private List<LocalTime> getReservableTimes(Store store,LocalDate anticipatedDate) {
+    public List<LocalTime> getReservableTimes(Store store,LocalDate anticipatedDate) {
         return getReservableTimes(store.getStoreNum(),anticipatedDate);
     }
 

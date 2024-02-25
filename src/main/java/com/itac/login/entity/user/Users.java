@@ -1,23 +1,25 @@
 package com.itac.login.entity.user;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.itac.login.entity.BaseTimeEntity;
+import com.itac.login.entity.reservation.Reservation;
+import com.itac.login.entity.store.Store;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @EqualsAndHashCode(of= {"userNum"}) // equals, hashCode 자동 생성
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
-@ToString
+@ToString(exclude ={"reservations","stores"})
 @Slf4j
 public class Users extends BaseTimeEntity implements UserDetails {
 
@@ -38,6 +40,16 @@ public class Users extends BaseTimeEntity implements UserDetails {
         this.userPassword = userPassword;
         this.auth = auth;
     }
+
+    @OneToMany(mappedBy = "users",fetch=FetchType.LAZY)
+    @JsonBackReference //순환참조 방지
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    private List<Reservation> reservations;
+
+    @OneToMany(mappedBy = "users",fetch=FetchType.LAZY)
+    @JsonBackReference //순환참조 방지
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    private List<Store> stores;
 
     public Long getUserNum() {
         return userNum;
