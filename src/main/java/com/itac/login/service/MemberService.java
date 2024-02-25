@@ -33,4 +33,8 @@ public class MemberService implements UserDetailsService {
 		return userRepository.getAuth(username);
 	}
 
+	public int findMember(String username){
+		return userRepository.getId(username);
+	}
+
 }

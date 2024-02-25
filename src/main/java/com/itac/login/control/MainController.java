@@ -37,4 +37,7 @@ public class MainController {
     public String mypage2(){
         return "mypage/storePage";
     }
+
+    @GetMapping("/mypage/storeManage")
+    public String storeManage(){ return "mypage/store/StoreManage"; }
 }

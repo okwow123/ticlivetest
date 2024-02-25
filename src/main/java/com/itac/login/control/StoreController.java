@@ -1,6 +1,7 @@
 package com.itac.login.control;
 
 import com.itac.login.entity.store.Store;
+import com.itac.login.entity.user.Users;
 import com.itac.login.service.MemberService;
 import com.itac.login.service.StoreService;
 import com.itac.login.dto.StoreDto;
@@ -28,8 +29,6 @@ import java.util.List;
 @Slf4j
 public class StoreController {
 
-    String url ="http://localhost:8080";
-
     @Autowired
     private StoreService storeService;
 
@@ -43,21 +42,21 @@ public class StoreController {
             if(auth.getAuthorities() != null){
                 String email = req.getUserPrincipal().getName();
                 if(!memberService.getAuth(email).equals("store")){
-                    resp.sendRedirect(url+"/mypage");
+                    resp.sendRedirect("/mypage");
 
                 }else{
-                    resp.sendRedirect(url+"/storePage");
+                    resp.sendRedirect("/mypage/storePage");
                 }
             }
         }catch(Exception e){
-            resp.sendRedirect(url+"/login");
+            resp.sendRedirect("/login");
         }
     }
     
     @GetMapping("/list")
-    public ResponseEntity<Object> list(){
-        
-        return ResponseEntity.status(HttpStatus.OK).body(storeService.allStores());
+    public ResponseEntity<Object> list(HttpServletRequest req){
+        int userId = memberService.findMember(req.getUserPrincipal().getName());
+        return ResponseEntity.status(HttpStatus.OK).body(storeService.manageStoreInfo(userId));
     }
 
     @GetMapping("/{id}")
