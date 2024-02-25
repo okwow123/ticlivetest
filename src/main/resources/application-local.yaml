@@ -7,9 +7,9 @@ spring:
     ansi:
       enabled: detect
   datasource:
-    url: jdbc:postgresql://localhost:5432/postgres
-    username: postgres
-    password: 1q2w3e!Q@W#E
+    url: jdbc:postgresql://20.214.108.168:15432/testdb
+    username: testuser
+    password: testuser
     #hikari:
      # maximum-pool: 20
   jpa:
