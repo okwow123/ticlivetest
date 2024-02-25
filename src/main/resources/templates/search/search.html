@@ -1,316 +1,126 @@
 <!DOCTYPE html>
-    <html xmlns:th="http://www.thymeleaf.org" lang="ko">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-        <!--=============== BOXICONS ===============-->
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+    <!--=============== BOXICONS ===============-->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css"
+    />
 
-        <!--=============== BOOTSTRAP ===============-->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+    <!--=============== BOOTSTRAP ===============-->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+      crossorigin="anonymous"
+    ></script>
 
-        <!--=============== CSS ===============-->
-        <link rel="stylesheet" href="/css/styles.css">
-        <link rel="stylesheet" href="/css/search.css">
+    <!--=============== CSS ===============-->
+    <link rel="stylesheet" href="/css/styles.css" />
+    <link rel="stylesheet" href="/css/search.css" />
 
-        <title>달곰 디저트 검색하기</title>
-        <script>
-            let previousDisplayStyle;
+    <title>달곰 디저트 검색하기</title>
+    <script></script>
+  </head>
+  <body>
+    <!--=============== HEADER ===============-->
+    <header class="header" id="header">
+      <nav class="nav container">
+        <a href="#" class="nav__logo">달곰디저트</a>
+        <div class="nav__menu" id="nav-menu">
+          <ul class="nav__list">
+            <li class="nav__item">
+              <a href="/home" class="nav__link active-link">
+                <i class="bx bx-home-alt nav__icon"></i>
+                <span class="nav__name">홈</span>
+              </a>
+            </li>
+            <li class="nav__item">
+              <a href="/search" class="nav__link">
+                <i class="bx bx-message-square-detail nav__icon"></i>
+                <span class="nav__name">검색</span>
+              </a>
+            </li>
+            <li class="nav__item">
+              <a href="/reservation" class="nav__link">
+                <i class="bx bx-book-alt nav__icon"></i>
+                <span class="nav__name">예약</span>
+              </a>
+            </li>
 
-            function fetchList(){
-                let search_option = document.getElementById('search_option').value;
-                let search_input = document.getElementById('search_input').value;
-                let fetch_path = '/api/'+search_option+'/'+search_input;
-                //console.log(fetch_path);
+            <li class="nav__item">
+              <a href="/mypage" class="nav__link">
+                <i class="bx bx-user nav__icon"></i>
+                <span class="nav__name">마이페이지</span>
+              </a>
+            </li>
+          </ul>
+        </div>
 
-                
-                let category_list = document.getElementById('category_list');
-                let searched_list = document.getElementById('searched_list');
+        <img src="/img/perfil.png" alt="" class="nav__img" />
+      </nav>
+    </header>
 
-                if(search_input == ''){
-                    category_list.style.display = previousDisplayStyle;
-                    searched_list.style.display = "none";
-                    return;
-                }
+    <main>
+      <!--=============== CONTACTME ===============-->
+      <section class="container section section__height" id="contactme">
+        <h2 class="section__title">검색화면</h2>
+        <label for="search_option">검색하기</label>
 
-                if(category_list.style.display!='none'){
-                    previousDisplayStyle = category_list.style.display;
-                    category_list.style.display = 'none';
-                    searched_list.style.display=previousDisplayStyle;
-                }
+        <div class="search_module module">
+          <select id="search_option" name="search_option">
+            <option value="search">상호명</option>
+            <option value="location">지역</option>
+          </select>
+          <input type="text" id="search_input" oninput="fetchList()" />
+        </div>
 
-                fetch(fetch_path)
-                .then((result)=>{
-                    let data = result.json();
-                    if(data!=null){
-                        searched_list.innerHTML = '';
-                    }
-                    return data;
-                })
-                .then((data)=>{
-                    console.log(data)
-                    data.forEach(store => {
-                        let store_div = document.createElement('div');
-                        store_div.classList.add('store_div');
-
-                        let images = store.images.map(
-                            (image,idx) => {
-                                if(idx==0 && image==null)
-                                    return "이미지 없음 경로";
-                                else if(image==null){
-                                    return;
-                                }
-                            }
-                        )
-                        // let store_name = store.storeName;
-                        // let store_path = store.storeLocation;
-
-                        let images_div = document.createElement('div');
-                        let store_name_div = document.createElement('div');
-                        let store_path_div = document.createElement('div');
-
-                        images_div.classList.add('images_div');
-                        store_name_div.classList.add('store_name_div');
-                        store_path_div.classList.add('store_path_div');
-
-                        let images_img = document.createElement('img');
-                        images_img.setAttribute('src', images[0]);
-                        images_img.setAttribute('alt', '이미지 경로 유실');
-                        images_div.appendChild(images_img);
-
-                        store_name_div.innerText=store.storeName;
-                        store_path_div.innerText=store.storeLocation;
-
-                        store_div.appendChild(images_div);
-                        store_div.appendChild(store_name_div);
-                        store_div.appendChild(store_path_div);
-                       
-                        searched_list.appendChild(store_div);
-                    });
-                })
-                .catch((error)=>{
-                    console.log(error);
-                    console.log("조회된 데이터가 없습니다.");
-                    let nothing_searched_div = document.createElement('div');
-
-                    nothing_searched_div.classList.add('nothing_searched_div');
-                    nothing_searched_div.innerHTML = "조회된 데이터가 없습니다."; 
-
-                    document.getElementById('searched_list').appendChild(nothing_searched_div);
-                });
-            }
-            
-            function setup_recommend(){
-                let recommend_list = document.getElementById('recommend_list');
-                let dataJSON = [ //추후에는 외부에서 이 값을 읽어와야함 //외부에서 주입되는 고정추천리스트
-                {
-                        itemname:"마카롱",
-                        image:"/img/마카롱.jpg",//이미지 경로
-                        tags:[
-                            "마카롱","태그2"
-                        ],
-                        linkedurl:"",
-                    },{
-                        itemname:"딸기",
-                        image:"/img/딸기.jpg",//이미지 경로
-                        tags:[
-                            "딸기","태그2"
-                        ],
-                        linkedurl:"",
-                    },{
-                        itemname:"마카롱",
-                        image:"/img/마카롱.jpg",//이미지 경로
-                        tags:[
-                            "마카롱","태그2"
-                        ],
-                        linkedurl:"",
-                    },{
-                        itemname:"딸기",
-                        image:"/img/딸기.jpg",//이미지 경로
-                        tags:[
-                            "딸기","태그2"
-                        ],
-                        linkedurl:"",
-                    },{
-                        itemname:"마카롱",
-                        image:"/img/마카롱.jpg",//이미지 경로
-                        tags:[
-                            "마카롱","태그2"
-                        ],
-                        linkedurl:"",
-                    },{
-                        itemname:"딸기",
-                        image:"/img/딸기.jpg",//이미지 경로
-                        tags:[
-                            "딸기","태그2"
-                        ],
-                        linkedurl:"",
-                    },
-                ];
-
-                dataJSON.forEach((item,idx)=>{
-                    let item_div = document.createElement('div'); //recommend_list에 부착될 요소들
-                    item_div.classList.add('item_div');
-                    item_div.style.width = '9vw';
-                    item_div.style.height = item_div.style.width;
-
-                    let item_img = document.createElement('img'); //item_div에 담길 요소
-                    item_img.setAttribute('src',item.image);
-                    item_img.classList.add('item_img');
-
-                    let tags_div = document.createElement('div'); //item_div에 담길 요소
-                    tags_div.classList.add('col');
-                    item.tags.forEach((tag,tagidx)=>{
-                        let tag_div = document.createElement('div');
-                        tag_div.classList.add('tag_div');
-                        tag_div.style.display = "inline-block"
-                        tag_div.innerText ='#'+tag;
-                        tags_div.appendChild(tag_div);
-                    })
-
-                    item_div.appendChild(item_img);
-                    item_div.appendChild(tags_div);
-
-                    recommend_list.appendChild(item_div);
-                })
-            }
-
-            function setup_hashtags(){
-                let hashtags = [//외부에서 유저 정보를 통계를 내서 주입해주는 리스트
-                    {
-                        tagname:"태그1",
-                        url:"",
-                    },{
-                        tagname:"태그2",
-                        url:"",
-                    },{
-                        tagname:"태그3",
-                        url:"",
-                    },{
-                        tagname:"태그4",
-                        url:"",
-                    }
-                ];
-
-                let hashtag_list = document.getElementById('hashtag_list');
-                hashtags.forEach((tag_obj,idx)=>{
-                    let a = document.createElement('a');
-                    a.href = tag_obj.url;
-                    a.innerText = '#'+tag_obj.tagname;
-                    a.style.border = '1px solid #ff3d00';
-                    a.style.borderRadius = '18px';
-                    a.style.textDecoration = 'none';
-                    a.style.color = 'black';
-                    a.style.padding = '1px';
-
-                    hashtag_list.appendChild(a);
-                })                
-            }
-
-            function setup(){
-                setup_recommend();
-                setup_hashtags();
-            }
-        </script>
-    </head>
-    <body>
-        <!--=============== HEADER ===============-->
-        <header class="header" id="header">
-            <nav class="nav container">
-                <a href="#" class="nav__logo">달곰디저트</a>
-                <div class="nav__menu" id="nav-menu">
-                    <ul class="nav__list">
-                        <li class="nav__item">
-                            <a href="/home" class="nav__link active-link">
-                                <i class='bx bx-home-alt nav__icon'></i>
-                                <span class="nav__name">홈</span>
-                            </a>
-                        </li>
-                        <li class="nav__item">
-                            <a href="/search" class="nav__link">
-                                <i class='bx bx-message-square-detail nav__icon'></i>
-                                <span class="nav__name">검색</span>
-                            </a>
-                        </li>
-                        <li class="nav__item">
-                            <a href="/reservation" class="nav__link">
-                                <i class='bx bx-book-alt nav__icon'></i>
-                                <span class="nav__name">예약</span>
-                            </a>
-                        </li>
-
-                        <li class="nav__item">
-                            <a href="/mypage" class="nav__link">
-                                <i class='bx bx-user nav__icon'></i>
-                                <span class="nav__name">마이페이지</span>
-                            </a>
-                        </li>
-                    </ul>
+        <div>
+          <div id="category_list">
+            <div class="row">
+              <div class="recommend_module module">
+                어떤 것을 찾으세요?
+                <div class="row" id="recommend_list">
+                  <!-- 마카롱,딸기 -->
                 </div>
-
-                <img src="/img/perfil.png" alt="" class="nav__img">
-            </nav>
-        </header>
-
-        <main>
-            <!--=============== CONTACTME ===============-->
-            <section class="container section section__height" id="contactme">
-                <h2 class="section__title">검색화면</h2>
-                <label for="search_option">검색하기</label>
-
-                <div class="search_module module">
-                    <select id="search_option" name="search_option">
-                        <option value="search">상호명</option>
-                        <option value="location">지역</option>
-                    </select>
-                    <input type="text" id="search_input" oninput="fetchList()">
-                </div>
-                
-                <div>
-                    <div id="category_list">
-                        <div class="row">
-                            <div class="recommend_module module">
-                                어떤 것을 찾으세요?
-                                <div class="row" id="recommend_list">
-                                    <!-- 마카롱,딸기 -->                                    
-                                </div>
-                            </div>
-                            <div class="hashtag_module module">
-                                추천 해시태그
-                                <div class="col" id="hashtag_list">
-                                    
-                                </div>
-                            </div>
-                            <div class="soaring_module module">
-                                <!-- <ul>
+              </div>
+              <div class="hashtag_module module">
+                추천 해시태그
+                <div class="col" id="hashtag_list"></div>
+              </div>
+              <div class="soaring_module module">
+                <!-- <ul>
                                     <li style="cursor: pointer;"></li>
                                 </ul> -->
-                            </div>
-                        </div>
-                    </div>
+              </div>
+            </div>
+          </div>
 
-                    <div id="searched_list">
-                        <th:block th:if="${list}">
-                            th:block list exist
-                        </th:block>
-                    </div>
-                </div>
-                <button id="reservationDateTableUp_btn">예약 버튼</button>
-                <div id="reservationDateTable">새로운 div
-                    <button id="cancelReserving">닫기</button>
-                </div>
+          <div id="searched_list">
+            <th:block th:if="${list}"> th:block list exist </th:block>
+          </div>
+        </div>
+        <button id="reservationDateTableUp_btn">예약 버튼</button>
+        <div id="reservationDateTable">
+          새로운 div
+          <button id="cancelReserving">닫기</button>
+        </div>
+      </section>
+    </main>
 
-            </section>
-        </main>
-        
-
-        <!--=============== MAIN JS ===============-->
-        <script src="/js/main.js"></script>
-        <script src="/js/search.js"></script>
-        <script>
-            setup();
-        </script>
-    </body>
+    <!--=============== MAIN JS ===============-->
+    <script src="/js/main.js"></script>
+    <script src="/js/search.js"></script>
+    <script>
+      setup();
+    </script>
+  </body>
 </html>

@@ -1,5 +1,7 @@
 package com.itac.login.control;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.itac.login.entity.store.Store;
 import com.itac.login.entity.user.Users;
 import com.itac.login.service.MemberService;
@@ -22,9 +24,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api/v1/store")
@@ -60,9 +60,6 @@ public class StoreController {
         int userId = memberService.findMember(req.getUserPrincipal().getName());
         return ResponseEntity.status(HttpStatus.OK).body(storeService.manageStoreInfo(userId));
     }
-
-
-
     @GetMapping("/{id}")
     public ResponseEntity<Store> store(@PathVariable Long id){
         Store store = storeService.show(id);
@@ -70,10 +67,19 @@ public class StoreController {
         return ResponseEntity.status(HttpStatus.OK).body(store);
     }
 
-    @GetMapping("/{id}/{localdate}")
-    public ResponseEntity<List<LocalTime>> getReservableTimes(@PathVariable Long id,@PathVariable LocalDate localdate){
-       List<LocalTime> reservableTimes = storeService.getReservableTimes(id,localdate);
-       return reservableTimes != null && !reservableTimes.isEmpty()?
+    @GetMapping("/{id}/{localDatestr}")
+    public ResponseEntity<List<LocalTime>> getReservableTimes(@PathVariable Long id,@PathVariable String localDatestr) throws JsonProcessingException {
+        log.info("@GetMapping(/{id}/{localDate}) -> id : "+ id+", localDate : "+localDatestr);
+//        ObjectMapper objectMapper = new ObjectMapper();
+//        // 이 부분을 try catch문으로 바꿔야함
+//        Map<String, Integer> dateMap = objectMapper.readValue(localDate, Map.class);
+//        // Map에서 년, 월, 일 값을 추출하여 LocalDate 객체 생성
+//        LocalDate parsedDate = LocalDate.of(dateMap.get("year"), dateMap.get("month"), dateMap.get("day"));
+        StringTokenizer st = new StringTokenizer(localDatestr,"-");
+        LocalDate parsedDate = LocalDate.of(Integer.parseInt(st.nextToken()),Integer.parseInt(st.nextToken()),Integer.parseInt(st.nextToken()));
+
+        List<LocalTime> reservableTimes = storeService.getReservableTimes(id,parsedDate);
+        return reservableTimes != null && !reservableTimes.isEmpty()?
                ResponseEntity.status(HttpStatus.OK).body(reservableTimes):
                ResponseEntity.status(HttpStatus.NO_CONTENT).body(reservableTimes);
     }
@@ -105,6 +111,4 @@ public class StoreController {
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
-
-
 }

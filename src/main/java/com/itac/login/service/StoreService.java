@@ -181,15 +181,35 @@ public class StoreService {
         List<LocalTime> reservableTimes = new ArrayList<>();
         Store store = storeRepository.findById(storeNum).orElse(null);
         //store가 null일때 또는 reservable이 0일때 예외처리가 필요
-        LocalTime openingtime = store.getOpeningtime().plusHours(1);
+        //openingtime, closingtime이 null일떄를 체크해야함   
+        
+        //오프닝 시간
+        LocalTime openingtime = store.getOpeningtime();
+        if(openingtime == null){
+            openingtime = LocalTime.of(9,0);
+        }
         openingtime = openingtime.plusHours(1);
+        
+        //클로징 시간
         LocalTime closingtime = store.getClosingtime();
+        if(openingtime == null){
+            openingtime = LocalTime.of(18,0);
+        }
+
         for (LocalTime time = openingtime; time.isBefore(closingtime); time = time.plusHours(1)) {
             reservableTimes.add(time);
         }
         //기본 예약가능한 시간들에서 예약된 시간들을 빼야함
+        List<Reservation> removerList = reservationRepository.findAllReservedTimesByStoreNumberAndDateTime(storeNum,anticipatedDate);
+        System.out.println(removerList);
+        System.out.println(removerList);
 
-        HashSet<LocalTime> reservedTimes = new HashSet<>(reservationRepository.findAllReservedTimesByStoreNumberAndDateTime(storeNum,anticipatedDate));
+        HashSet<LocalTime> reservedTimes = new HashSet<>();
+
+        for(Reservation r : removerList){
+            reservedTimes.add(r.getReservationTime());
+        }
+
         reservableTimes.removeIf(reservable-> reservedTimes.contains(reservable));
         log.info(reservedTimes.toString());
 

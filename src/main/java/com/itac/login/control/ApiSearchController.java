@@ -1,7 +1,11 @@
 package com.itac.login.control;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.itac.login.common.util.SortMethod;
+import com.itac.login.entity.reservation.Reservation;
 import com.itac.login.entity.store.Store;
+import com.itac.login.service.ReservationService;
 import com.itac.login.service.StoreService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,8 +16,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDate;
 import java.util.List;
-
+import java.util.Map;
+import java.util.StringTokenizer;
 
 
 @RequestMapping("/api")
@@ -24,6 +30,7 @@ public class ApiSearchController {
 
     private final StoreService storeService;
     private final SortMethod sortMethod;
+    private final ReservationService reservationService;
 
     @GetMapping(value={"/search","/location","/category"})
     public ResponseEntity<Object> allStores(){
@@ -78,5 +85,26 @@ public class ApiSearchController {
             return ResponseEntity.ok().body(storeList);
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("조회된 데이터 없음");
+    }
+
+    @GetMapping("/reservations")
+    public ResponseEntity<List<Reservation>> getAllReservations(){
+        List<Reservation> reservations = reservationService.allReservations();
+        log.info("reservations : "+reservations);
+
+        return reservations!=null? ResponseEntity.ok().body(reservations):
+                ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("/reservation/{localDatestr}")
+    public ResponseEntity<Reservation> getReservation2(@PathVariable String localDatestr) {
+        log.info("localDate : "+localDatestr);
+        StringTokenizer st = new StringTokenizer(localDatestr,"-");
+
+        LocalDate localDate = LocalDate.of(Integer.parseInt(st.nextToken()),Integer.parseInt(st.nextToken()),Integer.parseInt(st.nextToken()));
+        Reservation reservations = reservationService.findByLocalDate(localDate);
+        log.info("reservations : "+reservations);
+        return reservations!=null? ResponseEntity.ok().body(reservations):
+                ResponseEntity.notFound().build();
     }
 }
