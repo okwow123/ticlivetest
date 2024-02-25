@@ -33,6 +33,10 @@ public class StoreService {
         return storeRepository.findAll(gradeAsc);
     }
 
+    public List<Store> manageStoreInfo(long usernum){
+        return storeRepository.findByManageStore(usernum);
+    }
+
     public List<Store> searchWithWord(String searchWord) {
         return storeRepository.findByStoreNameContaining(searchWord);
     }
