@@ -8,12 +8,11 @@ let storeNum;
 
 let previousDisplayStyle;
 
-function fetchList() {
+async function fetchList() {
   //검색으로 가져온 목록들
   let search_option = document.getElementById("search_option").value;
   let search_input = document.getElementById("search_input").value;
   let fetch_path = "/api/" + search_option + "/" + search_input;
-  //console.log(fetch_path);
 
   let category_list = document.getElementById("category_list");
   let searched_list = document.getElementById("searched_list");
@@ -30,17 +29,16 @@ function fetchList() {
     searched_list.style.display = previousDisplayStyle;
   }
 
-  fetch(fetch_path)
-    .then((result) => {
-      let data = result.json();
-      if (data != null) {
-        searched_list.innerHTML = "";
-      }
-      return data;
-    })
-    .then((data) => {
-      // console.log(data);
-      data.forEach((store) => {
+  console.log("검색으로 fetch 시도할 주소 : "+fetch_path);
+  try {
+    const response = await fetch(fetch_path);
+    console.log("조회해온 데이터 : "+response);
+    console.log(response);
+    const stores = await response.json();
+
+    console.log("json으로 만든 데이터 : " + stores);
+    console.log(stores);
+      stores.forEach((store) => {
         // console.log(store);
         let store_div = document.createElement("div");
         store_div.classList.add("store_div");
@@ -82,19 +80,19 @@ function fetchList() {
 
         searched_list.appendChild(store_div);
       });
-    })
-    .catch((error) => {
-      console.log(error);
-      console.log("조회된 데이터가 없습니다.");
-      let nothing_searched_div = document.createElement("div");
 
-      nothing_searched_div.classList.add("nothing_searched_div");
-      nothing_searched_div.innerHTML = "조회된 데이터가 없습니다.";
+  } catch(error){
+    console.log(error);
+    console.log("조회된 데이터가 없습니다.");
+    let nothing_searched_div = document.createElement("div");
 
-      document
-        .getElementById("searched_list")
-        .appendChild(nothing_searched_div);
-    });
+    nothing_searched_div.classList.add("nothing_searched_div");
+    nothing_searched_div.innerHTML = "조회된 데이터가 없습니다.";
+
+    document
+    .getElementById("searched_list")
+    .appendChild(nothing_searched_div);   
+  }
 }
 
 function setup_recommend() {
@@ -266,7 +264,11 @@ const setupReservableTimes = (currentDate) => {
     month: currentDate.getMonth(),
     day: currentDate.getDate(),
   });
-  fetch("/api/v1/store/" + storeNum + "/" + currentDateJson)
+  var currentString = ""+currentDate.getFullYear()+"-"+(currentDate.getMonth()+1)+"-"+currentDate.getDate();
+  // fetch("/api/v1/store/" + storeNum + "/" + currentDateJson)
+  console.log("fetch할때 가져갈 storeNum값 : " + storeNum);
+  console.log("/api/v1/store/에 접근 시도");
+  fetch("/api/v1/store/" + storeNum + "/" + currentString)
     .then((data) => {
       return data.json();
     })

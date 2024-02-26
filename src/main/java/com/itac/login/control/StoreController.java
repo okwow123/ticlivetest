@@ -67,15 +67,15 @@ public class StoreController {
         return ResponseEntity.status(HttpStatus.OK).body(store);
     }
 
-    @GetMapping("/{id}/{localDatestr}")
-    public ResponseEntity<List<LocalTime>> getReservableTimes(@PathVariable Long id,@PathVariable String localDatestr) throws JsonProcessingException {
-        log.info("@GetMapping(/{id}/{localDate}) -> id : "+ id+", localDate : "+localDatestr);
+    @GetMapping("/{id}/{localDateStr}")
+    public ResponseEntity<List<LocalTime>> getReservableTimes(@PathVariable Long id,@PathVariable String localDateStr) {
+        log.info("@GetMapping(/{id}/{localDate}) -> id : "+ id+", localDateStr : "+localDateStr);
 //        ObjectMapper objectMapper = new ObjectMapper();
 //        // 이 부분을 try catch문으로 바꿔야함
 //        Map<String, Integer> dateMap = objectMapper.readValue(localDate, Map.class);
 //        // Map에서 년, 월, 일 값을 추출하여 LocalDate 객체 생성
 //        LocalDate parsedDate = LocalDate.of(dateMap.get("year"), dateMap.get("month"), dateMap.get("day"));
-        StringTokenizer st = new StringTokenizer(localDatestr,"-");
+        StringTokenizer st = new StringTokenizer(localDateStr,"-");
         LocalDate parsedDate = LocalDate.of(Integer.parseInt(st.nextToken()),Integer.parseInt(st.nextToken()),Integer.parseInt(st.nextToken()));
 
         List<LocalTime> reservableTimes = storeService.getReservableTimes(id,parsedDate);
