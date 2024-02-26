@@ -8,10 +8,11 @@ tempborderlines,.search_module,.store_div,.images_div,.store_name_div,.store_pat
 }
 
 .store_div{
-
+    border-radius: 10%;
+    border : 1px solid gray;
 }
 
-.images_div{
+.images_div {
 
 }
 
@@ -59,3 +60,20 @@ tempborderlines,.search_module,.store_div,.images_div,.store_name_div,.store_pat
   }
 }
 
+
+table tr,
+table th,
+table td
+{  
+  border: 1px solid black;
+}
+
+#modal-body {
+  margin: 0 auto; /* 좌우 여백을 자동으로 설정하여 가운데 정렬 */
+  text-align: center; /* 테이블 내용을 가운데 정렬 */
+}
+
+.modal-content{
+  border: 1px solid black;
+  border-radius: 10%;
+}

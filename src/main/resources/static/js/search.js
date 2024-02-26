@@ -4,7 +4,8 @@ let reservationDateTableUp_btn = document.getElementById(
 let reservationDateTable = document.getElementById("reservationDateTable");
 let currentDate = new Date();
 const realToday = new Date(); //절대 바뀌지 않는 오늘의 값
-let storeNum;
+let storeNum=-1;
+let modal_body = document.getElementById('modal-body');
 
 let previousDisplayStyle;
 
@@ -12,6 +13,9 @@ async function fetchList() {
   //검색으로 가져온 목록들
   let search_option = document.getElementById("search_option").value;
   let search_input = document.getElementById("search_input").value;
+  console.log('path만들때 사용할 변수값들');
+  console.log(search_option);
+  console.log(search_input);
   let fetch_path = "/api/" + search_option + "/" + search_input;
 
   let category_list = document.getElementById("category_list");
@@ -32,6 +36,9 @@ async function fetchList() {
   console.log("검색으로 fetch 시도할 주소 : "+fetch_path);
   try {
     const response = await fetch(fetch_path);
+    if(response.status != 200){
+      return;
+    }
     console.log("조회해온 데이터 : "+response);
     console.log(response);
     const stores = await response.json();
@@ -53,16 +60,23 @@ async function fetchList() {
         // let store_path = store.storeLocation;
 
         let images_div = document.createElement("div");
+        let store_info_div = document.createElement("div");
         let store_name_div = document.createElement("div");
         let store_path_div = document.createElement("div");
 
         images_div.classList.add("images_div");
+        store_info_div.classList.add("store_info_div");
         store_name_div.classList.add("store_name_div");
         store_path_div.classList.add("store_path_div");
+        
 
         let images_img = document.createElement("img");
-        images_img.setAttribute("src", images[0]);
+        images_img.setAttribute("src", "");
+        //images_img.setAttribute("src", images[0]);
         images_img.setAttribute("alt", "이미지 경로 유실");
+        images_img.style.width = images_div.offsetWidth;
+        images_img.style.height = images_div.offsetWidth;
+        images_div.offsetHeight = images_div.offsetWidth;
         images_div.appendChild(images_img);
 
         store_name_div.innerText = store.storeName;
@@ -73,16 +87,51 @@ async function fetchList() {
         storeNum_div.setAttribute("value", store.storeNum);
 
         store_div.appendChild(images_div);
-        store_div.appendChild(store_name_div);
-        store_div.appendChild(store_path_div);
+        store_div.appendChild(store_info_div);
+        store_info_div.appendChild(store_name_div);
+        store_info_div.appendChild(store_path_div);
         store_div.appendChild(storeNum_div);
-        store_div.addEventListener("click", showReservableTable);
+
+        store_div.classList.add("row");
+        images_div.classList.add('col-3');
+        store_info_div.classList.add('col');
+        store_info_div.classList.add('col-9');
+        store_name_div.classList.add('row-3');
+        store_path_div.classList.add('row-3');
+        
+        // images_div.classList.add('col-sm-2');
+        // store_info_div.classList.add('col-sm-10');
+        // store_name_div.classList.add('row-sm-3');
+        // store_path_div.classList.add('row-sm-3');
+
+        // store_div.addEventListener("click", showReservableTable);
+          
+        // 타겟 요소를 클릭했을 때 모달을 열기 위한 이벤트 리스너를 추가합니다.
+        store_div.addEventListener('click',(e)=>{
+          storeNum = e.currentTarget.querySelector('input[type="hidden"]').value;
+          console.log('store_div눌림 storeNum 갱신 to '+storeNum);
+        })
+        store_div.addEventListener('click', function() {
+          // 모달 버튼을 클릭하는 것처럼 모달을 엽니다.
+          var modal = new bootstrap.Modal(document.getElementById('exampleModal'));
+          setupCalendar();
+          modal.show();
+        });
 
         searched_list.appendChild(store_div);
-      });
+      });//모든 store_div 세팅완료
 
-  } catch(error){
-    console.log(error);
+    let images_divs = document.querySelectorAll('.images_div');
+    images_divs.forEach((images_div)=>{
+      images_div.style.height = images_div.offsetWidth+'px';
+      let img = images_div.querySelector('img');
+      img.style.width = '100%';
+      img.style.height = '100%';
+    })
+  }
+  catch(error){
+    //여기가 undefined error?
+    //console.log(error);
     console.log("조회된 데이터가 없습니다.");
     let nothing_searched_div = document.createElement("div");
 
@@ -93,6 +142,7 @@ async function fetchList() {
     .getElementById("searched_list")
     .appendChild(nothing_searched_div);   
   }
+
 }
 
 function setup_recommend() {
@@ -220,7 +270,8 @@ function defaultSetting() {
 }
 defaultSetting();
 
-const showReservableTable = (e) => {
+ const showReservableTable = async (e) => {
+  console('showReservableTable 함수 시작');
   reservationDateTable.style.display = "block";
   let main = e.currentTarget;
   console.log(main);
@@ -228,9 +279,13 @@ const showReservableTable = (e) => {
     e.currentTarget.querySelector('input[type="hidden"]') != null &&
     storeNum != e.currentTarget.querySelector('input[type="hidden"]').value
   ) {
-    storeNum = e.currentTarget.querySelector('input[type="hidden"]').value;
+    storeNum = await e.currentTarget.querySelector('input[type="hidden"]').value;
+    console.log("갱신된 storeNum : ");
+    console.log(storeNum);
     currentDate = new Date();
-    console.log("showReservableTable 중 정상적인 갱신");
+    console.log("갱신된 currentDate : ");
+    console.log(currentDate);
+    console.log("showReservableTable 중 정상적인 갱신완료 추정");
   } else {
     console.log("비상");
     console.log(e.currentTarget.querySelector('input[type="hidden"]') != null);
@@ -256,6 +311,7 @@ document.getElementById("cancelReserving").addEventListener("click", () => {
   reservationDateTable.style.display = "none";
 });
 
+//setupCalendar로부터 호출됨
 const setupReservableTimes = (currentDate) => {
   const reservableTimes_div = document.createElement("div");
   reservableTimes_div.classList.add("reservableTimes_div");
@@ -279,12 +335,16 @@ const setupReservableTimes = (currentDate) => {
     });
 };
 
+//modal로부터 호출됨
 const setupCalendar = (inputDate) => {
+  
   reservationDateTable.innerHTML = "";
   //원하는 시간으로 테이블 변경하기 위한 기본 조건
   currentDate = new Date(); //예약하기 위한 타겟이 되는 날짜
   if (inputDate !== undefined) {
     currentDate = inputDate;
+    console.log('다음 값 갱신');
+    console.log(currentDate);
   }
 
   // 주어진 조건의 달이 첫번째 요일이 무슨요일로 시작하는지 계산
@@ -312,13 +372,26 @@ const setupCalendar = (inputDate) => {
 
   let count = 0;
   let iterateDate;
+  //thead 세팅 구현중
+  var row = calendarHead.insertRow();
+  row.classList.add('row');
+  for (var j = 0; j < 7; j++) {
+    var cell = row.insertCell();
+    cell.classList.add('col');
+
+    cell.innerHTML = ''+getTodayDay(j);
+  }
+  
+  //tbody 세팅
   for (var i = 0; i < 6; i++) {
     //행이 6개
     var row = calendarBody.insertRow();
+    row.classList.add('row');
     for (var j = 0; j < 7; j++) {
       //열이 7개 일월화수목금토
       iterateDate = getDateNDaysNext(mainDate, count);
       var cell = row.insertCell();
+      cell.classList.add('col');
 
       var cellElement = document.createElement("div");
 
@@ -342,8 +415,11 @@ const setupCalendar = (inputDate) => {
     }
   }
   // 생성된 달력 요소를 reservationDateTable에 추가
+  calendarTable.appendChild(calendarHead);
   calendarTable.appendChild(calendarBody);
-  reservationDateTable.appendChild(calendarTable);
+  modal_body.style.textAlign = 'center';
+  modal_body.appendChild(calendarTable);
+  // reservationDateTable.appendChild(calendarTable);
   setupReservableTimes(currentDate);
 };
 
@@ -351,7 +427,7 @@ const setupCalendar = (inputDate) => {
 
 function getTodayDay(dayIndex) {
   const days = ["일", "월", "화", "수", "목", "금", "토"];
-  if (dayIndex != Number) {
+  if (typeof(dayIndex) != 'number') {
     return;
   }
   return days[dayIndex % 7];
