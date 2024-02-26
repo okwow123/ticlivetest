@@ -2,7 +2,7 @@ let reservationDateTableUp_btn = document.getElementById(
   "reservationDateTableUp_btn"
 );
 let reservationDateTable = document.getElementById("reservationDateTable");
-let currentDate = new Date();
+let currentDate = new Date(); //유동으로 조사하는 값
 const realToday = new Date(); //절대 바뀌지 않는 오늘의 값
 let storeNum=-1;
 let modal_body = document.getElementById('modal-body');
@@ -338,7 +338,8 @@ const setupReservableTimes = (currentDate) => {
 //modal로부터 호출됨
 const setupCalendar = (inputDate) => {
   
-  reservationDateTable.innerHTML = "";
+  modal_body.innerHTML = "";
+
   //원하는 시간으로 테이블 변경하기 위한 기본 조건
   currentDate = new Date(); //예약하기 위한 타겟이 되는 날짜
   if (inputDate !== undefined) {
@@ -346,6 +347,43 @@ const setupCalendar = (inputDate) => {
     console.log('다음 값 갱신');
     console.log(currentDate);
   }
+
+  //테이블 상단부의 오늘로 가는 버튼 + <년+월> 버튼 및 알림구현
+  let tableHeader = document.createElement('div');
+  
+  //정의
+  let goTodayBtn = document.createElement('button');
+  let leftArrow = document.createElement('div');
+  let rightArrow = document.createElement('div');
+  let showingYearAndMonth = document.createElement('div');
+
+  //구현상세
+  goTodayBtn.addEventListener('click',()=>{
+    // currentDate = new Date(); setupCalendar()내부에 이미 있는 코드
+    setupCalendar();
+  })
+  leftArrow.classList.add('arrow');
+  leftArrow.addEventListener('click',()=>{
+    currentDate.setMonth(currentDate.getMonth()-1);
+    setupCalendar(currentDate);
+    //showingYearAndMonth이쪽의 글자도 갱신해줘야함
+    //showingYearAndMonth를 갱신하는 메서드도 필요
+  })
+  rightArrow.classList.add('arrow');
+  rightArrow.addEventListener('click',()=>{
+    currentDate.setMonth(currentDate.getMonth()+1);
+    setupCalendar(currentDate);
+  })
+
+  //부착
+  tableHeader.appendChild(goTodayBtn);
+  tableHeader.appendChild(leftArrow);
+  tableHeader.appendChild(showingYearAndMonth);
+  tableHeader.appendChild(rightArrow);
+
+  modal_body.appendChild(tableHeader);
+
+
 
   // 주어진 조건의 달이 첫번째 요일이 무슨요일로 시작하는지 계산
   // 주어진 조건의 1달전의 몇개의 요일이 필요한지 계산
@@ -356,14 +394,9 @@ const setupCalendar = (inputDate) => {
   //테이블의 제일 좌측 상단의 시간 (년월일포함);
   //테이블 이 기준이 되는값
   const mainDate = getDateNDaysAgo(currentDate, previousMonthDays);
-  // let isDateFasterThanRealtime = false;
-  // function revalidateFasterThanRealtime (){
-  //   if(mainDate>realToday){
-  //     isDateFasterThanRealtime = true;
-  //   }
-  //   return isDateFasterThanRealtime;
-  // }
-  // revalidateFasterThanRealtime();
+
+
+
 
   // 달력 요소 생성
   var calendarTable = document.createElement("table");
