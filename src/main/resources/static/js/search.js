@@ -10,6 +10,7 @@ let currentDate = new Date();
 const realToday = new Date(); 
 /** 어느 가게를 선택했는지 담고있는 변수 {*} @type {number} */
 let storeNum = -1;
+let storeInfo = null;
 
 /** modal_body전역 변수 */
 let modal_body = document.getElementById('modal-body');
@@ -64,6 +65,8 @@ async function fetchList() {
       // console.log(store);
       let store_div = document.createElement('div');
       store_div.classList.add('store_div');
+      store_div.dataset.store = JSON.stringify(store);
+      console.log(store);
 
       let images = store.images.map((image, idx) => {
         if (idx == 0 && image == null) return '이미지 없음 경로';
@@ -116,6 +119,7 @@ async function fetchList() {
       /** 모달을 열기위한 이벤트 추가 */
       store_div.addEventListener('click', (e) => {
         storeNum = e.currentTarget.querySelector('input[type="hidden"]').value;
+        storeInfo = e.currentTarget.dataset.store;
         console.log('store_div눌림 storeNum 갱신 to ' + storeNum);
       });
 
@@ -531,6 +535,34 @@ function setup_hashtags() {
     hashtag_list.appendChild(a);
   });
 }
+
+const reserve = () =>{
+  if(!selectedPerson){
+    alert('예약 인원수를 설정해주세요');
+    return;
+  }
+
+  if(!selectedTime){
+    alert('희망 예약 시간을 설정해주세요');
+    return;
+  }
+  /** 
+   *  @todo fetch필요 storeNum으로 store 정보 불러오기
+   *  @todo store을 만들떄 dataset에 store를 담기
+   */
+  if(confirm('다음과 같이 예약 하시겠습니까?'+'\n'
+  +'예약 가게명 : ' + JSON.parse(storeInfo).storeName +'\n'
+  +'예약 날짜 : ' + currentDate.toDateString() +'\n'
+  +'예약 시간 : ' + selectedTime.dataset.time +'\n'
+  +'예약 인원수 : ' + selectedPerson.dataset.personCount +'\n')){
+    alert('예약 눌림');
+    //api로 예약을 하고 status.ok가 뜰때와 아닐때의 예외처리
+  } else {
+    alert('예약 취소 눌림');
+    // 취소가 눌렸을 때 수행할 작업을 기술할 수도 있습니다.
+  }
+}
+
 
 // 코드 확인 후 삭제 필요
 // 숨긴 div에서 modal 방식으로 변경되어서 필요없는 코드

@@ -108,26 +108,7 @@
             <th:block th:if="${list}"> th:block list exist </th:block>
           </div>
         </div>
-        <!-- <button type="hidden" id="reservationDateTableUp_btn">예약 버튼</button>
-        <div id="reservationDateTable">
-          새로운 div
-          <button id="cancelReserving">닫기</button>
-        </div> -->
-
-        <script>
-          // 타겟 요소를 가져옵니다.
-          const target = document.getElementById('targetdiv');
-
-          // 타겟 요소를 클릭했을 때 모달을 열기 위한 이벤트 리스너를 추가합니다.
-          target.addEventListener('click', function () {
-            // 모달 버튼을 클릭하는 것처럼 모달을 엽니다.
-            var modal = new bootstrap.Modal(
-              document.getElementById('exampleModal')
-            );
-            modal.show();
-          });
-        </script>
-
+ 
         <!-- Modal -->
         <!-- Modal 숙련도가 올라가면 id값을 적절하게 변경필요 -->
         <div
@@ -138,7 +119,7 @@
           aria-hidden="true"
         >
           <!-- 모달 크기 조정이 필요 컴퓨터 화면으로 볼때는 너무크며 모바일 일때는 괜찮을 듯함 -->
-          <div class="modal-dialog modal-dialog-centered modal-fullscreen">
+          <div class="modal-dialog modal-dialog-centered modal-fullscreen-md-down">
             <div class="modal-content">
               <div class="modal-header">
                 <h1
@@ -179,7 +160,7 @@
                 >
                   취소
                 </button>
-                <button type="button" class="btn btn-primary">
+                <button type="button" class="btn btn-primary" onclick="reserve()">
                   예약하기
                 </button>
               </div>

@@ -109,3 +109,7 @@ table td {
   text-shadow: blue ;
   font-size: 1.1em;
 }
+
+#modal_body>table {
+  margin:0 auto;
+}
