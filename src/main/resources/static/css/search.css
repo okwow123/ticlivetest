@@ -77,24 +77,35 @@ table td {
 }
 
 .unavailableDate {
-  color: gray;
+  color: gray;  
+  opacity: 0.5; /* 0에 가까울수록 투명하게 됨 */
+  cursor: not-allowed; /* 마우스 커서를 기본값에서 변경하여 비활성화된 상태임을 나타냄 */
 }
 
 .availableDate {
   color: black;
 }
 
-.availableDate:hover {
+.availableDate>span:hover {
   background-color: red;
   border: 1px solid red;
-  border-radius: 100%;
-  font-size: 1.1em;
+  border-radius: 10%;
+  /* display: inline-block; */
+  /* font-size: 1.1em; */
 }
 
-.availableDate.today {
+.availableDate.today,
+.currentDate {
   color: blue;
 }
 
 .arrow:hover {
   font-weight: 900;
+}
+
+.selected{
+  font-weight: bold;
+  color : black;
+  text-shadow: blue ;
+  font-size: 1.1em;
 }

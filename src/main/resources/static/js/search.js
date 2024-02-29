@@ -2,12 +2,26 @@ let reservationDateTableUp_btn = document.getElementById(
   'reservationDateTableUp_btn'
 );
 let reservationDateTable = document.getElementById('reservationDateTable');
-let currentDate = new Date(); //유동으로 조사하는 값
-const realToday = new Date(); //절대 바뀌지 않는 오늘의 값
+
+/** 유동으로 조사하는 값 (달력에서 예약을 희망하는 날짜) */
+let currentDate = new Date(); 
+
+/** 절대 바뀌지 않는 오늘의 값 */
+const realToday = new Date(); 
+/** 어느 가게를 선택했는지 담고있는 변수 {*} @type {number} */
 let storeNum = -1;
+
+/** modal_body전역 변수 */
 let modal_body = document.getElementById('modal-body');
 
-let previousDisplayStyle; //search시 다른 메뉴 div의 display속성을 임시저장
+/** search시 다른 메뉴 div의 display속성을 임시저장 */
+let previousDisplayStyle;
+
+/** 예약 시 몇 명 예약을 희망했는지 담는 전역 변수 */
+let selectedPerson = null;
+
+/** 예약 시 몇 시에 예약을 희망했는지 담는 전역 변수 */
+let selectedTime = null;
 
 //검색 할때 사용됨(함수명 리팩토링 필요)
 async function fetchList() {
@@ -46,7 +60,7 @@ async function fetchList() {
 
     console.log('json으로 만든 데이터 : ' + stores);
     console.log(stores);
-    stores.forEach((store) => {
+    stores.forEach((store,idx) => {
       // console.log(store);
       let store_div = document.createElement('div');
       store_div.classList.add('store_div');
@@ -71,7 +85,7 @@ async function fetchList() {
       store_path_div.classList.add('store_path_div');
 
       let images_img = document.createElement('img');
-      images_img.setAttribute('src', '');
+      images_img.setAttribute('src', '/img/딸기.jpg');
       //images_img.setAttribute("src", images[0]);
       images_img.setAttribute('alt', '이미지 경로 유실');
       images_img.style.width = images_div.offsetWidth;
@@ -98,20 +112,13 @@ async function fetchList() {
       store_info_div.classList.add('col-9');
       store_name_div.classList.add('row-3');
       store_path_div.classList.add('row-3');
-
-      // images_div.classList.add('col-sm-2');
-      // store_info_div.classList.add('col-sm-10');
-      // store_name_div.classList.add('row-sm-3');
-      // store_path_div.classList.add('row-sm-3');
-
-      // store_div.addEventListener('click', showReservableTable);
-      // 이방식이 바로 아래있는 모달 호출로 변경됨
-
-      // 타겟 요소를 클릭했을 때 모달을 열기 위한 이벤트 리스너를 추가합니다.
+      
+      /** 모달을 열기위한 이벤트 추가 */
       store_div.addEventListener('click', (e) => {
         storeNum = e.currentTarget.querySelector('input[type="hidden"]').value;
         console.log('store_div눌림 storeNum 갱신 to ' + storeNum);
       });
+
       store_div.addEventListener('click', function () {
         // 모달 버튼을 클릭하는 것처럼 모달을 엽니다.
         var modal = new bootstrap.Modal(
@@ -159,7 +166,6 @@ const setupCalendar = (inputDate) => {
   if (inputDate !== undefined) {
     currentDate = inputDate;
     console.log('다음 값 갱신');
-    // console.log(currentDate);
   }
 
   //테이블 상단부의 오늘로 가는 버튼 + <년+월> 버튼 및 알림구현
@@ -215,13 +221,20 @@ const setupCalendar = (inputDate) => {
 
   // 주어진 조건의 달이 첫번째 요일이 무슨요일로 시작하는지 계산
   // 주어진 조건의 1달전의 몇개의 요일이 필요한지 계산
-  firstDayOfMonth = getFirstDayOfMonth(currentDate);
+  firstDayOfMonth = getFirstDayOfMonth();
+  console.log(firstDayOfMonth);
   let previousMonthDays = firstDayOfMonth;
   let needPreviousMonthDays = true;
 
   //테이블의 제일 좌측 상단의 시간 (년월일포함);
   //테이블 이 기준이 되는값
-  const mainDate = getDateNDaysAgo(currentDate, previousMonthDays);
+
+  /** @todo 왼쪽의 값이 currentDate가 아닌 currentDate의 1일 날짜를 넣어야함 */
+  let sameMonth1stDate = new Date(currentDate);
+  sameMonth1stDate.setDate(1);
+
+  let mainDate = getDateNDaysAgo(sameMonth1stDate, previousMonthDays);
+  console.log(mainDate.toDateString);
 
   // 달력 요소 생성
   var calendarTable = document.createElement('table');
@@ -247,31 +260,34 @@ const setupCalendar = (inputDate) => {
     for (var j = 0; j < 7; j++) {
       //열이 7개 일월화수목금토
       iterateDate = getDateNDaysNext(mainDate, count);
-      console.log();
+      
       var cell = row.insertCell();
       cell.classList.add('col');
-
       var cellElement = document.createElement('div');
-
+      cellElement.dataset.date = iterateDate.toString();
       if (iterateDate < realToday) {
         //현실기준 과거시점은 예약불가
         cellElement.innerHTML = iterateDate.getDate();
         cellElement.classList.add('unavailableDate');
-      } else if (iterateDate >= realToday) {
-        if (iterateDate == realToday) {
-          cellElement.classList.add('today');
+      } else if (iterateDate.toDateString >= realToday.toDateString) {
+        if (iterateDate.toDateString() == currentDate.toDateString()) {
+          cellElement.classList.add('currentDate');
         }
         //현실보다 미래시점 예약가능 //오늘이지만 과거시점의 예외처리 필요
-        cellElement.addEventListener('click', () => {
+        cellElement.addEventListener('click', (e) => {
+          let myDateString = e.currentTarget.dataset.date;
+          console.log(myDateString);
           setupCalendar(
-            new Date(
-              iterateDate.getFullYear(),
-              iterateDate.getMonth(),
-              iterateDate.getDate()
-            )
+            new Date(myDateString)
           );
         });
-        cellElement.innerText = iterateDate.getDate();
+        // 아래코드가 그 아래 세줄 코드로 변경
+        // cellElement.innerText = iterateDate.getDate();
+
+        let spanInCell = document.createElement('span');
+        spanInCell.innerText = iterateDate.getDate();
+        cellElement.appendChild(spanInCell);
+        
         //이쪽에 저 a link가 눌렸을때 아래 예약가능시간 탭도 갱신해주는 코드 추가필요;
         cellElement.classList.add('availableDate');
       }
@@ -284,21 +300,53 @@ const setupCalendar = (inputDate) => {
   calendarTable.appendChild(calendarBody);
   modal_body.style.textAlign = 'center';
   modal_body.appendChild(calendarTable);
+
+  //예약할 명수 추가할 리스트 띄어주기
+  let reservableList = document.createElement('div');
+  reservableList.classList.add('reservableList');
+  reservableList.classList.add('row');
+
+  for(let i=1;i<13;i++){
+    //요소마다의 별개 연산이 들어가면 좋음
+    // 너무적은인원의 예약과 많은인원의 예약의 경우
+    // 다른 function으로 연결하여서 그function내에서 세부 나눔처리
+    let reservablePerson = document.createElement('div');
+    let spanInReservablePerson = document.createElement('span');
+    reservablePerson.classList.add('reservablePerson');
+    reservablePerson.classList.add('col');
+    reservablePerson.dataset.personCount = i;
+    reservablePerson.addEventListener('click',(e)=>{
+      let pressedPerson = e.currentTarget;
+      if(selectedPerson){
+        selectedPerson.classList.remove('selectedPerson');
+        selectedPerson.classList.remove('selected');
+      }
+      pressedPerson.classList.add('selectedPerson');
+      pressedPerson.classList.add('selected');
+      selectedPerson = pressedPerson;
+    })
+
+    spanInReservablePerson.innerText=i+'명';
+    spanInReservablePerson.classList.add('spanInReservablePerson');
+
+    reservablePerson.appendChild(spanInReservablePerson);
+    reservableList.appendChild(reservablePerson);
+  }
+  modal_body.appendChild(reservableList);
+
+  //예약가능한 시간들 나타내주기
+
   // reservationDateTable.appendChild(calendarTable);
   setupReservableTimes(currentDate);
 };
 
-//setupCalendar로부터 호출됨
+/**
+ * 예약가능한 시간때를 list에 담아 modal_body에 부착하는 메서드
+ * @param {Date} currentDate 예약가능한 시간을 조회할 날짜
+ */
 const setupReservableTimes = (currentDate) => {
-  const reservableTimes_div = document.createElement('div');
-  reservableTimes_div.classList.add('reservableTimes_div');
-  var currentDateJson = JSON.stringify({
-    year: currentDate.getFullYear(),
-    month: currentDate.getMonth(),
-    day: currentDate.getDate(),
-  });
+
   var currentString =
-    '' +
     currentDate.getFullYear() +
     '-' +
     (currentDate.getMonth() + 1) +
@@ -308,14 +356,39 @@ const setupReservableTimes = (currentDate) => {
   console.log('fetch할때 가져갈 storeNum값 : ' + storeNum);
   console.log('/api/v1/store/에 접근 시도');
   fetch('/api/v1/store/' + storeNum + '/' + currentString)
-    .then((data) => {
-      return data.json();
-    })
-    .then((datas) => {
-      datas.forEach((data) => {
-        // console.log(data);
+  .then((data) => {
+    return data.json();
+  })
+  .then((datas) => {
+    let reservableTimesList = document.createElement('div');
+    datas.forEach((data) => {
+      let reservableTime = document.createElement('div');
+      reservableTime.classList.add('reservableTime');
+      reservableTime.classList.add('col');
+      reservableTime.addEventListener('click',(e)=>{
+        let pressedTime = e.currentTarget;
+        if(selectedTime){
+          selectedTime.classList.remove('selectedTime');
+          selectedTime.classList.remove('selected');
+        }
+        pressedTime.classList.add('selectedTime');
+        pressedTime.classList.add('selected');
+        selectedTime = pressedTime;
       });
+      
+      /** @todo A href 달아야함*/
+      reservableTime.innerText = data;
+      reservableTime.dataset.time = data;
+
+      // console.log(data);
+      reservableTimesList.appendChild(reservableTime)
     });
+
+    reservableTimesList.classList.add('reservableTimesList');
+    reservableTimesList.classList.add('row');
+
+    modal_body.appendChild(reservableTimesList);
+  });
 };
 
 // 날짜 관련 함수 모음
@@ -327,9 +400,12 @@ function getTodayDay(dayIndex) {
   return days[dayIndex % 7];
 }
 
-function getFirstDayOfMonth(firstDayOfMonth) {
-  firstDayOfMonth.setDate(1);
-  return firstDayOfMonth.getDay();
+// firstDayOfMonth는 지역변수 인것같은데..
+// 전역변수인 currentDate에 영향이 있었음
+function getFirstDayOfMonth() {
+  let tempDate = new Date(currentDate)
+  tempDate.setDate(1);
+  return tempDate.getDay();
 }
 
 function getDateNDaysAgo(standardDate, n) {
@@ -458,19 +534,19 @@ function setup_hashtags() {
 
 // 코드 확인 후 삭제 필요
 // 숨긴 div에서 modal 방식으로 변경되어서 필요없는 코드
-function defaultSetting() {
-  var parent = document.getElementById('contactme');
-  reservationDateTable.style.left = parent.offsetLeft + 'px';
-  reservationDateTable.style.width = parent.offsetWidth + 'px';
-  reservationDateTable.style.backgroundColor = '#f1f1f1';
-}
+// function defaultSetting() {
+//   var parent = document.getElementById('contactme');
+//   reservationDateTable.style.left = parent.offsetLeft + 'px';
+//   reservationDateTable.style.width = parent.offsetWidth + 'px';
+//   reservationDateTable.style.backgroundColor = '#f1f1f1';
+// }
 
 // 페이지 로딩 후 시작 함수를 모아둔곳
 // window.onload 변경고려
 function setup() {
   setup_recommend();
   setup_hashtags();
-  defaultSetting();
+  // defaultSetting();
 }
 
 // reservationDateTableUp_btn.addEventListener('click', showReservableTable);
