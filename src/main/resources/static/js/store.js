@@ -29,19 +29,41 @@ function fnStoreRegist(){
         storeInfo : storeInfoEl.value
     }
 
-    var toJson = new Blob([JSON.stringify(data)],{
-        type : 'application/json',
+    var toJSON = JSON.stringify(data);
+    storeForm.append("store", new Blob([toJSON], {type: "application/json"}))
+    $.ajax({
+        type: 'post',
+        url : '/api/v1/store/create',
+        data : storeForm,
+        contentType : false,
+        processData : false,
+        success : function (message){
+            alert("성공!");
+        }
+
+    });
+
+
+/*
+    axios Code
+    var jsonData = JSON.stringify(data);
+
+
+    var toJson = new Blob([jsonData],{
+        type : 'application/json; charset=utf-8',
     });
 
     storeForm.append("store", toJson);
 
     const headers = {
         headers : {
-            'Content-Type': 'multipart/form-data',
+            'Content-Type': 'multipart/form-data; boundary=<calculated when request is sent>',
         },
     };
 
     axios.post('/api/v1/store/create', storeForm, headers);
+
+ */
 }
 
 
