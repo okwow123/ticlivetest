@@ -39,6 +39,9 @@ import java.util.*;
 public class StoreController {
 
     @Autowired
+    ObjectMapper objectMapper;
+
+    @Autowired
     private StoreService storeService;
 
     @Autowired
@@ -95,7 +98,10 @@ public class StoreController {
     }
 
     @PostMapping(value="/create")
-    public ResponseEntity<Store> Create(HttpServletRequest req, @RequestPart("store") StoreDto storeDto, @RequestPart(value = "file", required = false)List<MultipartFile> multipartFile) throws IOException{
+    public ResponseEntity<Store> Create(HttpServletRequest req, @RequestPart(value = "file", required = false)List<MultipartFile> multipartFile, @RequestParam("store") String storeString) throws IOException{
+
+        StoreDto storeDto = objectMapper.readValue(storeString, StoreDto.class);
+
         String user = req.getUserPrincipal().getName();
         Store store = storeService.create(storeDto, user, multipartFile);
         return ResponseEntity.status(HttpStatus.OK).body(store);
@@ -149,20 +155,10 @@ public class StoreController {
         reservationDateTimeInfo = reservationDateTimeInfo.substring(0,19);
         LocalDateTime localDateTime = LocalDateTime.parse(reservationDateTimeInfo);
 
-
-//        Instant instant = Instant.parse(reservationDateTimeInfo);
-//        LocalDateTime reservationDateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
-//        log.info(reservationDateTime.toString());
-//        LocalDateTime reservationDateTime = LocalDateTime.parse(reservationDateTimeInfo);
-
         reservation.setReservationDate(localDateTime.toLocalDate());
         reservation.setReservationTime(LocalTime.parse(data.get("reservationTime")));
 
         log.info("reservation : "+reservation);
-
-
-//        String memberId  = SecurityContextHolder.getContext().getAuthentication().getName();
-//        log.info("memberId : "+ memberId);
 
         Object principal = authentication.getPrincipal();
         if(! (principal instanceof Users)){

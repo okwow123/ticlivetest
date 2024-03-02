@@ -1,6 +1,7 @@
 package com.itac.login.entity.user;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.itac.login.entity.BaseTimeEntity;
 import com.itac.login.entity.reservation.Reservation;
@@ -43,12 +44,12 @@ public class Users extends BaseTimeEntity implements UserDetails {
 
     @OneToMany(mappedBy = "users",fetch=FetchType.LAZY)
     @JsonBackReference //순환참조 방지
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @JsonIgnore
     private List<Reservation> reservations;
 
     @OneToMany(mappedBy = "users",fetch=FetchType.LAZY)
     @JsonBackReference //순환참조 방지
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @JsonIgnore
     private List<Store> stores;
 
     public Long getUserNum() {

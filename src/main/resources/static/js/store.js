@@ -29,19 +29,29 @@ function fnStoreRegist(){
         storeInfo : storeInfoEl.value
     }
 
-    var toJson = new Blob([JSON.stringify(data)],{
-        type : 'application/json',
-    });
+    // var toJson = new Blob([JSON.stringify(data)],{
+    //     type : 'application/json',
+    // });
 
-    storeForm.append("store", toJson);
+    // storeForm.append("store", toJson);
 
     const headers = {
+        params: {
+            store: JSON.stringify(data)
+        },
         headers : {
             'Content-Type': 'multipart/form-data',
         },
     };
+    console.log(storeForm);
 
-    axios.post('/api/v1/store/create', storeForm, headers);
+    axios.post('/api/v1/store/create', storeForm, headers)
+    .then(response => {
+        console.log(response);
+    })
+    .catch(error=>{
+        console.log(error);
+    });
 }
 
 

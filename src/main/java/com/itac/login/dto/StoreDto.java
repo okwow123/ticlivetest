@@ -1,17 +1,22 @@
 package com.itac.login.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.itac.login.entity.store.Store;
 import com.itac.login.entity.user.Users;
 import lombok.*;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.List;
 
 @Getter
 @Setter
-@ToString
+@ToString(exclude = "users")
 @NoArgsConstructor
 @AllArgsConstructor
+@Component
 public class StoreDto {
 
     private Long storeNum;
@@ -22,7 +27,10 @@ public class StoreDto {
     private String storeInfo;
     private LocalDate createDate;
     private LocalDate modificationDate;
+
     private List<String> images;
+    @JsonManagedReference
+    @JsonIgnore
     private Users users;
 
 

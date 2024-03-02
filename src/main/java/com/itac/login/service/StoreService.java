@@ -138,7 +138,7 @@ public class StoreService {
                     try {
                         folder.mkdir();
                     } catch (Exception e) {
-
+                        e.printStackTrace();
                     }
                 }
 
