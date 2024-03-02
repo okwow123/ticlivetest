@@ -27,4 +27,5 @@ public interface StoreRepository extends JpaRepository<Store,Long> {
 
     @Query(value="select * from public.store s where usernum=(:usernum)", nativeQuery=true)
     List<Store> findByManageStore(long usernum);
+
 }

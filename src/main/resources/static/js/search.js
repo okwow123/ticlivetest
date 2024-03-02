@@ -238,7 +238,7 @@ const setupCalendar = (inputDate) => {
   sameMonth1stDate.setDate(1);
 
   let mainDate = getDateNDaysAgo(sameMonth1stDate, previousMonthDays);
-  console.log(mainDate.toDateString);
+  console.log(mainDate.toDateString());
 
   // 달력 요소 생성
   var calendarTable = document.createElement('table');
@@ -554,8 +554,8 @@ const reserve = () =>{
 
   console.log(reservationDate);
   console.log(currentDate.toISOString());
-  alert(reservationDate)
-  alert(currentDate.toISOString());
+  // alert(reservationDate)
+  // alert(currentDate.toISOString());
 
   /** 
    *  @todo fetch필요 storeNum으로 store 정보 불러오기
@@ -592,7 +592,6 @@ const reserve = () =>{
 
           // 위 행동 이후에 모달을 내려줘야함
           // 예약 가능한 시간을 재 조회해야함
-
           const closeButton = document.getElementById("exampleModal-closer");
           closeButton.click();
         }else{
@@ -607,7 +606,8 @@ const reserve = () =>{
           })
           console.error(data.message);
         }
-        console.error(error.message);
+        console.error(error);
+        // console.error(error.message);
       });
   } else {
     alert('예약 신청을 취소하였습니다.');

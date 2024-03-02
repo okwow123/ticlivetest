@@ -122,7 +122,7 @@ public class StoreController {
     }
 
     @PostMapping("/reservation")
-    public ResponseEntity<LocalTime> post(@RequestBody String body, Authentication authentication){
+    public ResponseEntity<Reservation> post(@RequestBody String body, Authentication authentication){
         ObjectMapper objectMapper = new ObjectMapper();
 
         HashMap<String,String> data=null;
@@ -146,12 +146,17 @@ public class StoreController {
         reservation.setNumberOfPerson(numberOfPerson);
 
         String reservationDateTimeInfo = data.get("reservationDate");
-        Instant instant = Instant.parse(reservationDateTimeInfo);
-        LocalDateTime reservationDateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
+        reservationDateTimeInfo = reservationDateTimeInfo.substring(0,19);
+        LocalDateTime localDateTime = LocalDateTime.parse(reservationDateTimeInfo);
+
+
+//        Instant instant = Instant.parse(reservationDateTimeInfo);
+//        LocalDateTime reservationDateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
+//        log.info(reservationDateTime.toString());
 //        LocalDateTime reservationDateTime = LocalDateTime.parse(reservationDateTimeInfo);
 
-        reservation.setReservationDate(reservationDateTime.toLocalDate());
-        reservation.setReservationTime(reservationDateTime.toLocalTime());
+        reservation.setReservationDate(localDateTime.toLocalDate());
+        reservation.setReservationTime(LocalTime.parse(data.get("reservationTime")));
 
         log.info("reservation : "+reservation);
 
@@ -160,6 +165,10 @@ public class StoreController {
 //        log.info("memberId : "+ memberId);
 
         Object principal = authentication.getPrincipal();
+        if(! (principal instanceof Users)){
+            log.info("reservation 저장 실패 사유 : 로그인 되지 않은 유저 ");
+            return ResponseEntity.badRequest().body(null);
+        }
 
         log.info("principal : "+ principal);
 
@@ -169,11 +178,20 @@ public class StoreController {
         Store store = storeService.findById(Long.parseLong(data.get("storeNum")));
         reservation.setStore(store);
 
-        Reservation savedReservation = reservationService.save(reservation);
+        Reservation saved = reservationService.save(reservation);
+        log.info("reservation 저장 전 : " + reservation);
 
-
-
-
-        return null;
+        if(saved!=null){
+            log.info("reservation 저장 성공 추정 : " + saved);
+            return ResponseEntity.status(HttpStatus.OK).body(saved);
+        }else{
+            log.info("reservation 저장 실패 추정 : " + reservation);
+            return ResponseEntity.badRequest().body(null);
+        }
+    }
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<String> handleException(Exception e) {
+        // 예상치 못한 오류 발생 시
+        return ResponseEntity.internalServerError().body(e.getMessage());
     }
 }

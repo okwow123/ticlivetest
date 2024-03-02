@@ -17,7 +17,7 @@ public interface ReservationRepository extends JpaRepository<Reservation,Long> {
 
     List<Reservation> findAllByUsersUserNum(Long userNum);
 
-    @Query(value = "SELECT * FROM Reservation r INNER JOIN store s ON r.storenum = s.storenum WHERE s.storenum = :storenum and r.reservationDate = :reservationDate", nativeQuery = true)
+    @Query(value = "SELECT * FROM Reservation r INNER JOIN store s ON r.reservationstorenum = s.storenum WHERE s.storenum = :storenum and r.reservationDate = :reservationDate", nativeQuery = true)
     List<Reservation> findAllReservedTimesByStoreNumberAndDateTime(@Param("storenum") Long storenum,@Param("reservationDate") LocalDate value);
 
     List<Reservation> findAll();
