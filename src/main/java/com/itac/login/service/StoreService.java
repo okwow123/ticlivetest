@@ -227,6 +227,9 @@ public class StoreService {
         return getReservableTimes(store.getStoreNum(),anticipatedDate);
     }
 
+    public Store findById(Long storeNum){
+        return storeRepository.findById(storeNum).orElse(null);
+    }
 
 
 

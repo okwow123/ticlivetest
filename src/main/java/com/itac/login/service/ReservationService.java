@@ -2,6 +2,7 @@ package com.itac.login.service;
 
 import com.itac.login.entity.reservation.Reservation;
 import com.itac.login.entity.reservation.ReservationRepository;
+import com.itac.login.entity.store.Store;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -21,5 +22,10 @@ public class ReservationService {
 
     public Reservation findByLocalDate(LocalDate localDate){
         return reservationRepository.findByReservationDate(localDate);
+    }
+
+    public Reservation save(Reservation reservation) {
+        Reservation saved = reservationRepository.save(reservation);
+        return saved;
     }
 }

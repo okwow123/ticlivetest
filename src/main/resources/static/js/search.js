@@ -546,20 +546,71 @@ const reserve = () =>{
     alert('희망 예약 시간을 설정해주세요');
     return;
   }
+  let storeName = JSON.parse(storeInfo).storeName;
+  let storeNum = JSON.parse(storeInfo).storeNum;
+  let numberOfPerson = selectedPerson.dataset.personCount;
+  let reservationDate = currentDate.toDateString();
+  let reservationTime = selectedTime.dataset.time;
+
+  console.log(reservationDate);
+  console.log(currentDate.toISOString());
+  alert(reservationDate)
+  alert(currentDate.toISOString());
+
   /** 
    *  @todo fetch필요 storeNum으로 store 정보 불러오기
    *  @todo store을 만들떄 dataset에 store를 담기
    */
   if(confirm('다음과 같이 예약 하시겠습니까?'+'\n'
-  +'예약 가게명 : ' + JSON.parse(storeInfo).storeName +'\n'
-  +'예약 날짜 : ' + currentDate.toDateString() +'\n'
-  +'예약 시간 : ' + selectedTime.dataset.time +'\n'
-  +'예약 인원수 : ' + selectedPerson.dataset.personCount +'\n')){
-    alert('예약 눌림');
+  +'예약 가게명 : ' + storeName +'\n'
+  +'예약 날짜 : ' + reservationDate +'\n'
+  +'예약 시간 : ' + reservationTime +'\n'
+  +'예약 인원수 : ' + numberOfPerson +'\n')){
+    let data = {
+      storeNum,
+      numberOfPerson,
+      reservationDate:currentDate.toISOString(),
+      reservationTime,
+    }
+    const options = {
+      method: "POST",
+      Headers:{
+        "Content-Type" : "application/json",        
+      },
+      body : JSON.stringify(data),
+    }
+    alert('예약 진행중'); //여기에 방어로직추가
     //api로 예약을 하고 status.ok가 뜰때와 아닐때의 예외처리
+    fetch('/api/v1/store/reservation',options)
+      .then(response => {
+        if(response.status===200){
+          alert("예약이 완료 되었습니다."+'\n'
+          +'예약 가게명 : ' + storeName +'\n'
+          +'예약 날짜 : ' + reservationDate +'\n'
+          +'예약 시간 : ' + reservationTime +'\n'
+          +'예약 인원수 : ' + numberOfPerson +'\n')
+
+          // 위 행동 이후에 모달을 내려줘야함
+          // 예약 가능한 시간을 재 조회해야함
+
+          const closeButton = document.getElementById("exampleModal-closer");
+          closeButton.click();
+        }else{
+          throw new Error("Request failed with status code " + response.status);
+        }
+      })
+      .catch((error) => {
+        if(error.response){
+          const response = error.response;
+          response.json().then(data=>{
+            alert(data.message);
+          })
+          console.error(data.message);
+        }
+        console.error(error.message);
+      });
   } else {
-    alert('예약 취소 눌림');
-    // 취소가 눌렸을 때 수행할 작업을 기술할 수도 있습니다.
+    alert('예약 신청을 취소하였습니다.');
   }
 }
 

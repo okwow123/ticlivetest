@@ -15,6 +15,7 @@ import java.time.LocalTime;
 @Slf4j
 @EqualsAndHashCode(of={"reservationNum"})
 @NoArgsConstructor
+//@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter @Setter
 @ToString
 @Entity
@@ -42,7 +43,7 @@ public class Reservation implements Serializable {
     @ManyToOne
     @JsonManagedReference // 순환참조 방지
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    @JoinColumn(name="storenum")
+    @JoinColumn(name="reservationstorenum")
     private Store store;
 
     @Builder
