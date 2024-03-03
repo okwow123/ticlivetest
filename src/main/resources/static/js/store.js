@@ -32,12 +32,16 @@ function fnStoreRegist(){
 
 //ajax
     var toJSON = JSON.stringify(data);
-    storeForm.append("store", new Blob([toJSON], {type: "application/json"}))
+    var blob = new Blob([toJSON], {type : "application/json"});
+
+    storeForm.append("store", blob);
+
     $.ajax({
         type: 'post',
         url : '/api/v1/store/create',
+
         data : storeForm,
-        contentType : "multipart/form-data; charset=utf-8",
+        contentType : false,
         processData : false,
         success : function (message){
             alert("성공!");

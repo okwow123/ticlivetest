@@ -19,6 +19,7 @@ import java.util.List;
 @EqualsAndHashCode(of= {"usernum"}) // equals, hashCode 자동 생성
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
+@Setter
 @Entity
 @ToString(exclude ={"reservations","stores"})
 @Slf4j

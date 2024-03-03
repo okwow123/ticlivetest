@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -24,9 +25,9 @@ public class StoreService {
 
     // 파일 저장 위치
     // 윈도우
-    //private final String imageDir = "c:/temp";
+    private final String imageDir = "c:/temp";
     // Linux
-    private final String imageDir = "/home/web2/data";
+    //private final String imageDir = "/home/web2/data";
 
     //멤버
     private final UserRepository userRepo;
@@ -68,10 +69,15 @@ public class StoreService {
         return storeRepository.findByStoreLocationContaining(locationWord);
     }
 
+    @Transactional
     public Store create(StoreDto storeDto, String user, List<MultipartFile> files) {
         storeDto.setStoreNum(null);
         storeDto.setGrade(0f);
-        storeDto.setUsers(userRepo.findByUserEmail(user));
+
+        Users users = userRepo.findByUserEmail(user);
+        users.setStores(null);
+        storeDto.setUsers(users);
+        
         if(files != null){
             storeDto.setImages(uuidImage(files));
         }else{

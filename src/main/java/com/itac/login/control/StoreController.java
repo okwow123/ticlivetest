@@ -100,9 +100,6 @@ public class StoreController {
 
     @PostMapping(value="/create")
     public ResponseEntity<Store> Create(HttpServletRequest req, @RequestPart("store")StoreDto storeDto, @RequestPart(value = "file", required = false)List<MultipartFile> multipartFile){
-    //public ResponseEntity<Store> Create(HttpServletRequest req, @RequestPart(value = "file", required = false)List<MultipartFile> multipartFile, @RequestParam("store") String storeString) throws IOException{
-
-        //StoreDto storeDto = objectMapper.readValue(storeString, StoreDto.class);
         String user = req.getUserPrincipal().getName();
         //String user = "test@test.org";
         Store store = storeService.create(storeDto, user, multipartFile);
