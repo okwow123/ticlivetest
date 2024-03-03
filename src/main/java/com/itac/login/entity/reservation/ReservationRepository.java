@@ -1,5 +1,6 @@
 package com.itac.login.entity.reservation;
 
+import com.itac.login.entity.user.Users;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -22,4 +23,6 @@ public interface ReservationRepository extends JpaRepository<Reservation,Long> {
 
     List<Reservation> findAll();
     Reservation findByReservationDate(LocalDate localDate);
+
+    List<Reservation> findAllByUsers(Users user);
 }

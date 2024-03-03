@@ -12,6 +12,7 @@ import com.itac.login.service.ReservationService;
 import com.itac.login.service.StoreService;
 import com.itac.login.dto.StoreDto;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.persistence.EntityManager;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
@@ -198,7 +200,14 @@ public class StoreController {
         }
 
         Users user = (Users) principal;
-        List<Reservation> reservations = user.getReservations();
+        Long userNum =user.getUserNum();
+//        List<Reservation> reservations = reservationService.findByUserNum(userNum);
+//        List<Reservation> reservations = user.getReservations();
+        List<Reservation> reservations = reservationService.findAllByUsers(user);
+        for (Reservation reservation : reservations) {
+            reservation.setUsers(null);
+        }
+
         return (reservations != null && !reservations.isEmpty())?
                 ResponseEntity.status(HttpStatus.OK).body(reservations):
                 ResponseEntity.status(HttpStatus.NO_CONTENT).build();

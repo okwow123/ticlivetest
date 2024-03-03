@@ -3,6 +3,7 @@ package com.itac.login.service;
 import com.itac.login.entity.reservation.Reservation;
 import com.itac.login.entity.reservation.ReservationRepository;
 import com.itac.login.entity.store.Store;
+import com.itac.login.entity.user.Users;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -27,5 +28,15 @@ public class ReservationService {
     public Reservation save(Reservation reservation) {
         Reservation saved = reservationRepository.save(reservation);
         return saved;
+    }
+
+    public List<Reservation> findByUserNum(Long userNum) {
+        List<Reservation> list = reservationRepository.findAllByUsersUserNum(userNum);
+        return list;
+    }
+
+    public List<Reservation> findAllByUsers(Users user) {
+        List<Reservation> list = reservationRepository.findAllByUsers(user);
+        return list;
     }
 }
