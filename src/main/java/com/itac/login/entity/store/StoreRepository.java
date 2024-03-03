@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalTime;
 import java.util.List;
 import com.itac.login.entity.store.Store;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 @EnableJpaRepositories
@@ -25,6 +26,7 @@ public interface StoreRepository extends JpaRepository<Store,Long> {
     @Query(value="select * from public.store where storenum=(:storenum)", nativeQuery = true)
     Store createUser(Long storenum);
 
-    @Query(value="select * from public.store s where usernum=(:usernum)", nativeQuery=true)
+    @Query(value="select * from public.store s where s.usernum=(:usernum)", nativeQuery=true)
     List<Store> findByManageStore(long usernum);
+
 }

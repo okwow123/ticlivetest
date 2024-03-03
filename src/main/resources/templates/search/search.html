@@ -10,25 +10,25 @@
       href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css"
     />
 
-    <!--=============== BOOTSTRAP ===============-->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
-      crossorigin="anonymous"
-    />
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
-      crossorigin="anonymous"
-    ></script>
-
     <!--=============== CSS ===============-->
     <link rel="stylesheet" href="/css/styles.css" />
     <link rel="stylesheet" href="/css/search.css" />
 
     <title>달곰 디저트 검색하기</title>
-    <script></script>
+
+    <!--=============== BOOTSTRAP CSS ===============-->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <!-- JQuery -->
+    <script
+      src="https://code.jquery.com/jquery-3.7.1.js"
+      integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+      crossorigin="anonymous"
+    ></script>
   </head>
   <body>
     <!--=============== HEADER ===============-->
@@ -104,23 +104,83 @@
             </div>
           </div>
 
-          <div id="searched_list">
+          <div id="searched_list" class="col">
             <th:block th:if="${list}"> th:block list exist </th:block>
           </div>
         </div>
-        <button id="reservationDateTableUp_btn">예약 버튼</button>
-        <div id="reservationDateTable">
-          새로운 div
-          <button id="cancelReserving">닫기</button>
+ 
+        <!-- Modal -->
+        <!-- Modal 숙련도가 올라가면 id값을 적절하게 변경필요 -->
+        <div
+          class="modal fade"
+          id="exampleModal"
+          tabindex="-1"
+          aria-labelledby="exampleModalLabel"
+          aria-hidden="true"
+        >
+          <!-- 모달 크기 조정이 필요 컴퓨터 화면으로 볼때는 너무크며 모바일 일때는 괜찮을 듯함 -->
+          <div class="modal-dialog modal-dialog-centered modal-fullscreen-md-down">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1
+                  class="modal-title fs-5"
+                  id="exampleModalLabel"
+                  style="text-align: center"
+                >
+                  <!-- 모달 타이틀(중앙 정렬 필요) -->
+                  예약 시간 정하기
+                </h1>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body" id="modal-body">
+                <!-- 오늘버튼 + 년,월 필요 -->
+
+                <!-- 테이블 -->
+
+                <!-- 예약 인원 수 -->
+
+                <!-- 예약 가능한 시간 -->
+                <!-- 예약 가능한 시간이 눌렸을 때 다음화면이 필요 -->
+
+                <!-- 닫기 버튼 -->
+
+                모달 바디
+                <hr />
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                  id="exampleModal-closer"
+                >
+                  취소
+                </button>
+                <button type="button" class="btn btn-primary" onclick="reserve()">
+                  예약하기
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
     </main>
 
     <!--=============== MAIN JS ===============-->
-    <script src="/js/main.js"></script>
+    <!-- <script src="/js/main.js"></script> -->
     <script src="/js/search.js"></script>
     <script>
       setup();
     </script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
   </body>
 </html>

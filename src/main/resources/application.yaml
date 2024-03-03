@@ -51,8 +51,8 @@ logging:
   level:
     root: error
   pattern:
-    console: "%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n"
-    file: "%d %-5level [%thread] %logger : %msg%n"
+    console: '%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n'
+    file: '%d %-5level [%thread] %logger : %msg%n'
   file:
     name: ./logs/login.log
   logback:
@@ -69,13 +69,16 @@ server:
     encoding:
       charset: UTF-8
       force: true
+    multipart:
+      max-file-size: 10MB # 개별 파일의 최대 허용 크기
+      max-request-size: 10MB # http 요청 전체의 최대 허용 크기
   tomcat:
-    basedir: .                              # access log를 저장할 base directory 지정
+    basedir: . # access log를 저장할 base directory 지정
     accesslog:
-      enabled: true                         # access log 저장 여부 (default: false)
-      directory: logs                       # access log를 저장할 상세 directory (base directory에 기반한) (default: logs)
-      pattern: '%h %l %u %t "%r" %s %b %D'  # access log 출력 패턴
-      prefix: access                        # access log 파일이름 prefix
-      suffix: .log                          # access log 파일이름 suffix (확장자 포함)
-      rotate: true                          # access log rotation 여부
-      rename-on-rotate: true                # rotation 시, 새로운 이름 지정 여부 (rotate 될 때의 날짜명이 로그 파일이름에 찍힘)
+      enabled: true # access log 저장 여부 (default: false)
+      directory: logs # access log를 저장할 상세 directory (base directory에 기반한) (default: logs)
+      pattern: '%h %l %u %t "%r" %s %b %D' # access log 출력 패턴
+      prefix: access # access log 파일이름 prefix
+      suffix: .log # access log 파일이름 suffix (확장자 포함)
+      rotate: true # access log rotation 여부
+      rename-on-rotate: true # rotation 시, 새로운 이름 지정 여부 (rotate 될 때의 날짜명이 로그 파일이름에 찍힘)

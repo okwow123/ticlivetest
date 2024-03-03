@@ -9,9 +9,9 @@ import com.itac.login.entity.user.UserRepository;
 import com.itac.login.entity.user.Users;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.elasticsearch.search.DocValueFormat;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -40,6 +40,7 @@ public class StoreService {
         return storeRepository.findAll(gradeAsc);
     }
 
+    @Transactional
     public List<Store> manageStoreInfo(long usernum){
         return storeRepository.findByManageStore(usernum);
     }
@@ -138,7 +139,7 @@ public class StoreService {
                     try {
                         folder.mkdir();
                     } catch (Exception e) {
-
+                        e.printStackTrace();
                     }
                 }
 
@@ -227,6 +228,9 @@ public class StoreService {
         return getReservableTimes(store.getStoreNum(),anticipatedDate);
     }
 
+    public Store findById(Long storeNum){
+        return storeRepository.findById(storeNum).orElse(null);
+    }
 
 
 
