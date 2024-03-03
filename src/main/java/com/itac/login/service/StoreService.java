@@ -26,7 +26,7 @@ public class StoreService {
     // 파일 저장 위치
     // 윈도우
     //private final String imageDir = "c:/temp";
-    private final String imageDir = "/temp";
+    private final String imageDir = "/hoe/web2/data";
 
     //멤버
     private final UserRepository userRepo;
@@ -135,11 +135,11 @@ public class StoreService {
             for (MultipartFile file : files) {
                 UUID uuid = UUID.randomUUID();
                 String imageName = uuid + "_" + file.getOriginalFilename();
-                String filePath = imageDir + "/" + uuid.toString().charAt(0) + "/";
+                String filePath = imageDir + "/";
                 File folder = new File(filePath);
                 if (!folder.exists()) {
                     try {
-                        folder.mkdir();
+                        folder.mkdirs();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
