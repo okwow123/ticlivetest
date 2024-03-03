@@ -146,6 +146,7 @@ const cancel = () => {
     if (response.status === 200) {
       alert('예약이 취소되었습니다.');
       document.getElementById('ModalCloser').click();
+      window.onload();
     } else {
       alert('예약 취소가 실패하였습니다.');
     }
