@@ -25,9 +25,9 @@ public class StoreService {
 
     // 파일 저장 위치
     // 윈도우
-    private final String imageDir = "c:/temp";
+    //private final String imageDir = "c:/temp";
     // Linux
-    //private final String imageDir = "/home/web2/data";
+    private final String imageDir = "/home/web2/data";
 
     //멤버
     private final UserRepository userRepo;
