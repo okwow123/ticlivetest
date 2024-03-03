@@ -39,4 +39,17 @@ public class ReservationService {
         List<Reservation> list = reservationRepository.findAllByUsers(user);
         return list;
     }
+
+    public Reservation findById(Long reservationNum) {
+        Reservation reservation = reservationRepository.findById(reservationNum).orElse(null);
+        return reservation;
+    }
+
+    public void deleteById(Long reservationNum){
+        reservationRepository.deleteById(reservationNum);
+    }
+
+    public boolean existsById(Long reservationNum){
+        return reservationRepository.existsById(reservationNum);
+    }
 }
