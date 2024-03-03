@@ -1,0 +1,115 @@
+tempborderlines,
+.search_module,
+.store_div,
+.images_div,
+.store_name_div,
+.store_path_div {
+  /* border: 1px solid black; */
+}
+
+.search_module {
+}
+
+.store_div {
+  border-radius: 10%;
+  border: 1px solid gray;
+}
+
+.images_div {
+}
+
+.store_name_div {
+}
+
+.store_path_div {
+}
+
+.item_img {
+  background-size: cover;
+  background-position: center;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.module {
+  margin: 2vh 0 2vh 0;
+}
+
+#hashtag_list > * {
+  margin: 0 1vw 0 1vw;
+}
+
+#reservationDateTable {
+  display: none;
+  position: fixed;
+  bottom: 0px;
+  height: 70vh;
+  /* max-width: 100%; */
+  background-color: #f1f1f1;
+  padding: 20px;
+  animation: slideUp 0.5s ease;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+table tr,
+table th,
+table td {
+  border: 1px solid black;
+}
+
+#modal-body {
+  margin: 0 auto; /* 좌우 여백을 자동으로 설정하여 가운데 정렬 */
+  text-align: center; /* 테이블 내용을 가운데 정렬 */
+}
+
+.modal-content {
+  border: 1px solid black;
+  border-radius: 10%;
+}
+
+.unavailableDate {
+  color: gray;  
+  opacity: 0.5; /* 0에 가까울수록 투명하게 됨 */
+  cursor: not-allowed; /* 마우스 커서를 기본값에서 변경하여 비활성화된 상태임을 나타냄 */
+}
+
+.availableDate {
+  color: black;
+}
+
+.availableDate>span:hover {
+  background-color: red;
+  border: 1px solid red;
+  border-radius: 10%;
+  /* display: inline-block; */
+  /* font-size: 1.1em; */
+}
+
+.availableDate.today,
+.currentDate {
+  color: blue;
+}
+
+.arrow:hover {
+  font-weight: 900;
+}
+
+.selected{
+  font-weight: bold;
+  color : black;
+  text-shadow: blue ;
+  font-size: 1.1em;
+}
+
+#modal_body>table {
+  margin:0 auto;
+}

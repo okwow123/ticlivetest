@@ -1,6 +1,7 @@
 package com.itac.login.entity.store;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.itac.login.entity.StringListConverter;
@@ -18,6 +19,7 @@ import org.hibernate.annotations.TypeDef;
 import java.io.*;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,6 +64,12 @@ public class Store implements Serializable {
     @Column(name="lng")
     private float lng;
 
+    private LocalTime openingtime;
+    private LocalTime closingtime;
+
+    private int reservable;
+
+
     @Column(name="images")
     @Convert(converter = StringListConverter.class)
     private List<String> images = new ArrayList<>();
@@ -73,7 +81,7 @@ public class Store implements Serializable {
     private Users users;
 
 
-    @OneToMany(mappedBy = "store",fetch=FetchType.LAZY)
+    @OneToMany(mappedBy = "store",fetch=FetchType.EAGER)
     @JsonBackReference //순환참조 방지
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private List<Review> reviews = new ArrayList<>();
