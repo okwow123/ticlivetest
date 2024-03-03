@@ -221,8 +221,8 @@ public class StoreService {
         
         //클로징 시간
         LocalTime closingtime = store.getClosingtime();
-        if(openingtime == null){
-            openingtime = LocalTime.of(18,0);
+        if(closingtime == null){
+            closingtime = LocalTime.of(18,0);
         }
 
         for (LocalTime time = openingtime; time.isBefore(closingtime); time = time.plusHours(1)) {

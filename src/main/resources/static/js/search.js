@@ -4,10 +4,10 @@ let reservationDateTableUp_btn = document.getElementById(
 let reservationDateTable = document.getElementById('reservationDateTable');
 
 /** 유동으로 조사하는 값 (달력에서 예약을 희망하는 날짜) */
-let currentDate = new Date(); 
+let currentDate = new Date();
 
 /** 절대 바뀌지 않는 오늘의 값 */
-const realToday = new Date(); 
+const realToday = new Date();
 /** 어느 가게를 선택했는지 담고있는 변수 {*} @type {number} */
 let storeNum = -1;
 let storeInfo = null;
@@ -61,7 +61,7 @@ async function fetchList() {
 
     console.log('json으로 만든 데이터 : ' + stores);
     console.log(stores);
-    stores.forEach((store,idx) => {
+    stores.forEach((store, idx) => {
       // console.log(store);
       let store_div = document.createElement('div');
       store_div.classList.add('store_div');
@@ -115,7 +115,7 @@ async function fetchList() {
       store_info_div.classList.add('col-9');
       store_name_div.classList.add('row-3');
       store_path_div.classList.add('row-3');
-      
+
       /** 모달을 열기위한 이벤트 추가 */
       store_div.addEventListener('click', (e) => {
         storeNum = e.currentTarget.querySelector('input[type="hidden"]').value;
@@ -264,7 +264,7 @@ const setupCalendar = (inputDate) => {
     for (var j = 0; j < 7; j++) {
       //열이 7개 일월화수목금토
       iterateDate = getDateNDaysNext(mainDate, count);
-      
+
       var cell = row.insertCell();
       cell.classList.add('col');
       var cellElement = document.createElement('div');
@@ -281,9 +281,7 @@ const setupCalendar = (inputDate) => {
         cellElement.addEventListener('click', (e) => {
           let myDateString = e.currentTarget.dataset.date;
           console.log(myDateString);
-          setupCalendar(
-            new Date(myDateString)
-          );
+          setupCalendar(new Date(myDateString));
         });
         // 아래코드가 그 아래 세줄 코드로 변경
         // cellElement.innerText = iterateDate.getDate();
@@ -291,7 +289,7 @@ const setupCalendar = (inputDate) => {
         let spanInCell = document.createElement('span');
         spanInCell.innerText = iterateDate.getDate();
         cellElement.appendChild(spanInCell);
-        
+
         //이쪽에 저 a link가 눌렸을때 아래 예약가능시간 탭도 갱신해주는 코드 추가필요;
         cellElement.classList.add('availableDate');
       }
@@ -310,7 +308,7 @@ const setupCalendar = (inputDate) => {
   reservableList.classList.add('reservableList');
   reservableList.classList.add('row');
 
-  for(let i=1;i<13;i++){
+  for (let i = 1; i < 13; i++) {
     //요소마다의 별개 연산이 들어가면 좋음
     // 너무적은인원의 예약과 많은인원의 예약의 경우
     // 다른 function으로 연결하여서 그function내에서 세부 나눔처리
@@ -319,18 +317,18 @@ const setupCalendar = (inputDate) => {
     reservablePerson.classList.add('reservablePerson');
     reservablePerson.classList.add('col');
     reservablePerson.dataset.personCount = i;
-    reservablePerson.addEventListener('click',(e)=>{
+    reservablePerson.addEventListener('click', (e) => {
       let pressedPerson = e.currentTarget;
-      if(selectedPerson){
+      if (selectedPerson) {
         selectedPerson.classList.remove('selectedPerson');
         selectedPerson.classList.remove('selected');
       }
       pressedPerson.classList.add('selectedPerson');
       pressedPerson.classList.add('selected');
       selectedPerson = pressedPerson;
-    })
+    });
 
-    spanInReservablePerson.innerText=i+'명';
+    spanInReservablePerson.innerText = i + '명';
     spanInReservablePerson.classList.add('spanInReservablePerson');
 
     reservablePerson.appendChild(spanInReservablePerson);
@@ -349,50 +347,52 @@ const setupCalendar = (inputDate) => {
  * @param {Date} currentDate 예약가능한 시간을 조회할 날짜
  */
 const setupReservableTimes = (currentDate) => {
-
   var currentString =
     currentDate.getFullYear() +
     '-' +
     (currentDate.getMonth() + 1) +
     '-' +
     currentDate.getDate();
+  let fetch_url = '/api/v1/store/' + storeNum + '/' + currentString;
   // fetch("/api/v1/store/" + storeNum + "/" + currentDateJson)
-  console.log('fetch할때 가져갈 storeNum값 : ' + storeNum);
-  console.log('/api/v1/store/에 접근 시도');
-  fetch('/api/v1/store/' + storeNum + '/' + currentString)
-  .then((data) => {
-    return data.json();
-  })
-  .then((datas) => {
-    let reservableTimesList = document.createElement('div');
-    datas.forEach((data) => {
-      let reservableTime = document.createElement('div');
-      reservableTime.classList.add('reservableTime');
-      reservableTime.classList.add('col');
-      reservableTime.addEventListener('click',(e)=>{
-        let pressedTime = e.currentTarget;
-        if(selectedTime){
-          selectedTime.classList.remove('selectedTime');
-          selectedTime.classList.remove('selected');
-        }
-        pressedTime.classList.add('selectedTime');
-        pressedTime.classList.add('selected');
-        selectedTime = pressedTime;
+  // console.log('fetch할때 가져갈 storeNum값 : ' + storeNum);
+  // console.log('/api/v1/store/에 접근 시도');
+  console.log(fetch_url);
+  fetch(fetch_url)
+    .then((data) => {
+      console.log(data);
+      return data.json();
+    })
+    .then((datas) => {
+      let reservableTimesList = document.createElement('div');
+      datas.forEach((data) => {
+        let reservableTime = document.createElement('div');
+        reservableTime.classList.add('reservableTime');
+        reservableTime.classList.add('col');
+        reservableTime.addEventListener('click', (e) => {
+          let pressedTime = e.currentTarget;
+          if (selectedTime) {
+            selectedTime.classList.remove('selectedTime');
+            selectedTime.classList.remove('selected');
+          }
+          pressedTime.classList.add('selectedTime');
+          pressedTime.classList.add('selected');
+          selectedTime = pressedTime;
+        });
+
+        /** @todo A href 달아야함*/
+        reservableTime.innerText = data;
+        reservableTime.dataset.time = data;
+
+        // console.log(data);
+        reservableTimesList.appendChild(reservableTime);
       });
-      
-      /** @todo A href 달아야함*/
-      reservableTime.innerText = data;
-      reservableTime.dataset.time = data;
 
-      // console.log(data);
-      reservableTimesList.appendChild(reservableTime)
+      reservableTimesList.classList.add('reservableTimesList');
+      reservableTimesList.classList.add('row');
+
+      modal_body.appendChild(reservableTimesList);
     });
-
-    reservableTimesList.classList.add('reservableTimesList');
-    reservableTimesList.classList.add('row');
-
-    modal_body.appendChild(reservableTimesList);
-  });
 };
 
 // 날짜 관련 함수 모음
@@ -407,7 +407,7 @@ function getTodayDay(dayIndex) {
 // firstDayOfMonth는 지역변수 인것같은데..
 // 전역변수인 currentDate에 영향이 있었음
 function getFirstDayOfMonth() {
-  let tempDate = new Date(currentDate)
+  let tempDate = new Date(currentDate);
   tempDate.setDate(1);
   return tempDate.getDay();
 }
@@ -536,13 +536,13 @@ function setup_hashtags() {
   });
 }
 
-const reserve = () =>{
-  if(!selectedPerson){
+const reserve = () => {
+  if (!selectedPerson) {
     alert('예약 인원수를 설정해주세요');
     return;
   }
 
-  if(!selectedTime){
+  if (!selectedTime) {
     alert('희망 예약 시간을 설정해주세요');
     return;
   }
@@ -557,53 +557,77 @@ const reserve = () =>{
   // alert(reservationDate)
   // alert(currentDate.toISOString());
 
-  /** 
+  /**
    *  @todo fetch필요 storeNum으로 store 정보 불러오기
    *  @todo store을 만들떄 dataset에 store를 담기
    */
-  if(confirm('다음과 같이 예약 하시겠습니까?'+'\n'
-  +'예약 가게명 : ' + storeName +'\n'
-  +'예약 날짜 : ' + reservationDate +'\n'
-  +'예약 시간 : ' + reservationTime +'\n'
-  +'예약 인원수 : ' + numberOfPerson +'\n')){
+  if (
+    confirm(
+      '다음과 같이 예약 하시겠습니까?' +
+        '\n' +
+        '예약 가게명 : ' +
+        storeName +
+        '\n' +
+        '예약 날짜 : ' +
+        reservationDate +
+        '\n' +
+        '예약 시간 : ' +
+        reservationTime +
+        '\n' +
+        '예약 인원수 : ' +
+        numberOfPerson +
+        '\n'
+    )
+  ) {
     let data = {
       storeNum,
       numberOfPerson,
-      reservationDate:currentDate.toISOString(),
+      reservationDate: currentDate.toISOString(),
       reservationTime,
-    }
+    };
     const options = {
-      method: "POST",
-      Headers:{
-        "Content-Type" : "application/json",        
+      method: 'POST',
+      Headers: {
+        'Content-Type': 'application/json',
       },
-      body : JSON.stringify(data),
-    }
+      body: JSON.stringify(data),
+    };
     alert('예약 진행중'); //여기에 방어로직추가
     //api로 예약을 하고 status.ok가 뜰때와 아닐때의 예외처리
-    fetch('/api/v1/store/reservation',options)
-      .then(response => {
-        if(response.status===200){
-          alert("예약이 완료 되었습니다."+'\n'
-          +'예약 가게명 : ' + storeName +'\n'
-          +'예약 날짜 : ' + reservationDate +'\n'
-          +'예약 시간 : ' + reservationTime +'\n'
-          +'예약 인원수 : ' + numberOfPerson +'\n')
+    fetch('/api/v1/store/reservation', options)
+      .then((response) => {
+        if (response.status === 200) {
+          alert(
+            '예약이 완료 되었습니다.' +
+              '\n' +
+              '예약 가게명 : ' +
+              storeName +
+              '\n' +
+              '예약 날짜 : ' +
+              reservationDate +
+              '\n' +
+              '예약 시간 : ' +
+              reservationTime +
+              '\n' +
+              '예약 인원수 : ' +
+              numberOfPerson +
+              '\n'
+          );
 
           // 위 행동 이후에 모달을 내려줘야함
           // 예약 가능한 시간을 재 조회해야함
-          const closeButton = document.getElementById("exampleModal-closer");
+          const closeButton = document.getElementById('exampleModal-closer');
           closeButton.click();
-        }else{
-          throw new Error("Request failed with status code " + response.status);
+        } else {
+          throw new Error('Request failed with status code ' + response.status);
         }
       })
       .catch((error) => {
-        if(error.response){
+        if (error.response) {
           const response = error.response;
-          response.json().then(data=>{
+          response.json().then((data) => {
             alert(data.message);
-          })
+          });
           console.error(data.message);
         }
         console.error(error);
@@ -612,8 +636,7 @@ const reserve = () =>{
   } else {
     alert('예약 신청을 취소하였습니다.');
   }
-}
-
+};
 
 // 코드 확인 후 삭제 필요
 // 숨긴 div에서 modal 방식으로 변경되어서 필요없는 코드
