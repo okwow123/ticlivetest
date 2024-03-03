@@ -24,7 +24,9 @@ import java.util.*;
 public class StoreService {
 
     // 파일 저장 위치
-    private final String imageDir = "c:/temp";
+    // 윈도우
+    //private final String imageDir = "c:/temp";
+    private final String imageDir = "/temp";
 
     //멤버
     private final UserRepository userRepo;
