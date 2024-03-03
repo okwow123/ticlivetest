@@ -1,7 +1,6 @@
 package com.itac.login.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.itac.login.entity.store.Store;
 import com.itac.login.entity.user.Users;
@@ -27,7 +26,6 @@ public class StoreDto {
     private String storeInfo;
     private LocalDate createDate;
     private LocalDate modificationDate;
-
     private List<String> images;
     @JsonManagedReference
     @JsonIgnore

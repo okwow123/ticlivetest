@@ -37,7 +37,7 @@ function fnStoreRegist(){
         type: 'post',
         url : '/api/v1/store/create',
         data : storeForm,
-        contentType : false,
+        contentType : "multipart/form-data; charset=utf-8",
         processData : false,
         success : function (message){
             alert("성공!");
@@ -151,12 +151,8 @@ function findAll(){
         url : "/api/v1/store/list",
         dataType : "json",
         success : function (response){
-            console.log("통신 성공!");
-            console.log(response);
-            /*
-            const respData = response.data;
             const tableBody = document.getElementById("storeList");
-            respData.forEach(data => {
+            response.forEach(data => {
                 // 테이블 생성
                 const row = document.createElement("tr");
                 const numCell = document.createElement("td");
@@ -196,7 +192,6 @@ function findAll(){
                 row.appendChild(modifiedCell);
                 tableBody.appendChild(row);
             });
-             */
         }
     });
 }
