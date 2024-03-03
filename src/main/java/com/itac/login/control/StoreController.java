@@ -71,8 +71,7 @@ public class StoreController {
     @GetMapping("/list")
     public ResponseEntity<Object> list(HttpServletRequest req){
         int userId = memberService.findMember(req.getUserPrincipal().getName());
-        List<Store> stores = storeService.manageStoreInfo(userId);
-
+        List<StoreDto> stores = storeService.manageStoreInfo(userId);
         return ResponseEntity.status(HttpStatus.OK).body(stores);
     }
     @GetMapping("/{id}")

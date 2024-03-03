@@ -11,7 +11,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -26,6 +25,8 @@ public class StoreService {
     // 파일 저장 위치
     // 윈도우
     //private final String imageDir = "c:/temp";
+
+    // Linux
     private final String imageDir = "/temp";
 
     //멤버
@@ -42,9 +43,22 @@ public class StoreService {
         return storeRepository.findAll(gradeAsc);
     }
 
-    @Transactional
-    public List<Store> manageStoreInfo(long usernum){
-        return storeRepository.findByManageStore(usernum);
+    public List<StoreDto> manageStoreInfo(long usernum){
+        List<Store> storeList = storeRepository.findByManageStore2(usernum);
+        List<StoreDto> storeDtos = new ArrayList<>();
+        for(int i=0; i<storeList.size(); i++){
+            StoreDto dto = new StoreDto();
+            dto.setStoreNum(storeList.get(i).getStoreNum());
+            dto.setStoreName(storeList.get(i).getStoreName());
+            dto.setStoreLocation(storeList.get(i).getStoreLocation());
+            dto.setStorePhoneNum(storeList.get(i).getStorePhoneNum());
+            dto.setGrade(storeList.get(i).getGrade());
+            dto.setStoreInfo(storeList.get(i).getStoreInfo());
+            dto.setCreateDate(storeList.get(i).getCreateDate());
+            dto.setModificationDate(storeList.get(i).getModificationDate());
+            storeDtos.add(dto);
+        }
+        return storeDtos;
     }
 
     public List<Store> searchWithWord(String searchWord) {
