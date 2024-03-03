@@ -4,7 +4,6 @@
 
 ![image](https://github.com/okwow123/itca/assets/11327395/9e951cab-ab76-496f-a7c0-e6f260500cf5) ![image](https://github.com/okwow123/itca/assets/11327395/4a9cc5d2-a155-418b-b85a-e18d2917a72e)
 
-
 컨셉 : 디저트,커피 위주의 캐치테이블 버전
 
 URL : 20.214.108.168
@@ -15,26 +14,24 @@ URL : 20.214.108.168
 
 https 인증서 추가 설치 요청중...
 
-
 프로젝트 개발 참여자 및 역할
 
 김민제님 -> 환경구성
 
 권영환님 -> 백엔드 개발
 
-안효진님 -> 백엔드 개발(사진 업로드) 및 앱 개발
+안효진님 -> 백엔드 개발(사진 업로드) 및 앱(flutter,android) 개발
 
 최태형님 -> 백엔드 개발
 
-이진원님 -> 백엔드 개발 및 다이어그램 설계
-
+이진원님 -> 다이어그램 설계
 
 - 기술스택
 - JAVA JDK 11
 - 스프링부트 2.6.4
 - query DSL 5.0.0 + JPA
 - thymeleaf
-- postgresql Database + docker 
+- postgresql Database + docker
 - postman
 - github / sourcetree / github desktop
 - intellij
@@ -45,14 +42,25 @@ https 인증서 추가 설치 요청중...
 - ubuntu 20.04
 - flutter / android app
 
--- 간트차트 
+#### 추천 리스트 우선순위 정렬 알고리즘
+
+- 추천할 후보 가게들을 여러개를 보유하고 있을 때 어떤 가게를 더 우선순위로 노출시킬지 구현한 사용자 정의 정렬 알고리즘
+- 고려 대상으로는 평균 별점, 리뷰의 개수, 가격, 거리 총 4가지 요소를 각각 사용자에게 추천할 만한 곳에 높은 점수를 부여함
+- 총점이 더 높은 쪽을 최종적으로 우선적으로 노출되게 정렬을 해줌
+- 재사용 가능성을 위해 메서드화 (매개변수 정렬할 가게리스트, 반환값 정렬된 가게리스트)
+- 위에서 고려한 4가지 기준의 상대적 고유한 가치가 다를 수 있으므로
+- 각각의 기준에 상대적 가중치를 부여할 수 있게 상수를 만듬
+
+![alt text](/src/main/resources/static/img/image.png)
+
+-- 간트차트
 
 ![image](https://github.com/okwow123/itca/assets/11327395/9d4f5286-c5df-4340-9203-7dfb4fa5929a)
 
 안효진님 DB설계
 ![image](https://github.com/okwow123/itca/assets/11327395/e94714b6-1290-46da-892a-aac991425b93)
 
-최태형님 SQL 수정 
+최태형님 SQL 수정
 
 --회원테이블
 
@@ -85,7 +93,7 @@ CREATE TABLE public."forum" (
 
 
 
--- 2024. 02. 03 
+-- 2024. 02. 03
 create sequence user_userNum_seq
 	increment 1
 	start 1
@@ -165,26 +173,18 @@ create table public."reservation"(
 
 ```
 
-
-
-
-
 권영환님 초기 아키텍처 설계
 ![image](https://github.com/okwow123/itca/assets/11327395/5ac45d4b-dad6-4e3e-ba7b-0a064ab5d262)
 
-
 최태형님 초기 아키텍처 설계
 ![image](https://github.com/okwow123/itca/assets/11327395/ce2b2266-19ac-4111-97ad-f73556a38905)
-
 
 이진원님 다이어그램 설계
 ![image](https://github.com/okwow123/itca/assets/11327395/8ccec4e7-7286-45d1-bfec-949784a664b0)
 
 ![image](https://github.com/okwow123/itca/assets/11327395/1fcf548e-42c4-4854-95f2-96293f56244c)
 
-
 ![image](https://github.com/okwow123/itca/assets/11327395/458d24bf-b94a-479d-9fe3-39a1a2f1ce77)
-
 
 화면설계
 ![image](https://github.com/okwow123/itca/assets/11327395/5e6e17da-f9ba-4074-883c-1ead8081c0fb)
@@ -198,33 +198,23 @@ create table public."reservation"(
 
 ![image](https://github.com/okwow123/itca/assets/11327395/bc68b046-0c3e-4525-b828-e1fe3bd28463)
 ![image](https://github.com/okwow123/itca/assets/11327395/a87b38c7-85ab-4861-952f-7335a5a771a5)
-[화면설계서_캐치테이블 (3).pptx](https://github.com/okwow123/itca/files/14155466/_.3.pptx)
-
-
+[화면설계서\_캐치테이블 (3).pptx](https://github.com/okwow123/itca/files/14155466/_.3.pptx)
 
 - 젠킨스 셋팅
-![image](https://github.com/okwow123/itca/assets/11327395/a039f30b-b25b-4500-a9a0-449f7ba209e3)
+  ![image](https://github.com/okwow123/itca/assets/11327395/a039f30b-b25b-4500-a9a0-449f7ba209e3)
 
 ![image](https://github.com/okwow123/itca/assets/11327395/c0e69976-add5-48ff-9c61-2d8e70d5da98)
 
-
-
 - https 인증서 추가
-- 
-![image](https://github.com/okwow123/itca/assets/11327395/d09f976b-9cc7-41f9-90e8-ab7c936eb0e1)
-
+- ![image](https://github.com/okwow123/itca/assets/11327395/d09f976b-9cc7-41f9-90e8-ab7c936eb0e1)
 
 - 웹 도커 셋팅
 
 ![image](https://github.com/okwow123/itca/assets/11327395/6f81edc8-ed55-4c26-bcfd-76222a0750a5)
 
-
 - nginx 셋팅
 
   ![image](https://github.com/okwow123/itca/assets/11327395/bd058996-b66b-4fe4-bebe-e77fb2532dd5)
-
-
-
 
 - build.gradle 셋팅 +JPA +QUERY DSL
 
@@ -315,18 +305,15 @@ tasks.named('test') {
 }
 ```
 
-
-
 --프로젝트 관리 방법론
 
 ![image](https://github.com/okwow123/itca/assets/11327395/d70dfa33-7ae7-4982-a4fd-a2193b4b571c)
 
-
-프로젝트 관리의 접근 방식은 소프트웨어 개발의 Agile 방식을 기반으로 하며, 
+프로젝트 관리의 접근 방식은 소프트웨어 개발의 Agile 방식을 기반으로 하며,
 
 이러한 방식으로 교차 기능 팀은 지속적인 공동 작업, 계획 수립, 학습, 개선을 통해 소프트웨어를 신속하게 제공하고 변화에 더욱 유연하게 대응.
 
-Agile 방식의 목적은 프로젝트 완료 단계에서만 모든 이점을 제공할 뿐만 아니라 소프트웨어 개발 프로세스 전체에 걸쳐 이점을 제공. 
+Agile 방식의 목적은 프로젝트 완료 단계에서만 모든 이점을 제공할 뿐만 아니라 소프트웨어 개발 프로세스 전체에 걸쳐 이점을 제공.
 
 Agile 관리는 여러 팀을 조율하고, 효과적인 프로세스를 수립하며, 데드라인을 설정하고, Agile 소프트웨어 프로젝트를 성공으로 이끌기 위한 방식
 
@@ -340,16 +327,13 @@ Agile 관리는 여러 팀을 조율하고, 효과적인 프로세스를 수립�
 
 계획을 따르는 것보다 변화에 대한 대응을 중시.
 
-
 스프린트 단위 : 1주일
 ![image](https://github.com/okwow123/itca/assets/11327395/adea5834-f3ce-4396-9ae0-7408c0d055bd)
-
-
 
 - RESTAPI 설계 원칙
 
   REST의 의미
-어떻게 하면 RESTful 하게 자원을 명시하고 주고받는 방법을 API 로써 구현할 수 있을까요? 이를 위해, 저희는 다시 REST 의 의미에 대해 되짚고 갈 필요가 있습니다.
+  어떻게 하면 RESTful 하게 자원을 명시하고 주고받는 방법을 API 로써 구현할 수 있을까요? 이를 위해, 저희는 다시 REST 의 의미에 대해 되짚고 갈 필요가 있습니다.
 
 REST(Representational State Transfer) 란 서버와 클라이언트간의 통신방식 중 하나로, 자원의 이름을 구분하고 자원의 상태를 주고받는 통신 방식입니다.
 즉, 클라이언트와 서버가 데이터를 주고받는 방식에 대해 정리한 원칙들이 있고, 그 원칙을 기반으로하는 아키텍처 스타일을 REST 라고 하는 것이죠.
@@ -358,7 +342,6 @@ REST 는 다음과 같은 2가지 특징을 지닙니다.
 
 자원을 이름을 구분하고,
 자원의 상태를 주고받는다.
-
 
 1. 명사를 사용하자
 
@@ -382,9 +365,9 @@ REST 는 다음과 같은 2가지 특징을 지닙니다.
 
 말그대로 입니다. URI 마지막에 슬래시를 붙이지맙시다.
 
-/products      // 올바른 표현
+/products // 올바른 표현
 
-/products/     // 잘못된 표현
+/products/ // 잘못된 표현
 
 4. 하이픈 - 기호를 사용해 가독성을 높이자
 
@@ -392,33 +375,32 @@ REST 는 다음과 같은 2가지 특징을 지닙니다.
 
 맨 마지막에 하이픈 (-) 기호를 붙인 URI 와 비교해보면 훨씬 가독성이 좋아졌습니다.
 
-/profilemanagement   // 그냥 일렬로 나열한 방식
+/profilemanagement // 그냥 일렬로 나열한 방식
 
-/profileManagement   // 카멜 케이스를 사용한 방식
+/profileManagement // 카멜 케이스를 사용한 방식
 
-/profile-management  // 하이픈 기호를 사용한 방식
+/profile-management // 하이픈 기호를 사용한 방식
 
 5. 언더스코어를 사용하지 말자
 
-또 URI 는 가급적 언더스코어, 즉 밑줄( _ ) 을 사용하지 맙시다. 왜냐하면 일부 브라우저나 화면에서 글꼴에 따라 언더스크어 문자가 가려지거나 숨겨질 수 있기 때문입니다.
+또 URI 는 가급적 언더스코어, 즉 밑줄( \_ ) 을 사용하지 맙시다. 왜냐하면 일부 브라우저나 화면에서 글꼴에 따라 언더스크어 문자가 가려지거나 숨겨질 수 있기 때문입니다.
 
 따라서 /backend_people 이렇게 표현하기보다는 /people/backend 이렇게 표현하는 것이 더 좋습니다.
 
-/backend_people   // X
+/backend_people // X
 
-/people/backend   // O 
+/people/backend // O
 
 6. 소문자만을 사용하자
 
 URI 는 또 대문자가 아닌, 소문자만을 사용해야합니다.
 
-/PLAYERS     // X
+/PLAYERS // X
 
-/players.    // O
+/players. // O
 
 - postman을 이용한 실제 API 테스트
 
 ![image](https://github.com/okwow123/itca/assets/11327395/99483d94-fbc3-4ca9-82d1-131a752cf823)
 
 ![image](https://github.com/okwow123/itca/assets/11327395/aca84320-7796-4e04-8b6e-ebc447f1f3f4)
-

@@ -65,7 +65,7 @@ public class UserLoginSecurityConfiguration extends WebSecurityConfigurerAdapter
                 .permitAll()
                 .and()
                 .sessionManagement()
-                .maximumSessions(1) // 세션 최대 허용 수 1, -1인 경우 무제한 세션 허용
+                .maximumSessions(-1) // 세션 최대 허용 수 1, -1인 경우 무제한 세션 허용
                 .maxSessionsPreventsLogin(false) // true면 중복 로그인을 막고, false면 이전 로그인의 세션을 해제
                 .expiredUrl("/login?error=true&exception=Have been attempted to login from a new place. or session expired")  // 세션이 만료된 경우 이동 할 페이지를 지정
                 .and()
