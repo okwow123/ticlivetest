@@ -35,7 +35,7 @@ public class MainController {
     }
     @GetMapping("/reservation")
     public String reservation(){
-        return "reservation/reservation";
+        return "reservation/userReservation";
     }
     @GetMapping("/mypage")
     public String mypage(){

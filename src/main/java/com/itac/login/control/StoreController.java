@@ -85,11 +85,6 @@ public class StoreController {
     @GetMapping("/{id}/{localDateStr}")
     public ResponseEntity<List<LocalTime>> getReservableTimes(@PathVariable Long id,@PathVariable String localDateStr) {
         log.info("@GetMapping(/{id}/{localDate}) -> id : "+ id+", localDateStr : "+localDateStr);
-//        ObjectMapper objectMapper = new ObjectMapper();
-//        // 이 부분을 try catch문으로 바꿔야함
-//        Map<String, Integer> dateMap = objectMapper.readValue(localDate, Map.class);
-//        // Map에서 년, 월, 일 값을 추출하여 LocalDate 객체 생성
-//        LocalDate parsedDate = LocalDate.of(dateMap.get("year"), dateMap.get("month"), dateMap.get("day"));
         StringTokenizer st = new StringTokenizer(localDateStr,"-");
         LocalDate parsedDate = LocalDate.of(Integer.parseInt(st.nextToken()),Integer.parseInt(st.nextToken()),Integer.parseInt(st.nextToken()));
 
@@ -192,5 +187,20 @@ public class StoreController {
     public ResponseEntity<String> handleException(Exception e) {
         // 예상치 못한 오류 발생 시
         return ResponseEntity.internalServerError().body(e.getMessage());
+    }
+
+    @GetMapping("userReservation")
+    public ResponseEntity<List<Reservation>> getReservations(Authentication authentication){
+        Object principal = authentication.getPrincipal();
+
+        if(!(principal instanceof  Users)){
+            return ResponseEntity.badRequest().build();
+        }
+
+        Users user = (Users) principal;
+        List<Reservation> reservations = user.getReservations();
+        return (reservations != null && !reservations.isEmpty())?
+                ResponseEntity.status(HttpStatus.OK).body(reservations):
+                ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }

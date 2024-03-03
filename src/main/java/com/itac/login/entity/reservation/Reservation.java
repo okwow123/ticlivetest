@@ -1,5 +1,6 @@
 package com.itac.login.entity.reservation;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.itac.login.entity.store.Store;
@@ -36,13 +37,15 @@ public class Reservation implements Serializable {
 
     @ManyToOne
     @JsonManagedReference // 순환참조 방지
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+//    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @JsonIgnore
     @JoinColumn(name = "reservationusernum")
     private Users users;
 
     @ManyToOne
     @JsonManagedReference // 순환참조 방지
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+//    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @JsonIgnore
     @JoinColumn(name="reservationstorenum")
     private Store store;
 

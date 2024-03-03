@@ -44,12 +44,12 @@ public class Users extends BaseTimeEntity implements UserDetails {
 
     @OneToMany(mappedBy = "users",fetch=FetchType.LAZY)
     @JsonBackReference //순환참조 방지
-    @JsonIgnore
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private List<Reservation> reservations;
 
     @OneToMany(mappedBy = "users",fetch=FetchType.LAZY)
     @JsonBackReference //순환참조 방지
-    @JsonIgnore
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private List<Store> stores;
 
     public Long getUserNum() {
