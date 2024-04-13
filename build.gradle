@@ -10,10 +10,10 @@ plugins {
     id 'java'
 }
 
-group = 'com.itac.login'
+group = 'com.ticlivetest'
 version = '0.3.0'
 sourceCompatibility = '11'
-archivesBaseName = 'login'
+archivesBaseName = 'ticlivetest'
 
 ext['log4j2.version'] = '2.17.1'
 

@@ -2,36 +2,272 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-    <script src='/js/gpt.js'></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- naver search -->
+    <meta name="naver-site-verification" content="93e37a4011c974c4889878313596f1e54b12d0d3" />
+    <!-- GA-->
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-40T6JVRWYG"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-40T6JVRWYG');
+    </script>
+    <!--=============== BOXICONS ===============-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+
+    <!--=============== CSS ===============-->
+    <link rel="stylesheet" href="/css/styles.css">
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Oswald:wght@500;600;700&family=Pacifico&display=swap" rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-2jyInb2JCVXMaFwuSI2r9q4yCKlaDTAfOrzHRgbpxtb+NRmU54w1kkQ7+lyMTiOaMHNK8DaaWtAwTTc5FAGLHg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/style2.css" rel="stylesheet">
+    <title>Responsive bottom navigation</title>
+
 </head>
 <body>
-<div class="chatGPT">
-    <div class="header">
-        <h3>
-            <img src="/images/logo-chat.png" alt="IT">
-            <span>GPT</span>
-        </h3>
-        <button type="button" class="btn btn-close"></button>
-    </div>
-    <div class="body">
-        <div class="form-row">
-            <div class="col">
-                <select id="selectId" hidden>
-                    <option selected value="4" >Chat</option>
-                </select>
+<!--=============== HEADER ===============-->
+<header class="header" id="header">
+    <nav class="nav container">
+        <a href="#" class="nav__logo">달곰디저트</a>
+
+        <div class="nav__menu" id="nav-menu">
+            <ul class="nav__list">
+                <li class="nav__item">
+                    <a href="/" class="nav__link active-link">
+                        <i class='bx bx-home-alt nav__icon'></i>
+                        <span class="nav__name">홈</span>
+                    </a>
+                </li>
+                <li class="nav__item">
+                    <a href="/search" class="nav__link">
+                        <i class='bx bx-message-square-detail nav__icon'></i>
+                        <span class="nav__name">검색</span>
+                    </a>
+                </li>
+                <li class="nav__item">
+                    <a href="/reservation" class="nav__link">
+                        <i class='bx bx-book-alt nav__icon'></i>
+                        <span class="nav__name">예약</span>
+                    </a>
+                </li>
+
+                <li class="nav__item">
+                    <a href="/mypage" class="nav__link">
+                        <i class='bx bx-user nav__icon'></i>
+                        <span class="nav__name">마이페이지</span>
+                    </a>
+                </li>
+
+
+
+
+
+            </ul>
+        </div>
+
+        <img src="/img/perfil.png" alt="" class="nav__img">
+    </nav>
+</header>
+
+<main>
+    <!-- About Start -->
+    <div class="container-fluid pt-5">
+        <div class="container">
+            <div class="section-title position-relative text-center mx-auto mb-5 pb-3" style="max-width: 600px;">
+                <br><br><br>
+                <h2 class="text-primary font-secondary">About Us</h2>
+                <h1 class="display-4 text-uppercase">Welcome To 달곰디저트</h1>
+            </div>
+            <div class="row gx-5">
+                <div class="col-lg-5 mb-5 mb-lg-0" style="min-height: 400px;">
+                    <div class="position-relative h-100">
+                        <img class="position-absolute w-100 h-100" src="img/about.jpg" style="object-fit: cover;">
+                    </div>
+                </div>
+                <div class="col-lg-6 pb-5">
+                    <h4 class="mb-4">즐거운 미식 생활의 시작, 달곰디저트</h4>
+                    <p class="mb-5">방문 목적에 맞게 날짜, 인원은 물론 가격대, 음식 종류, 테이블 타입까지! 데이트, 기념일, 가족 모임 등 상황에 맞는 추천 맛집도 준비</p>
+                    <div class="row g-5">
+                        <div class="col-sm-6">
+                            <div class="d-flex align-items-center justify-content-center bg-primary border-inner mb-4" style="width: 90px; height: 90px;">
+                                <i class="fa fa-heartbeat fa-2x text-white"></i>
+                            </div>
+                            <h4 class="text-uppercase">예약하기</h4>
+                            <p class="mb-0">전화없이 편리하게 달곰디저트로 맛집을 예약하세요!</p>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="d-flex align-items-center justify-content-center bg-primary border-inner mb-4" style="width: 90px; height: 90px;">
+                                <i class="fa fa-award fa-2x text-white"></i>
+                            </div>
+                            <h4 class="text-uppercase">검색하기</h4>
+                            <p class="mb-0">인공지능을 활용한 최고의 디저트 검색</p>
+                        </div>
+
+                        <div class="col-sm-12">
+                            <div class="d-flex align-items-center justify-content-center bg-primary border-inner mb-4" style="width: 90px; height: 90px;">
+                                <i class="fab fa-android fa-2x text-white"></i> <!-- 안드로이드 아이콘 추가 -->
+                            </div>
+                            <h4 class="text-uppercase">앱 다운로드하기</h4>
+                            <p class="mb-0">
+                                <a href="https://raw.githubusercontent.com/okwow123/itca/main/src/main/resources/templates/apk/app-release.apk">
+                                    지금 달곰디저트 앱을 다운로드하세요!</a></p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="chat-scroll scroll" id="chatDiv">
+    </div>
+    <!-- About End -->
+
+
+    <!-- Facts Start -->
+    <div class="container-fluid bg-img py-5 mb-5">
+        <div class="container py-5">
+            <div class="row gx-5 gy-4">
+                <div class="col-lg-3 col-md-6">
+                    <div class="d-flex">
+                        <div class="bg-primary border-inner d-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                            <i class="fa fa-star text-white"></i>
+                        </div>
+                        <div class="ps-4">
+                            <h6 class="text-primary text-uppercase">디저트 맛집 개수</h6>
+                            <h1 class="display-5 text-white mb-0" data-toggle="counter-up">8,706개</h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="d-flex">
+                        <div class="bg-primary border-inner d-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                            <i class="fa fa-users text-white"></i>
+                        </div>
+                        <div class="ps-4">
+                            <h6 class="text-primary text-uppercase">최고의 쉐프</h6>
+                            <h1 class="display-5 text-white mb-0" data-toggle="counter-up">19,302명</h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="d-flex">
+                        <div class="bg-primary border-inner d-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                            <i class="fa fa-check text-white"></i>
+                        </div>
+                        <div class="ps-4">
+                            <h6 class="text-primary text-uppercase">예약완료 횟수</h6>
+                            <h1 class="display-5 text-white mb-0" data-toggle="counter-up">400,385번</h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="d-flex">
+                        <div class="bg-primary border-inner d-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                            <i class="fa fa-mug-hot text-white"></i>
+                        </div>
+                        <div class="ps-4">
+                            <h6 class="text-primary text-uppercase">회원수</h6>
+                            <h1 class="display-5 text-white mb-0" data-toggle="counter-up">1백만명</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="footer">
-        <textarea class="form-control-sm-gpt" rows="2" id="textContent"></textarea>
-        <button type="button" class="btn btn-primary-gpt" id="chatSend">Send</button>
+    <!-- Facts End -->
+
+
+    <!-- Products Start -->
+    <div class="container-fluid about py-5">
+        <div class="container">
+            <div class="section-title position-relative text-center mx-auto mb-5 pb-3" style="max-width: 600px;">
+                <h2 class="text-primary font-secondary">메뉴 & 가격</h2>
+                <h1 class="display-4 text-uppercase">최고의 디저트</h1>
+            </div>
+        </div>
     </div>
-    <p class="copyright">© ALL RIGHTS RESERVED.</p>
-</div>
-<button type="button" class="btn btn-primary-gpt btn-GPT"><b>IT</b><br>GPT</button>
+    <!-- Products End -->
+
+
+    <!-- Service Start -->
+    <div class="container-fluid service position-relative px-5 mt-5" style="margin-bottom: 135px;">
+        <div class="container">
+            <div class="row g-5">
+                <div class="col-lg-4 col-md-6">
+                    <div class="bg-primary border-inner text-center text-white p-5">
+                        <h4 class="text-uppercase mb-3">서울 마카롱 맛집</h4>
+                        <p>마츄피츄 강남구청역 마카롱  메종드루즈 성신여대 마카롱 노뜨 베이크샵 사당역 마카롱</p>
+                        <a class="text-uppercase text-dark" href="">더보기 <i class="bi bi-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="bg-primary border-inner text-center text-white p-5">
+                        <h4 class="text-uppercase mb-3">송도 바리스타 카페 커피화 커피 베이커리 맛집</h4>
+                        <p>송도에서 가장 맛있는 커피 맛집 카페. 바리스타 대회 우승자인 전문 바리스타가 내려주는 커피맛이 일품</p>
+                        <a class="text-uppercase text-dark" href="">더보기 <i class="bi bi-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="bg-primary border-inner text-center text-white p-5">
+                        <h4 class="text-uppercase mb-3">버들골 수제약과</h4>
+                        <p>선물용으로 고급스럽게 포장한 벌크형 약과. 강원도 춘천에서 만든 버들골약과 </p>
+                        <a class="text-uppercase text-dark" href="">더보기 <i class="bi bi-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-12 col-md-6 text-center">
+                    <h1 class="text-uppercase text-light mb-4">75% 할인 쿠폰 지금 받기</h1>
+                    <a href="" class="btn btn-primary border-inner py-3 px-5">지금 주문하기</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Service Start -->
+
+    <!-- Offer Start -->
+    <div class="container-fluid bg-offer my-5 py-5">
+        <div class="container py-5">
+            <div class="row gx-5 justify-content-center">
+                <div class="col-lg-7 text-center">
+                    <div class="section-title position-relative text-center mx-auto mb-4 pb-3" style="max-width: 600px;">
+                        <h2 class="text-primary font-secondary">지상 최대의 디저트 온라인 예약</h2>
+                        <h1 class="display-4 text-uppercase text-white">연남동 스몰럭케이크</h1>
+                    </div>
+                    <p class="text-white mb-4">감성적인 레터링 케이크로 유명한 스몰럭 케이크. small-luck-cake. design cake house 📍연남동 240-53, 2층 Cafe. 수-일요일(월화 휴무) Design Cake. 목-일요일</p>
+                    <a href="" class="btn btn-primary border-inner py-3 px-5 me-3">쇼핑하기</a>
+                    <a href="" class="btn btn-dark border-inner py-3 px-5">더보기</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Offer End -->
+
+
+</main>
+<!--=============== MAIN JS ===============-->
+<script src="/js/main.js"></script>
+
+<!-- JavaScript Libraries -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="lib/easing/easing.min.js"></script>
+<script src="lib/waypoints/waypoints.min.js"></script>
+<script src="lib/counterup/counterup.min.js"></script>
+<script src="lib/owlcarousel/owl.carousel.min.js"></script>
 
 </body>
 </html>
